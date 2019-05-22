@@ -1,0 +1,91 @@
+<form [formGroup]="itemEditForm" novalidate >
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Edit Item</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Name" formControlName="itemName">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Description" formControlName="itemDescription"></textarea>
+            <mat-error *ngIf="itemEditForm.controls['itemDescription'].hasError('required')">
+              Description is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Price" formControlName="itemPrice">
+            <mat-error *ngIf="itemEditForm.controls['itemPrice'].hasError('required')">
+              Price is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Condition" formControlName="itemCondition">
+            <mat-error *ngIf="itemEditForm.controls['itemCondition'].hasError('required')">
+              Condition is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput type="date" placeholder="Date Available" formControlName="itemDateAvailable">
+            <mat-error *ngIf="itemEditForm.controls['itemDateAvailable'].hasError('required')">
+              Date Available is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                  <mat-label>Select an option</mat-label>
+                  <mat-select [(value)]="selected" formControlName="itemPictureUrl">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let itemPic of itemPics" [value]="itemPic">{{itemPic}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <mat-chip-list #chipList>
+                  <mat-chip *ngFor="let tag of itemTags" [selectable]="selectable" [removable]="removable" (removed)="removeTag(tag)">
+                    {{tag}}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+                <input [matChipInputFor]="chipList" placeholder="Tags..." 
+                  [matChipInputSeparatorKeyCodes]="separatorKeyCodes"
+                  [matChipInputAddOnBlur]="addOnBlur"
+                  (matChipInputTokenEnd)="addTag($event)">
+              </mat-form-field>
+            </div>
+          </div>
+            
+        </div>
+        <div class="col" width="50%" *ngIf="selected>''">
+          <img [src]="'assets/items/' + selected" width="75%">
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="button" (click)="save()">Save</button>
+      <button mat-raised-button color="warn" type="button" (click)="cancel()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
