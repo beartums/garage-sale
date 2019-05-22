@@ -1,0 +1,12 @@
+export const environment = {
+  production: true,
+  firebaseConfig: {
+    apiKey: "",
+    authDomain: "garage-sale-78809.firebaseapp.com",
+    databaseURL: "https://garage-sale-78809.firebaseio.com",
+    projectId: "garage-sale-78809",
+    storageBucket: "garage-sale-78809.appspot.com",
+    messagingSenderId: "",
+    appId: ""
+  }
+};
