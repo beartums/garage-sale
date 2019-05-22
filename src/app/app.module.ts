@@ -16,6 +16,7 @@ import { AngularFireDatabaseModule } from "@angular/fire/database"
 import { environment } from '../environments/environment';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, 
   MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, 
   MatSortModule, MatInputModule, MatSelectModule, MatRadioModule, 
@@ -43,6 +44,7 @@ import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     LayoutModule,
+    FlexLayoutModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,

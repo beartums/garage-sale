@@ -23,7 +23,7 @@ export class MatItemTilesComponent {
 
   constructor(private breakpointObserver: BreakpointObserver, private ds: DataService) {
     this.items$ = this.ds.getItemList$();
-    let sub = this.breakpointObserver.observe(Breakpoints.Small).subscribe((state) => {
+    let sub = this.breakpointObserver.observe(Breakpoints.XSmall).subscribe((state) => {
       if (state.matches) {
         this.cardCols = 1;
         this.cardRows = 2;

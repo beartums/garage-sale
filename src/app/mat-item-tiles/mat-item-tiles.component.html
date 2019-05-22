@@ -15,6 +15,20 @@
             </mat-menu>
           </mat-card-title>
         </mat-card-header>
+        <mat-card-content>
+          <div class="container" fxLayout fxLayout.xs="column">
+            <div fxFlex="50%">
+                <img [src]="'assets/items/' + item.pictureUrl" object-fit="contain" width="100%">
+            </div>
+            <div class="container" fxLayout="column">
+              <div fxFlex>{{item.description}}</div>
+              <div fxFlex>{{item.price}}</div>
+              <div fxFlex>{{item.condition}}</div>
+              <div fxFlex>{{item.dateAvailable}}</div>
+            </div>
+          </div>
+        </mat-card-content>
+        <!--
         <mat-card-content class="dashboard-card-content">
           <table width="100%">
             <tr>
@@ -37,7 +51,7 @@
             <tr><td>&nbsp;</td></tr>
             <tr><td>&nbsp;</td></tr>
           </table>
-        </mat-card-content>
+        </mat-card-content>-->
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
