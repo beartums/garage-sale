@@ -1,58 +1,81 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list [cols]="gridListCols" rowHeight="350px">
-    <mat-grid-tile *ngFor="let item of items$ | async" [colspan]="cardCols" [rowspan]="cardRows">
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{item.name}}
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Expand</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="container" fxLayout fxLayout.xs="column">
-            <div fxFlex="50%">
-                <img [src]="'assets/items/' + item.pictureUrl" object-fit="contain" width="100%">
-            </div>
-            <div class="container" fxLayout="column">
-              <div fxFlex>{{item.description}}</div>
-              <div fxFlex>{{item.price}}</div>
-              <div fxFlex>{{item.condition}}</div>
-              <div fxFlex>{{item.dateAvailable}}</div>
-            </div>
-          </div>
-        </mat-card-content>
-        <!--
-        <mat-card-content class="dashboard-card-content">
-          <table width="100%">
-            <tr>
-              <td rowspan="6" width="50%" class="image">
-                  <img [src]="'assets/items/' + item.pictureUrl" height="250px">
-              </td>
-              <td>
-                  {{item.description}}
-              </td>
-            </tr>
-            <tr>
-              <td>Price: {{item.price}}</td>
-            </tr>
-            <tr>
-              <td>Available: {{item.dateAvailable}}</td>
-            </tr>
-            <tr>
-              <td>Condition: {{item.condition}}</td>
-            </tr>
-            <tr><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td></tr>
-          </table>
-        </mat-card-content>-->
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <h1 class="mat-h1">Items for sale</h1>
+  <div gdAuto="row" class="cards-container"
+      gdColumns.lt-md="1fr" gdColumns.lt-xl="1fr 1fr" gdColumns.xl="1fr 1fr 1fr" 
+      gdGap="20px">
+      <ng-container *ngFor="let item of items$ | async" >
+          <mat-card class="dashboard-card" *ngIf="!isFiltered(item)">
+              <div fxLayout="rows" fxLayoutAlign="center center" *ngIf="isSold(item)" class="overlay">
+                <img class="sold" src="assets/sold.png">
+              </div>
+              <mat-card-header>
+                <mat-card-title>
+                  {{item.name}}
+                  <div class="card-tools">
+                    <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                      <mat-icon>share</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" 
+                          class="twitter-share-button" data-show-count="false">
+                          <fa-icon class="twitter-color" [icon]="faTwitter" size="lg"></fa-icon>
+                        </a>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        <span class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" 
+                          data-width="20" data-layout="button" data-action="like" data-size="small" 
+                          data-show-faces="false" data-share="false">
+                          <fa-icon class="facebook-color" [icon]="faFacebook" size="lg"></fa-icon>
+                        </span>
+                         <div id="fb-root"></div>
+                          <script async defer crossorigin="anonymous" 
+                          src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3">
+                          </script>
+                      
+                      <fa-icon class="linkedin-color" [icon]="faLinkedin" size="lg"></fa-icon>
+                      <fa-icon class="pinterest-color" [icon]="faPinterest" size="lg"></fa-icon>
+                      <fa-icon class="instagram-color" [icon]="faInstagram" size="lg"></fa-icon>
+                      <fa-icon class="email-color" [icon]="faEnvelope" size="lg"></fa-icon>
+                    </mat-menu> -->
+                    <i class="material-icons-outlined" *ngIf="auth.isAdmin" (click)="editItem(item)">
+                      edit
+                    </i>
+                    <span *ngIf="auth.isLoggedIn">
+                      <i class="material-icons-outlined" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)">
+                        favorite_border
+                      </i>
+                      <i class="material-icons favorited" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)">
+                        favorite
+                      </i>
+                    </span>
+                    <i class="material-icons-outlined">email</i>
+                  </div>
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content class="content-container">
+                <div class="content-grid" gdAuto="row" 
+                  gdColumns.xs="1fr" gdRows.xs="1fr 1fr" 
+                  gdColumns.gt-xs="40% 60%" gdRows.gt-xs="1fr" 
+                  gdAlignColumns="center" gdAlignRows="center"
+                  gdGap="10px" >
+                  <div class="flex-image">
+                      <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
+                  </div>
+                  <div gdAuto="rows" gdRows="1fr 1fr" 
+                      ngClass.gt-xs="card-text" ngClass.xs="card-text-xs"
+                      gdAlignColumns.xs="center" gdAlignColumns.gt-xs="start"
+                      gdAlignRows="center">
+                    <div>
+                      {{item.description}}
+                    </div>
+                    <div>{{item.price}} | {{item.condition}} | {{item.dateAvailable}}</div>
+                  </div>
+                  
+                </div>
+              </mat-card-content>
+            </mat-card>
+              
+      </ng-container>
+  
+
+  </div>
 </div>

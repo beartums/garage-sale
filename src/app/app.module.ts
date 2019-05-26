@@ -21,6 +21,12 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
   MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, 
   MatSortModule, MatInputModule, MatSelectModule, MatRadioModule, 
   MatCardModule, MatChipsModule, MatGridListModule, MatMenuModule } from '@angular/material';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+import { AuthService } from './auth.service';
+import { DataService } from './data.service';
+import { ItemService } from './item.service';
 import { MatItemListComponent } from './mat-item-list/mat-item-list.component';
 import { MatItemEditComponent } from './mat-item-edit/mat-item-edit.component';
 import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component';
@@ -43,6 +49,7 @@ import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component
     AngularFireAuthModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+    FontAwesomeModule,
     LayoutModule,
     FlexLayoutModule,
     MatToolbarModule,
@@ -62,7 +69,7 @@ import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component
     MatGridListModule,
     MatMenuModule
   ],
-  providers: [],
+  providers: [AuthService, DataService, ItemService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

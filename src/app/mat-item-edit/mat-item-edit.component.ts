@@ -3,6 +3,7 @@ import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
+import { Location } from '@angular/common';
 
 import { Item } from '../item';
 import { ITEM_PICS } from '../itemPics';
@@ -36,7 +37,8 @@ export class MatItemEditComponent {
 
 
   constructor(private fb: FormBuilder, private ds: DataService, 
-    private router: Router,  private route: ActivatedRoute) {
+    private router: Router,  private route: ActivatedRoute,
+    private _location: Location) {
     
    }
 
@@ -46,7 +48,7 @@ export class MatItemEditComponent {
       this.itemKey = params.get('key');
     })
 
-    let item = Object.assign(new Item(),this.ds.itemBeingEdited);
+    const item = Object.assign(new Item(),this.ds.itemBeingEdited);
 
     this.itemEditForm.controls['itemName'].setValue(item.name || '');
     this.itemEditForm.controls['itemPrice'].setValue(item.price || '');
@@ -78,11 +80,13 @@ export class MatItemEditComponent {
     } else {
       this.ds.updateItem(this.ds.itemBeingEdited.key, item, this.ds.itemBeingEdited);
     }
-    this.router.navigate(['/mat-item-list/']);
+    // this.router.navigate(['/mat-item-list/']);
+    this._location.back()
   }
 
   cancel() {
-    this.router.navigate(['/mat-item-list/']);
+    // this.router.navigate(['/mat-item-list/']);
+    this._location.back()
   }
 
   addTag(event: MatChipInputEvent) {

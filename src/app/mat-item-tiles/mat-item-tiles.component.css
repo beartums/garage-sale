@@ -3,17 +3,34 @@
 }
 
 .dashboard-card {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
+  /* position: relative;
+  top: 25px;
+  left: 25px;
+  right: 25px;
+  bottom: 25px; */
+  height: 100%
 }
 
-.more-button {
+.mat-card-header-text {
+  width: 100%;
+  position: relative;
+
+}
+
+.card-tools {
   position: absolute;
-  top: 5px;
+  top: 0px;
   right: 10px;
+}
+
+.card-tools i {
+  position: relative;
+  top: 8px !important;
+  margin: 10px;
+  cursor: pointer;
+}
+.card-tools i:hover {
+  color:purple;
 }
 
 .dashboard-card-content {
@@ -27,3 +44,100 @@ td.image {
   text-align: center;
   width: 50%;
 }
+
+.card-text-xs {
+  text-align: center;
+}
+.card-text {
+  text-align: left;
+}
+.card-flex-box {
+  max-width: 800;
+  max-height: 350;
+}
+.cards-container {
+  
+}
+
+.content-container {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.content-grid {
+  margin: auto;
+
+}
+
+.flex-image {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: table-cell;
+  vertical-align: middle
+
+}
+.flex-image img {
+  width: 100%;
+
+}
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(129, 124, 124, 0.521);
+  z-index: 50;
+  /* text-align: center;
+  max-width: 800px; */
+}
+/* .overlay img {
+
+  max-height: 100%;
+  max-width: 100%;
+
+} */
+.sold {
+  margin: auto;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.linkedin-color {
+  color: #0077B5;
+}
+
+.facebook-color {
+  color:#4267b2;
+}
+
+.twitter-color {
+  color:#38A1F3;
+}
+
+.pinterest-color {
+  color: #BD081C;
+}
+
+.instagram-color {
+  color: #231F20;
+}
+.email-color {
+  color: darkred;
+}
+
+fa-icon {
+  margin: 8px;
+}
+
+.favorited {
+  color: gold;
+}
+
+

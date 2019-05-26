@@ -1,17 +1,62 @@
 .sidenav-container {
   height: 100%;
 }
-
 .sidenav {
   width: 200px;
 }
-
 .sidenav .mat-toolbar {
   background: inherit;
 }
-
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 100;
+}
+.mat-toolbar div {
+  position: relative;
+  width: 100%;
+}
+.success {
+  color: lawngreen;
+}
+.disabled {
+  color: #ada8a8;
+}
+.icon {
+  margin: 8px;
+  width: 100%;
+  max-width: 40px;
+  z-index: 150;
+}
+.icon:hover {
+  cursor: pointer;
+  color: lightskyblue;
+}
+
+.icon img {
+  border-radius: 50%;
+  position: relative;
+  top: 0;
+  width: 24px;
+}
+.icon-container {
+  height: 100%
+}
+.filterNav {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  z-index: 100;
+
+}
+.filter-container {
+  position: relative;
+  top: 0;
+  height: 100%;
+  z-index: 100;
+  width: 100%;
+  margin-top: 100px;
+  margin-bottom: 100px;
 }

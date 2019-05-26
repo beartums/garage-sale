@@ -10,5 +10,6 @@ export class Item {
     dateAvailable: Date;
     pictureUrl: string;
     tags: Array<string>;
+    favoritedBy: Array<string>; // user ids of users who have favorited this item
     oldVersions: Array<any>;
 }
