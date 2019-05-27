@@ -69,7 +69,6 @@ td.image {
 
 .content-grid {
   margin: auto;
-
 }
 
 .flex-image {
@@ -138,6 +137,15 @@ fa-icon {
 
 .favorited {
   color: gold;
+}
+
+.item-description {
+  font-size: large;
+}
+
+.item-details {
+  font-size: large;
+  font-weight: bold;
 }
 
 

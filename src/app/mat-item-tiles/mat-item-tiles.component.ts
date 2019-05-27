@@ -66,4 +66,18 @@ export class MatItemTilesComponent {
     this.ds.itemBeingEdited = item;
     this.router.navigate(['/mat-item-edit', item.key]);
   }
+
+  formatPrice(price: number = 0): string {
+    let priceString = '';
+    
+    if (price < 10000) {
+      priceString = price.toString();
+    } else if (price < 1000000) {
+      priceString = (price / 1000).toString() + 'K';
+    } else {
+      priceString = (price / 1000000).toString() + 'M';
+    }
+    priceString += ' ugx';
+    return priceString;
+  }
 }

@@ -64,10 +64,10 @@
                       ngClass.gt-xs="card-text" ngClass.xs="card-text-xs"
                       gdAlignColumns.xs="center" gdAlignColumns.gt-xs="start"
                       gdAlignRows="center">
-                    <div>
+                    <div class="item-description">
                       {{item.description}}
                     </div>
-                    <div>{{item.price}} | {{item.condition}} | {{item.dateAvailable}}</div>
+                    <div class="item-details">{{formatPrice(item.price)}} | {{item.condition}} | {{item.dateAvailable}}</div>
                   </div>
                   
                 </div>
