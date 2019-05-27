@@ -51,13 +51,6 @@ td.image {
 .card-text {
   text-align: left;
 }
-.card-flex-box {
-  max-width: 800;
-  max-height: 350;
-}
-.cards-container {
-  
-}
 
 .content-container {
   position: relative;
@@ -68,7 +61,24 @@ td.image {
 }
 
 .content-grid {
+  position: relative;
   margin: auto;
+  justify-content: space-around;
+  height: 100%
+}
+.card-text-grid {
+  /* margin: auto; */
+  position: relative;
+  top:0;
+  bottom:0;
+  height: 100%;
+}
+
+.text-flexbox {
+  height: 100%;
+  position: relative;
+  top: 0;
+  bottom: 0;
 }
 
 .flex-image {
@@ -79,8 +89,8 @@ td.image {
   right: 0;
   display: table-cell;
   vertical-align: middle
-
 }
+
 .flex-image img {
   width: 100%;
 
@@ -141,11 +151,16 @@ fa-icon {
 
 .item-description {
   font-size: large;
+  width: 100%;
 }
 
 .item-details {
   font-size: large;
   font-weight: bold;
+  width: 100%;
 }
-
+.item-details-header {
+  font-size: smaller;
+  font-variant: small-caps;
+}
 

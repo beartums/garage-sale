@@ -80,4 +80,12 @@ export class MatItemTilesComponent {
     priceString += ' ugx';
     return priceString;
   }
+
+  formatDateAvailable(date: string): string {
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    let da = new Date(date);
+    let now = new Date();
+    if (now > da) { return "Now" }
+    else { return da.getDate() + ' ' + months[da.getMonth()]  }
+  }
 }

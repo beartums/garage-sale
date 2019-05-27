@@ -5,7 +5,7 @@
       gdGap="20px">
       <ng-container *ngFor="let item of items$ | async" >
           <mat-card class="dashboard-card" *ngIf="!isFiltered(item)">
-              <div fxLayout="rows" fxLayoutAlign="center center" *ngIf="isSold(item)" class="overlay">
+              <div fxLayout="row" fxLayoutAlign="center center" *ngIf="isSold(item)" class="overlay">
                 <img class="sold" src="assets/sold.png">
               </div>
               <mat-card-header>
@@ -52,22 +52,33 @@
                 </mat-card-title>
               </mat-card-header>
               <mat-card-content class="content-container">
-                <div class="content-grid" gdAuto="row" 
-                  gdColumns.xs="1fr" gdRows.xs="auto auto" 
-                  gdColumns.gt-xs="40% 60%" gdRows.gt-xs="auto" 
-                  gdAlignColumns="center" gdAlignRows="center"
-                  gdGap="10px" >
-                  <div class="flex-image">
+                <!-- flexbox horizontal with 2 columns -- picture and text (changes to 2 rows and 1
+                      column when size is xs -->
+                <div class="content-grid" fxLayout.xs="column" fxLayout="row"
+                  fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
+                  fxLayoutGap="15px" >
+                  <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''">
                       <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
                   </div>
-                  <div gdAuto="rows" gdRows="auto auto" 
-                      ngClass.gt-xs="card-text" ngClass.xs="card-text-xs"
-                      gdAlignColumns.xs="center" gdAlignColumns.gt-xs="start"
-                      gdAlignRows="center">
-                    <div class="item-description">
-                      {{item.description}}
-                    </div>
-                    <div class="item-details">{{formatPrice(item.price)}} | {{item.condition}} | {{item.dateAvailable}}</div>
+                  <!-- second column of above flexbox, -->
+                  <div fxFlex="60%" class="text-flexbox">
+                    <!-- new Flexbox (vertical) for text information of item -->
+                    <p class="item-description" [innerHTML]="item.description">
+                        
+                    </p>
+                    <br />
+                    <br />
+                    <p class="item-details">
+                      <span class="item-details-header">
+                        <span *ngIf="item.price && item.price>''">price &nbsp; |</span>
+                        <span *ngIf="item.condition && item.condition>''"> &nbsp; condition &nbsp; |</span>
+                        <span *ngIf="item.dateAvailable && item.dateAvailable>''"> &nbsp; available &nbsp; |</span> 
+                      </span>
+                      <br />
+                      <span *ngIf="item.price && item.price>''">{{formatPrice(item.price)}} &nbsp; |</span>
+                      <span *ngIf="item.condition && item.condition>''"> &nbsp; {{item.condition}} &nbsp; |</span>
+                      <span *ngIf="item.dateAvailable && item.dateAvailable>''"> &nbsp; {{formatDateAvailable(item.dateAvailable)}} &nbsp; |</span> 
+                    </p>
                   </div>
                   
                 </div>
