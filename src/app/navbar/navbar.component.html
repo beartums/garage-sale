@@ -1,15 +1,16 @@
 <div [gdColumns]="showFilters ? '200px auto' : 'auto'">
   <div class="filter-nav" *ngIf="showFilters">
     <mat-toolbar color="primary"></mat-toolbar>
-    <h2>Filters</h2>
-    <mat-chip-list #chipList>
-      <mat-chip *ngFor="let tag of fs.getAvailableTags(fs.chosenTags)" 
-        [removable]="false" (click)="selectTag(tag)">
-        {{tag}}
-      </mat-chip>
-    </mat-chip-list>
-
-  </div>
+    <div class="filter-content">
+      <h2>Categories</h2>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let tag of fs.getAvailableTags(fs.chosenTags)" 
+          [removable]="false" (click)="selectTag(tag)">
+          {{tag}}
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+    </div>
   <div>
     <mat-toolbar color="primary">
       <!-- <button

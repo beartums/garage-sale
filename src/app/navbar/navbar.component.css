@@ -3,6 +3,7 @@
 }
 .sidenav {
   width: 200px;
+  padding: 15px;
 }
 .sidenav .mat-toolbar {
   background: inherit;
@@ -43,13 +44,21 @@
   height: 100%
 }
 .filterNav {
-  position: relative;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   width: 200px;
   z-index: 100;
+  margin: 15px;
 
+}
+.filter-content {
+  position: fixed;
+  top: 60px;
+  height: 100%;
+  width: 200px;
+  margin: 15px;
 }
 .filter-container {
   position: relative;
