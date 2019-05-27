@@ -20,7 +20,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, 
   MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, 
   MatSortModule, MatInputModule, MatSelectModule, MatRadioModule, 
-  MatCardModule, MatChipsModule, MatGridListModule, MatMenuModule } from '@angular/material';
+  MatCardModule, MatChipsModule, MatGridListModule, MatMenuModule, MatAutocompleteModule } from '@angular/material';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -67,7 +67,8 @@ import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component
     MatChipsModule,
     ReactiveFormsModule,
     MatGridListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatAutocompleteModule,
   ],
   providers: [AuthService, DataService, ItemService],
   bootstrap: [AppComponent]

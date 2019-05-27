@@ -47,7 +47,7 @@ export class MatItemTilesComponent {
   }
 
   isSold(item: Item): boolean {
-    const tags = item.tags;
+    const tags = item.tags || [];
     return tags.some( tag => tag.trim().toLowerCase() == 'sold')
   }
 

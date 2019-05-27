@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
 import { Location } from '@angular/common';
 
 import { Item } from '../item';
 import { ITEM_PICS } from '../itemPics';
-import { MatChipInputEvent } from '@angular/material';
+import { MatChipInputEvent, MatAutocompleteSelectedEvent,  MatAutocomplete } from '@angular/material';
+import { FilterService } from '../filter.service';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mat-item-edit',
@@ -34,12 +37,19 @@ export class MatItemEditComponent {
   selected: string;
   readonly separatorKeyCodes: number[] = [ENTER, COMMA, SPACE]
   readonly itemPics = ITEM_PICS;
+  chipControl = new FormControl();
+  filteredTags: Observable<string[]>;
 
-
+  @ViewChild('chipInput') chipInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  
   constructor(private fb: FormBuilder, private ds: DataService, 
     private router: Router,  private route: ActivatedRoute,
-    private _location: Location) {
-    
+    private _location: Location, private fs: FilterService) {
+
+      this.filteredTags = this.chipControl.valueChanges.pipe(
+        startWith(null),
+        map((tag: string | null) => tag ? this._filter(tag) : this.fs.getAvailableTags(this.itemTags).slice()));
    }
 
   ngOnInit() {
@@ -89,25 +99,47 @@ export class MatItemEditComponent {
     this._location.back()
   }
 
-  addTag(event: MatChipInputEvent) {
-    const input = event.input;
-    const value = (event.value || '').trim();
-
-    const isTag = this.itemTags.indexOf(value) > -1;
-    const isEmpty = value.trim() == '';
-    if (!isTag && !isEmpty) {
-      this.itemTags.push(value);
+  addTagEvent(event: MatChipInputEvent) {
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = (event.value || '').trim();
+      if (value !== '') {this.addTag(value); }
+      this.chipControl.setValue(null);
+      if (input) {
+        input.value = '';
+      }
     }
-    if (input) {
-      input.value = '';
+  }
+
+  addTag(input: string) {
+    const tag = input.trim().toLowerCase();
+
+    const isTag = this.itemTags.indexOf(tag) > -1;
+    const isEmpty = tag.trim() === '';
+    if (!isTag && !isEmpty) {
+      this.itemTags.push(tag);
     }
 
   }
+
+  addSelected(event: MatAutocompleteSelectedEvent) {
+    this.addTag(event.option.viewValue);
+    this.chipInput.nativeElement.value = '';
+    this.chipControl.setValue(null);
+  }
+
   removeTag(tag: string) {
     const idx = this.itemTags.indexOf(tag);
     if (idx >= 0) {
       this.itemTags.splice(idx, 1);
     }
+  }
+
+  _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    // return all tags that have the typed characters anywhere in the name
+    return this.fs.getAvailableTags(this.itemTags).filter(tag => tag.toLowerCase().indexOf(filterValue) > -1);
   }
 
 }
