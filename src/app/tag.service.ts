@@ -49,12 +49,17 @@ export class TagService {
     return tag.trim().toLowerCase();
   }
 
-  getItemsInTagsCount(tags: string[]): number {
+  getItemsInTagsCount(positive: string[], negative: string[] = []): number {
     let items: Item[] = [];
-    tags.forEach( (tag, idx) => {
+    positive = _.without(positive, ...negative);
+    positive.forEach( (tag, idx) => {
       // If this is the first tag, take all of them, otherwise the intersection of previous results with this one
       items = idx === 0 ? this.tags[tag] : _.intersection(items, this.tags[tag]);
     });
+
+    negative.forEach( (tag, idx) => {
+      items = _.without(items, ...this.tags[tag]);
+    })
     return items.length;
   }
 

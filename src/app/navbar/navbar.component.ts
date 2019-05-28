@@ -61,11 +61,19 @@ export class NavbarComponent {
   getChosenTags(): string[] {
     return this.filt.chosenTags;
   }
-  getTagBadgeCount(tag: string = '', chosenTags: string[] = []): number {
-    chosenTags = chosenTags.length === 0 ? this.fs.chosenTags : chosenTags;
-    const allTags = _.concat(chosenTags, tag);
-    const count = this.ts.getItemsInTagsCount(allTags);
+  getTagBadgeCount(tag: string = null, chosenTags: string[] = null, negativeTags: string[] = null): number {
+    chosenTags = chosenTags || this.fs.chosenTags;
+    negativeTags = negativeTags || this.fs.negativeTags;
+
+    const allTags = tag ? _.concat(chosenTags, tag) : chosenTags;
+    const count = this.ts.getItemsInTagsCount(allTags, negativeTags);
     return count;
+  }
+  isTagNegative(tag: string): boolean {
+    return this.fs.isTagNegative(tag);
+  }
+  toggleTagPolarity(tag) {
+    this.fs.toggleTagPolarity(tag);
   }
 
 }

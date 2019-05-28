@@ -62,8 +62,8 @@
     <div id="filter-container" *ngIf="getChosenTags().length>0">
       <br />
         <mat-chip-list #chipList>
-          <mat-chip color="primary" selected *ngFor="let tag of getChosenTags()" 
-            [removable]="true" (click)="removeTag(tag)">
+          <mat-chip [color]="isTagNegative(tag) ? 'accent' : 'primary'" selected *ngFor="let tag of getChosenTags()" 
+            [removable]="true" (click)="toggleTagPolarity(tag)">
             {{tag}}
             <mat-icon matChipRemove (click)="removeTag(tag)">cancel</mat-icon>
           </mat-chip>
