@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'mat-item-list', component: MatItemListComponent},
   { path: 'mat-item-tiles', component: MatItemTilesComponent},
   { path: 'mat-item-edit/:key', component: MatItemEditComponent},
-  { path: '', redirectTo: '/mat-item-list', pathMatch: 'full' }
+  { path: '', redirectTo: '/mat-item-tiles', pathMatch: 'full' }
 ];
 
 @NgModule({

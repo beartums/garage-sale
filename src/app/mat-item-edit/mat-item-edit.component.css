@@ -25,3 +25,6 @@
 .col:last-child {
   margin-right: 0;
 }
+.used {
+  text-decoration: line-through; 
+}

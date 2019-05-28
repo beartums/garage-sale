@@ -5,3 +5,17 @@
 button {
   margin: 16px 8px;
 }
+
+.table-img {
+  position: relative;
+  max-width: 30px;
+  max-height: 30px;
+}
+
+.small-chip {
+  min-height: 24px;
+  padding: 3px 8px;
+  font-size: smaller;
+  font-weight: bold;
+  /* font-variant: small-caps; */
+}

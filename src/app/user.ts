@@ -8,7 +8,7 @@ export class User {
     lastLogin: string;
     favorites: string[]; // favorited item ids
 
-    constructor(user: any) {
+    constructor(user?: any) {
         this.uid = user ? user.uid : null;
         this.displayName = user ? user.displayName : null;
         this.email = user ? user.email : null;

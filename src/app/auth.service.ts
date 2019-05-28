@@ -62,7 +62,7 @@ export class AuthService {
         // Set logged out and GM status.  Also clear out the userdata
         this._isLoggedIn = false;
         this._isAdmin = false;
-        this.userData = null;
+        this.userData = new User();
       }
     });
   }

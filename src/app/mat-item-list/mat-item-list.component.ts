@@ -1,8 +1,11 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
 import { Item } from '../item';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
+import { ItemService } from '../item.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-mat-item-list',
@@ -15,9 +18,10 @@ export class MatItemListComponent implements AfterViewInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource([]);
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['name','description'];
+  displayedColumns = ['pictureUrl', 'name', 'tags', 'edit'];
 
-  constructor(private ds: DataService, private router: Router) {
+  constructor(private ds: DataService, private router: Router,
+              private is: ItemService, private as: AuthService) {
     const itemList = this.ds.getItemList$();
     itemList.subscribe( list => { this.dataSource = new MatTableDataSource(list); } );
   }
@@ -31,6 +35,27 @@ export class MatItemListComponent implements AfterViewInit {
     this.ds.itemBeingEdited = null;
     this.router.navigate(['/mat-item-edit', 'new']);
   }
+
+  isAdmin() {
+    return this.as.isAdmin;
+  }
+
+  isFavorited(item: Item): boolean {
+    return this.is.isFavoritedBy(item, this.as.userId)
+  }
+
+  joinTags(tags: string[] = [], delim: string = ', '): string {
+    return tags.join(delim);
+  }
+
+  sortTags(tags: string[] = []): string[] {
+    return tags.sort();
+  }
+
+  toggleFavorited(item: Item) {
+    this.is.toggleFavorite(item, this.as.userId);
+  }
+
   ngAfterViewInit() {
     //this.dataSource = new MatItemListDataSource(this.paginator, this.sort);
   }

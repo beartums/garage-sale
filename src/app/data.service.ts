@@ -21,6 +21,7 @@ export class DataService {
   // magical object.  if assigned, then an item is being edited.  If null, then not;
   // used for communicating to the item-edit page
   itemBeingEdited: Item;
+  photoURLsUsed = {};
   
   readonly ITEM_ROOT: string = 'Items';
   readonly TAG_ROOT: string = 'Tags';
@@ -54,6 +55,10 @@ export class DataService {
           c => ( <Item>{ key: c.payload.key, ...c.payload.val() } )
         );
         this.ts.indexAllItems(<Item[]>items);
+        this.photoURLsUsed = <Item[]>items.reduce((URLObj, item) => {
+          if (item.pictureUrl && item.pictureUrl > '') { URLObj[item.pictureUrl] = true; }
+          return URLObj;
+        }, {});
         return <Item[]>items;
       })
     );

@@ -1,5 +1,5 @@
-<div [gdColumns]="showFilters ? '200px auto' : 'auto'">
-  <div class="filter-nav" *ngIf="showFilters">
+<div [gdColumns]="showFilters && isCurrentRoute('/mat-item-tiles') ? '200px auto' : 'auto'" >
+  <div class="filter-nav" *ngIf="showFilters && isCurrentRoute('/mat-item-tiles')">
     <mat-toolbar color="primary">
       <span>Filters</span>
       <span fxFlex="1 1 auto" class="fill-toolbar"></span>
@@ -19,7 +19,7 @@
         </ng-container>
       </mat-chip-list>
     </div>
-    </div>
+  </div>
   <div>
     <mat-toolbar color="primary">
       <!-- <button
@@ -32,26 +32,26 @@
       </button> -->
         
           
-          <i fxFlex="24px" class="material-icons icon-button" (click)="toggleFilter()" *ngIf="!showFilters">
+          <i fxFlex="24px" class="material-icons icon-button" (click)="toggleFilter()" *ngIf="!showFilters && isCurrentRoute('/mat-item-tiles')">
             chevron_right
           </i>
           
           <div fxFlex >Griffith Garage Sale</div>
           <div fxFlex  fxLayout="row" fxLayoutAlign="end center">
-            <i class="material-icons icon" (click)="gotoInfo()">info</i>
-            <i *ngIf="currentRoute()=='/mat-item-tiles' && auth.isAdmin" 
-                class="material-icons icon" (click)="gotoSaleSettings()">
-              settings
+            <i class="material-icons icon-button" (click)="gotoInfo()">info</i>
+            <i *ngIf="isCurrentRoute('/mat-item-tiles') && auth.isAdmin" 
+                class="material-icons icon-button" (click)="gotoSaleSettings()">
+              view_list
             </i>
           
-            <i class="icon material-icons" *ngIf="currentRoute()!=='/mat-item-tiles'"
+            <i class="icon-button material-icons" *ngIf="!isCurrentRoute('/mat-item-tiles')"
               (click)="gotoTileList()">
               view_module
             </i>
             <span class="icon" *ngIf="auth.isLoggedIn">
               <img [src]="auth.userData.photoURL" (click)="logout()" >
             </span>
-            <i class="icon material-icons disabled" *ngIf="!auth.isLoggedIn"  
+            <i class="icon-button material-icons disabled" *ngIf="!auth.isLoggedIn"  
               (click)="login()">
               account_circle
             </i>
@@ -59,7 +59,7 @@
        
 
     </mat-toolbar>
-    <div id="filter-container" *ngIf="getChosenTags().length>0">
+    <div id="filter-container" *ngIf="getChosenTags().length>0 && isCurrentRoute('/mat-item-tiles')">
       <br />
         <mat-chip-list #chipList>
           <mat-chip [color]="isTagNegative(tag) ? 'accent' : 'primary'" selected *ngFor="let tag of getChosenTags()" 

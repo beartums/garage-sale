@@ -1,6 +1,6 @@
 <div class="grid-container">
   <div gdAuto="row" class="cards-container"
-      gdColumns.lt-md="1fr" gdColumns.lt-xl="1fr 1fr" gdColumns.xl="1fr 1fr 1fr" 
+      gdColumns.lt-md="1fr" gdColumns.lt-lg="1fr 1fr" gdColumns.gt-md="1fr 1fr 1fr" 
       gdGap="20px">
       <ng-container *ngFor="let item of items$ | async" >
           <mat-card class="dashboard-card" *ngIf="!isFiltered(item)">
@@ -35,18 +35,18 @@
                       <fa-icon class="instagram-color" [icon]="faInstagram" size="lg"></fa-icon>
                       <fa-icon class="email-color" [icon]="faEnvelope" size="lg"></fa-icon>
                     </mat-menu> -->
-                    <i class="material-icons-outlined" *ngIf="auth.isAdmin" (click)="editItem(item)">
+                    <i class="material-icons-outlined icon-button" *ngIf="auth.isAdmin" (click)="editItem(item)">
                       edit
                     </i>
                     <span *ngIf="auth.isLoggedIn">
-                      <i class="material-icons-outlined" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)">
+                      <i class="material-icons-outlined icon-button" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)">
                         favorite_border
                       </i>
-                      <i class="material-icons favorited" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)">
+                      <i class="material-icons favorited icon-button" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)">
                         favorite
                       </i>
                     </span>
-                    <i class="material-icons-outlined">email</i>
+                    <i class="material-icons-outlined icon-button">email</i>
                   </div>
                 </mat-card-title>
               </mat-card-header>

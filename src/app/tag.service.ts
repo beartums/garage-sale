@@ -63,7 +63,7 @@ export class TagService {
     return items.length;
   }
 
-  getTagChanges(tags: string[], oldTags: string[]): 'remove' | 'add' | 'both' | null {
+  getTagChanges(tags: string[] = [], oldTags: string[] = []): 'remove' | 'add' | 'both' | null {
     const oTags = oldTags.map( tag => this.formatTag(tag));
     const nTags = tags.map( tag => this.formatTag(tag));
     const xTags = _.difference(oTags, nTags);

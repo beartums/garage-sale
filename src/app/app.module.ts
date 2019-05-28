@@ -31,6 +31,7 @@ import { ItemService } from './item.service';
 import { MatItemListComponent } from './mat-item-list/mat-item-list.component';
 import { MatItemEditComponent } from './mat-item-edit/mat-item-edit.component';
 import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component';
+import { MatItemComponent } from './mat-item/mat-item.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component
     NavbarComponent,
     MatItemListComponent,
     MatItemEditComponent,
-    MatItemTilesComponent
+    MatItemTilesComponent,
+    MatItemComponent
   ],
   imports: [
     BrowserModule,

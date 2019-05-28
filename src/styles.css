@@ -2,3 +2,21 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.icon-button {
+    padding: 8px;
+    margin: 2px;
+}
+
+.icon-button:hover {
+    background-color: grey;
+    border-radius: 30%;
+    color: white;
+    cursor: pointer;
+}
+
+
+.favorited {
+    color: gold;
+}

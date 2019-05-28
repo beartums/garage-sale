@@ -33,8 +33,8 @@ export class NavbarComponent {
   gotoInfo() {
     console.log('should be going to info page now')
   }
-  currentRoute(): string {
-    return this.router.url;
+  isCurrentRoute(route: string): boolean {
+    return route === this.router.url;
   }
 
   login() {

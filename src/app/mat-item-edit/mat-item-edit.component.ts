@@ -64,7 +64,7 @@ export class MatItemEditComponent {
     this.itemEditForm.controls['itemPrice'].setValue(item.price || '');
     this.itemEditForm.controls['itemCondition'].setValue(item.condition || '');
     this.itemEditForm.controls['itemDescription'].setValue(item.description || '');
-    this.itemEditForm.controls['itemDateAvailable'].setValue(item.dateAvailable || '');
+    this.itemEditForm.controls['itemDateAvailable'].setValue(item.dateAvailable || new Date().toISOString().split('T')[0]);
     this.itemTags = item.tags || [];
     this.itemEditForm.controls['itemPictureUrl'].setValue(item.pictureUrl || '');
     this.selected = item.pictureUrl || '';
@@ -81,7 +81,7 @@ export class MatItemEditComponent {
     item.price = this.itemEditForm.controls['itemPrice'].value || '';
     item.description = this.itemEditForm.controls['itemDescription'].value || '';
     item.condition = this.itemEditForm.controls['itemCondition'].value || '';
-    item.dateAvailable = this.itemEditForm.controls['itemDateAvailable'].value || '';
+    item.dateAvailable = this.itemEditForm.controls['itemDateAvailable'].value || new Date().toISOString();
     item.tags = this.itemTags || [];
     item.pictureUrl = this.itemEditForm.controls['itemPictureUrl'].value || '';
 
@@ -126,6 +126,10 @@ export class MatItemEditComponent {
     this.addTag(event.option.viewValue);
     this.chipInput.nativeElement.value = '';
     this.chipControl.setValue(null);
+  }
+
+  isPhotoUsed(url: string): boolean {
+    return this.ds.photoURLsUsed[url] === true;
   }
 
   removeTag(tag: string) {
