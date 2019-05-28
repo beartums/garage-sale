@@ -55,6 +55,7 @@
           <mat-chip color="primary" selected *ngFor="let tag of getChosenTags()" 
             [removable]="true" (click)="removeTag(tag)">
             {{tag}}
+            <mat-icon matChipRemove (click)="removeTag(tag)">cancel</mat-icon>
           </mat-chip>
         </mat-chip-list>
 
