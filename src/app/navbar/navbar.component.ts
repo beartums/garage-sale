@@ -4,6 +4,7 @@ import { AuthService } from '../auth.service';
 import { DataService } from '../data.service';
 import { TagService } from '../tag.service';
 import { FilterService } from '../filter.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-navbar',
@@ -59,6 +60,12 @@ export class NavbarComponent {
   }
   getChosenTags(): string[] {
     return this.filt.chosenTags;
+  }
+  getTagBadgeCount(tag: string = '', chosenTags: string[] = []): number {
+    chosenTags = chosenTags.length === 0 ? this.fs.chosenTags : chosenTags;
+    const allTags = _.concat(chosenTags, tag);
+    const count = this.ts.getItemsInTagsCount(allTags);
+    return count;
   }
 
 }

@@ -48,13 +48,23 @@ export class TagService {
   formatTag(tag: string): string {
     return tag.trim().toLowerCase();
   }
+
+  getItemsInTagsCount(tags: string[]): number {
+    let items: Item[] = [];
+    tags.forEach( (tag, idx) => {
+      // If this is the first tag, take all of them, otherwise the intersection of previous results with this one
+      items = idx === 0 ? this.tags[tag] : _.intersection(items, this.tags[tag]);
+    });
+    return items.length;
+  }
+
   getTagChanges(tags: string[], oldTags: string[]): 'remove' | 'add' | 'both' | null {
     const oTags = oldTags.map( tag => this.formatTag(tag));
     const nTags = tags.map( tag => this.formatTag(tag));
     const xTags = _.difference(oTags, nTags);
-    if (xTags.length == 0) return null; // no difference in tags
-    const isAdded = xTags.any( tag => oTags.indexOf(tag) == -1);
-    const isRemoved = xTags.any( tag => nTags.indexOf(tag) == -1);
+    if (xTags.length == 0) { return null; } // no difference in tags
+    const isAdded = xTags.some( tag => oTags.indexOf(tag) == -1);
+    const isRemoved = xTags.some( tag => nTags.indexOf(tag) == -1);
     if (isAdded && isRemoved) { return 'both'; };
     if (isAdded) { return 'add'; };
     if (isRemoved) { return 'remove'; };

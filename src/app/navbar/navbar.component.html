@@ -4,10 +4,13 @@
     <div class="filter-content">
       <h2>Categories</h2>
       <mat-chip-list #chipList>
-        <mat-chip *ngFor="let tag of getTags()" 
-          [removable]="false" (click)="selectTag(tag)">
-          {{tag}}
-        </mat-chip>
+        <ng-container *ngFor="let tag of getTags()" >
+          <mat-chip *ngIf="getTagBadgeCount(tag)>0" 
+            [removable]="false" (click)="selectTag(tag)" class="allow-overflow">
+            {{tag}}
+            <span class="chip-badge-internal">{{getTagBadgeCount(tag)}}</span>
+          </mat-chip>
+        </ng-container>
       </mat-chip-list>
     </div>
     </div>
@@ -49,7 +52,7 @@
     <div id="filter-container" *ngIf="getChosenTags().length>0">
       <br />
         <mat-chip-list #chipList>
-          <mat-chip color="primary" selected *ngFor="let tag of getChosenTags.chosenTags" 
+          <mat-chip color="primary" selected *ngFor="let tag of getChosenTags()" 
             [removable]="true" (click)="removeTag(tag)">
             {{tag}}
           </mat-chip>
