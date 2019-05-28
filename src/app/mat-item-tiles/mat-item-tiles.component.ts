@@ -9,6 +9,7 @@ import { faLinkedin, faFacebook,
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { Router } from '@angular/router';
 import { ItemService } from '../item.service';
+import { formatPercent } from '@angular/common';
 @Component({
   selector: 'app-mat-item-tiles',
   templateUrl: './mat-item-tiles.component.html',
@@ -87,5 +88,27 @@ export class MatItemTilesComponent {
     let now = new Date();
     if (now > da) { return "Now" }
     else { return da.getDate() + ' ' + months[da.getMonth()]  }
+  }
+
+  formatItemDetails(item: Item, headers: boolean): string {
+    let output = '';
+
+    if (item.price) {
+      output += output.length > 0 ? ' &nbsp; | &nbsp; ' : '';
+      output += headers ? 'price' : this.formatPrice(item.price);
+    }
+
+    if (item.condition) {
+      output += output.length > 0 ? ' &nbsp; | &nbsp; ' : '';
+      output += headers ? 'condition' : item.condition;
+    }
+
+    if (item.dateAvailable) {
+      output += output.length > 0 ? ' &nbsp; | &nbsp; ' : '';
+      output += headers ? 'available' : this.formatDateAvailable(item.dateAvailable);
+    }
+
+    return output;
+
   }
 }

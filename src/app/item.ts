@@ -7,7 +7,7 @@ export class Item {
     currency: "UGX" | "USD";
     usdExchangeRate: number;
     condition: string;
-    dateAvailable: Date;
+    dateAvailable: string;
     pictureUrl: string;
     tags: Array<string>;
     favoritedBy: Array<string>; // user ids of users who have favorited this item

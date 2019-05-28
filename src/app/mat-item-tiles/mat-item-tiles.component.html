@@ -69,15 +69,11 @@
                     <br />
                     <br />
                     <p class="item-details">
-                      <span class="item-details-header">
-                        <span *ngIf="item.price && item.price>''">price &nbsp; |</span>
-                        <span *ngIf="item.condition && item.condition>''"> &nbsp; condition &nbsp; |</span>
-                        <span *ngIf="item.dateAvailable && item.dateAvailable>''"> &nbsp; available &nbsp; |</span> 
+                      <span [innerHTML]="formatItemDetails(item, true)" class="item-details-header">
                       </span>
                       <br />
-                      <span *ngIf="item.price && item.price>''">{{formatPrice(item.price)}} &nbsp; |</span>
-                      <span *ngIf="item.condition && item.condition>''"> &nbsp; {{item.condition}} &nbsp; |</span>
-                      <span *ngIf="item.dateAvailable && item.dateAvailable>''"> &nbsp; {{formatDateAvailable(item.dateAvailable)}} &nbsp; |</span> 
+                      <span [innerHTML]="formatItemDetails(item)" class="item-details-header">
+                      </span>
                     </p>
                   </div>
                   
