@@ -4,7 +4,7 @@
     <div class="filter-content">
       <h2>Categories</h2>
       <mat-chip-list #chipList>
-        <mat-chip *ngFor="let tag of fs.getAvailableTags(fs.chosenTags)" 
+        <mat-chip *ngFor="let tag of getTags()" 
           [removable]="false" (click)="selectTag(tag)">
           {{tag}}
         </mat-chip>
@@ -26,12 +26,12 @@
           <div class="icon-container" fxLayout="row" fxLayoutAlign="end center">
             <i class="material-icons icon" (click)="gotoInfo()">info</i>
             <i class="material-icons icon" (click)="toggleFilter()">filter_list</i>
-            <i *ngIf="this.router.url=='/mat-item-tiles' && auth.isAdmin" 
+            <i *ngIf="currentRoute()=='/mat-item-tiles' && auth.isAdmin" 
                 class="material-icons icon" (click)="gotoSaleSettings()">
               settings
             </i>
           
-            <i class="icon material-icons" *ngIf="this.router.url!=='/mat-item-tiles'"
+            <i class="icon material-icons" *ngIf="currentRoute()!=='/mat-item-tiles'"
               (click)="gotoTileList()">
               view_module
             </i>
@@ -46,10 +46,10 @@
         </div>
 
     </mat-toolbar>
-    <div id="filter-container" *ngIf="fs.chosenTags.length>0">
+    <div id="filter-container" *ngIf="getChosenTags().length>0">
       <br />
         <mat-chip-list #chipList>
-          <mat-chip color="primary" selected *ngFor="let tag of fs.chosenTags" 
+          <mat-chip color="primary" selected *ngFor="let tag of getChosenTags.chosenTags" 
             [removable]="true" (click)="removeTag(tag)">
             {{tag}}
           </mat-chip>

@@ -14,11 +14,13 @@ export class NavbarComponent {
 
   showFilters = false;
   auth: AuthService;
+  filt: FilterService;
 
   constructor(private router: Router, 
     private as: AuthService, private ds: DataService, private ts: TagService,
     private fs: FilterService) {
       this.auth = as;
+      this.filt = fs;
   }
 
   gotoSaleSettings() {
@@ -26,6 +28,12 @@ export class NavbarComponent {
   }
   gotoTileList() {
     this.router.navigate(['/mat-item-tiles'])
+  }
+  gotoInfo() {
+    console.log('should be going to info page now')
+  }
+  currentRoute(): string {
+    return this.router.url;
   }
 
   login() {
@@ -45,6 +53,12 @@ export class NavbarComponent {
 
   toggleFilter() {
     this.showFilters = !this.showFilters;
+  }
+  getTags(): string[] {
+    return this.fs.getAvailableTags(this.fs.chosenTags)
+  }
+  getChosenTags(): string[] {
+    return this.filt.chosenTags;
   }
 
 }
