@@ -43,6 +43,11 @@
 .icon-container {
   height: 100%
 }
+
+.icon-button {
+  cursor: pointer;
+}
+
 .filterNav {
   position: absolute;
   top: 0;

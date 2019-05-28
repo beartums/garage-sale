@@ -1,6 +1,12 @@
 <div [gdColumns]="showFilters ? '200px auto' : 'auto'">
   <div class="filter-nav" *ngIf="showFilters">
-    <mat-toolbar color="primary"></mat-toolbar>
+    <mat-toolbar color="primary">
+      <span>Filters</span>
+      <span fxFlex="1 1 auto" class="fill-toolbar"></span>
+      <mat-icon class="material-icons icon-button" (click)="toggleFilter()" *ngIf="showFilters">
+        chevron_left
+      </mat-icon>
+    </mat-toolbar>
     <div class="filter-content">
       <h2>Categories</h2>
       <mat-chip-list #chipList>
@@ -24,11 +30,15 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button> -->
-        <div gdColumns="60% 40%" gdAlignColumns="center center">
-          <div>Griffith Garage Sale</div>
-          <div class="icon-container" fxLayout="row" fxLayoutAlign="end center">
+        
+          
+          <i fxFlex="24px" class="material-icons icon-button" (click)="toggleFilter()" *ngIf="!showFilters">
+            chevron_right
+          </i>
+          
+          <div fxFlex >Griffith Garage Sale</div>
+          <div fxFlex  fxLayout="row" fxLayoutAlign="end center">
             <i class="material-icons icon" (click)="gotoInfo()">info</i>
-            <i class="material-icons icon" (click)="toggleFilter()">filter_list</i>
             <i *ngIf="currentRoute()=='/mat-item-tiles' && auth.isAdmin" 
                 class="material-icons icon" (click)="gotoSaleSettings()">
               settings
@@ -46,7 +56,7 @@
               account_circle
             </i>
           </div>
-        </div>
+       
 
     </mat-toolbar>
     <div id="filter-container" *ngIf="getChosenTags().length>0">
