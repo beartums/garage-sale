@@ -1,0 +1,52 @@
+<mat-card class="dashboard-card" *ngIf="!isFiltered(item)">
+    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="isSold(item)" class="overlay">
+      <img class="sold" src="assets/sold.png">
+    </div>
+    <mat-card-header>
+      <mat-card-title>
+        {{item.name}}
+        <div class="card-tools">
+          <i class="material-icons-outlined icon-button" *ngIf="isAdmin()" (click)="editItem(item)">
+            edit
+          </i>
+          <span *ngIf="isLoggedIn()">
+            <i class="material-icons-outlined icon-button" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)">
+              favorite_border
+            </i>
+            <i class="material-icons favorited icon-button" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)">
+              favorite
+            </i>
+          </span>
+          <i class="material-icons-outlined icon-button">email</i>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="content-container">
+      <!-- flexbox horizontal with 2 columns -- picture and text (changes to 2 rows and 1
+            column when size is xs -->
+      <div class="content-grid" fxLayout.xs="column" fxLayout="row"
+        fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
+        fxLayoutGap="15px" >
+        <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''">
+            <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
+        </div>
+        <!-- second column of above flexbox, -->
+        <div fxFlex="60%" class="text-flexbox">
+          <!-- new Flexbox (vertical) for text information of item -->
+          <p class="item-description" [innerHTML]="item.description">
+              
+          </p>
+          <br />
+          <br />
+          <p class="item-details">
+            <span [innerHTML]="formatItemDetails(item, true)" class="item-details-header">
+            </span>
+            <br />
+            <span [innerHTML]="formatItemDetails(item)" class="item-details-header">
+            </span>
+          </p>
+        </div>
+        
+      </div>
+    </mat-card-content>
+  </mat-card>

@@ -3,85 +3,8 @@
       gdColumns.lt-md="1fr" gdColumns.lt-lg="1fr 1fr" gdColumns.gt-md="1fr 1fr 1fr" 
       gdGap="20px">
       <ng-container *ngFor="let item of items$ | async" >
-          <mat-card class="dashboard-card" *ngIf="!isFiltered(item)">
-              <div fxLayout="row" fxLayoutAlign="center center" *ngIf="isSold(item)" class="overlay">
-                <img class="sold" src="assets/sold.png">
-              </div>
-              <mat-card-header>
-                <mat-card-title>
-                  {{item.name}}
-                  <div class="card-tools">
-                    <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                      <mat-icon>share</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu" xPosition="before">
-                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" 
-                          class="twitter-share-button" data-show-count="false">
-                          <fa-icon class="twitter-color" [icon]="faTwitter" size="lg"></fa-icon>
-                        </a>
-                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                        <span class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" 
-                          data-width="20" data-layout="button" data-action="like" data-size="small" 
-                          data-show-faces="false" data-share="false">
-                          <fa-icon class="facebook-color" [icon]="faFacebook" size="lg"></fa-icon>
-                        </span>
-                         <div id="fb-root"></div>
-                          <script async defer crossorigin="anonymous" 
-                          src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3">
-                          </script>
-                      
-                      <fa-icon class="linkedin-color" [icon]="faLinkedin" size="lg"></fa-icon>
-                      <fa-icon class="pinterest-color" [icon]="faPinterest" size="lg"></fa-icon>
-                      <fa-icon class="instagram-color" [icon]="faInstagram" size="lg"></fa-icon>
-                      <fa-icon class="email-color" [icon]="faEnvelope" size="lg"></fa-icon>
-                    </mat-menu> -->
-                    <i class="material-icons-outlined icon-button" *ngIf="auth.isAdmin" (click)="editItem(item)">
-                      edit
-                    </i>
-                    <span *ngIf="auth.isLoggedIn">
-                      <i class="material-icons-outlined icon-button" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)">
-                        favorite_border
-                      </i>
-                      <i class="material-icons favorited icon-button" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)">
-                        favorite
-                      </i>
-                    </span>
-                    <i class="material-icons-outlined icon-button">email</i>
-                  </div>
-                </mat-card-title>
-              </mat-card-header>
-              <mat-card-content class="content-container">
-                <!-- flexbox horizontal with 2 columns -- picture and text (changes to 2 rows and 1
-                      column when size is xs -->
-                <div class="content-grid" fxLayout.xs="column" fxLayout="row"
-                  fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
-                  fxLayoutGap="15px" >
-                  <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''">
-                      <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
-                  </div>
-                  <!-- second column of above flexbox, -->
-                  <div fxFlex="60%" class="text-flexbox">
-                    <!-- new Flexbox (vertical) for text information of item -->
-                    <p class="item-description" [innerHTML]="item.description">
-                        
-                    </p>
-                    <br />
-                    <br />
-                    <p class="item-details">
-                      <span [innerHTML]="formatItemDetails(item, true)" class="item-details-header">
-                      </span>
-                      <br />
-                      <span [innerHTML]="formatItemDetails(item)" class="item-details-header">
-                      </span>
-                    </p>
-                  </div>
-                  
-                </div>
-              </mat-card-content>
-            </mat-card>
-              
+        <gs-item-card [item]="item"></gs-item-card>
       </ng-container>
-  
 
   </div>
 </div>
