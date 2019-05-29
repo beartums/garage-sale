@@ -1,5 +1,6 @@
 <mat-card class="dashboard-card" *ngIf="!isFiltered(item)">
-    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="isSold(item)" class="overlay">
+    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="isSold(item)" class="overlay"
+        matTooltip="So, this item is sold.  Sorry.  If you don't want to look at these, set your filter to exclude 'sold' items (in the filter sidebar, select the 'sold' category, then tap it to turn it red and exclude it)">
       <img class="sold" src="assets/sold.png">
     </div>
     <mat-card-header>
@@ -10,14 +11,16 @@
             edit
           </i>
           <span *ngIf="isLoggedIn()">
-            <i class="material-icons-outlined icon-button" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)">
+            <i class="material-icons-outlined icon-button" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)"
+            matTooltip="Tap to add to your favorites">
               favorite_border
             </i>
-            <i class="material-icons favorited icon-button" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)">
+            <i class="material-icons favorited icon-button" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)"
+              matTooltip="Tap to remove from your favorites">
               favorite
             </i>
           </span>
-          <i class="material-icons-outlined icon-button">email</i>
+          <i class="material-icons-outlined icon-button" matTooltip="Ask questions, make an offer, otherwise communicate with us">email</i>
         </div>
       </mat-card-title>
     </mat-card-header>
@@ -27,7 +30,8 @@
       <div class="content-grid" fxLayout.xs="column" fxLayout="row"
         fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
         fxLayoutGap="15px" >
-        <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''">
+        <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''" 
+              matTooltip="These photos are NOT (repeat, NOT) necessarily photos of the actual objects. Taking all those pictures is really hard.  So the internet provides">
             <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
         </div>
         <!-- second column of above flexbox, -->

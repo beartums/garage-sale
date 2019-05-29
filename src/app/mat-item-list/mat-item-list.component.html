@@ -4,7 +4,7 @@
     <!-- photo Column -->
     <ng-container matColumnDef="pictureUrl">
         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-        <td mat-cell *matCellDef="let item">
+        <td mat-cell *matCellDef="let item" matTooltip="Don't trust these photos!">
           <span class="table-img"><img class="table-img" object-fit="contain" [src]="'assets/items/' + item.pictureUrl"></span>
         </td>
       </ng-container>

@@ -1,9 +1,10 @@
 <div class="grid-container">
+  <!-- xs: 1 column portrait, sm: 1 column landscape, md: 2 col land, lg: 3 col land, xl: 4 col land -->
   <div gdAuto="row" class="cards-container"
-      gdColumns.lt-md="1fr" gdColumns.lt-lg="1fr 1fr" gdColumns.gt-md="1fr 1fr 1fr" 
+      gdColumns.lt-md="1fr" gdColumns.md="1fr 1fr" gdColumns.lg="1fr 1fr 1fr" gdColumns.xl="1fr 1fr 1fr 1fr"
       gdGap="20px">
       <ng-container *ngFor="let item of items$ | async" >
-        <gs-item-card [item]="item"></gs-item-card>
+        <gs-item-card *ngIf="!isFiltered(item)" [item]="item"></gs-item-card>
       </ng-container>
 
   </div>

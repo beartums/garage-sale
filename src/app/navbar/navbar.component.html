@@ -3,13 +3,15 @@
     <mat-toolbar color="primary">
       <span>Filters</span>
       <span fxFlex="1 1 auto" class="fill-toolbar"></span>
-      <mat-icon class="material-icons icon-button" (click)="toggleFilter()" *ngIf="showFilters">
-        chevron_left
-      </mat-icon>
+      <span fxFlex="40px" matTooltip="Tap to close Filter Sidebar">
+        <i class="material-icons icon-button" (click)="toggleFilter()" *ngIf="showFilters">
+          chevron_left
+        </i>
+      </span>
     </mat-toolbar>
     <div class="filter-content">
       <h2>Categories</h2>
-      <mat-chip-list #chipList>
+      <mat-chip-list #chipList matTooltip="Tap category to add it to a filter">
         <ng-container *ngFor="let tag of getTags()" >
           <mat-chip *ngIf="getTagBadgeCount(tag)>0" 
             [removable]="false" (click)="selectTag(tag)" class="allow-overflow">
@@ -32,26 +34,26 @@
       </button> -->
         
           
-          <i fxFlex="24px" class="material-icons icon-button" (click)="toggleFilter()" *ngIf="!showFilters && isCurrentRoute('/mat-item-tiles')">
+          <i fxFlex="40px" class="material-icons icon-button" (click)="toggleFilter()" *ngIf="!showFilters && isCurrentRoute('/mat-item-tiles')">
             chevron_right
           </i>
           
           <div fxFlex >Griffith Garage Sale</div>
           <div fxFlex  fxLayout="row" fxLayoutAlign="end center">
-            <i class="material-icons icon-button" (click)="gotoInfo()">info</i>
-            <i *ngIf="isCurrentRoute('/mat-item-tiles') && auth.isAdmin" 
+            <i class="material-icons icon-button" (click)="gotoInfo()" matTooltip="Go to info/help page">info</i>
+            <i *ngIf="isCurrentRoute('/mat-item-tiles') && auth.isAdmin" matToolTip="View as list"
                 class="material-icons icon-button" (click)="gotoSaleSettings()">
               view_list
             </i>
           
-            <i class="icon-button material-icons" *ngIf="!isCurrentRoute('/mat-item-tiles')"
+            <i class="icon-button material-icons" *ngIf="!isCurrentRoute('/mat-item-tiles')" matTooltip="View as cards"
               (click)="gotoTileList()">
               view_module
             </i>
-            <span class="icon" *ngIf="auth.isLoggedIn">
+            <span class="icon" *ngIf="auth.isLoggedIn" matTooltip="Logout">
               <img [src]="auth.userData.photoURL" (click)="logout()" >
             </span>
-            <i class="icon-button material-icons disabled" *ngIf="!auth.isLoggedIn"  
+            <i class="icon-button material-icons disabled" *ngIf="!auth.isLoggedIn" matTooltip="Log in using Google (to favorite items and save settings)" 
               (click)="login()">
               account_circle
             </i>
@@ -61,7 +63,7 @@
     </mat-toolbar>
     <div id="filter-container" *ngIf="getChosenTags().length>0 && isCurrentRoute('/mat-item-tiles')">
       <br />
-        <mat-chip-list #chipList>
+        <mat-chip-list #chipList matTooltip="Tap the 'X' to remove the category; tap the category to negate it (red means do NOT include this category)">
           <mat-chip [color]="isTagNegative(tag) ? 'accent' : 'primary'" selected *ngFor="let tag of getChosenTags()" 
             [removable]="true" (click)="toggleTagPolarity(tag)">
             {{tag}}

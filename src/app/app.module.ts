@@ -21,7 +21,8 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
   MatIconModule, MatListModule, MatTableModule, MatPaginatorModule, 
   MatSortModule, MatInputModule, MatSelectModule, MatRadioModule, 
   MatCardModule, MatChipsModule, MatGridListModule, MatMenuModule, MatAutocompleteModule,
-  MatBadgeModule } from '@angular/material';
+  MatBadgeModule, 
+  MatTooltipModule} from '@angular/material';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -72,6 +73,7 @@ import { MatItemComponent } from './mat-item/mat-item.component';
     ReactiveFormsModule,
     MatGridListModule,
     MatMenuModule,
+    MatTooltipModule,
     MatAutocompleteModule,
   ],
   providers: [AuthService, DataService, ItemService],
