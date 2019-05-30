@@ -5,8 +5,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 .icon-button {
-    padding: 8px;
-    margin: 2px;
+    padding: 5px;
+    margin: 4px;
 }
 
 .icon-button:hover {
@@ -15,7 +15,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: white;
     cursor: pointer;
 }
-
 
 .favorited {
     color: gold;

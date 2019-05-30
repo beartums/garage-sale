@@ -1,7 +1,7 @@
 
 .dashboard-card {
     height: 100%;
-    min-width: 400px;
+    min-width: 350px;
   }
   
   .mat-card-header-text {
@@ -149,5 +149,21 @@
     font-size: smaller;
     font-variant: small-caps;
   }
+
   
+.mat-badge-content {
+  left: 18px;
+  top: 16px!important;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+  line-height: 16px;
+  opacity: .9;
+}
+.icon-button-badge-below > .mat-badge-content {
+  top: 16px!important;
+}
+.icon-button-badge-above > .mat-badge-content {
+  top: -3px!important;
+}  
   

@@ -64,7 +64,7 @@
     <div id="filter-container" *ngIf="getChosenTags().length>0 && isCurrentRoute('/mat-item-tiles')">
       <br />
         <mat-chip-list #chipList matTooltip="Tap the 'X' to remove the category; tap the category to negate it (red means do NOT include this category)">
-          <mat-chip [color]="isTagNegative(tag) ? 'accent' : 'primary'" selected *ngFor="let tag of getChosenTags()" 
+          <mat-chip [color]="isTagNegative(tag) ? 'warn' : 'primary'" selected *ngFor="let tag of getChosenTags()" 
             [removable]="true" (click)="toggleTagPolarity(tag)">
             {{tag}}
             <mat-icon matChipRemove (click)="removeTag(tag)">cancel</mat-icon>

@@ -11,16 +11,20 @@
             <i class="material-icons-outlined icon-button" *ngIf="isAdmin()" (click)="editItem(item)">
               edit
             </i>
-            <i class="material-icons-outlined icon-button" (click)="toggleComments()">
+            <!-- Did not like the traditional positioning of matBadge, so did my own with icon-button-badge-below/above (always on right) -->
+            <!-- [matBadge]="item.commentCount" matBadgeSize="medium" [matBadgeHidden]="!item.commentCount"> -->
+            <i class="material-icons-outlined icon-button icon-button-badge-above" (click)="toggleComments(item)">
               chat
             </i>
             <span *ngIf="isLoggedIn()">
-              <i class="material-icons-outlined icon-button" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)"
-              matTooltip="Tap to add to your favorites">
+              <i class="material-icons-outlined icon-button icon-button-badge-above" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)"
+              matTooltip="Tap to add to your favorites"
+              [matBadge]="countFaves(item)" matBadgeSize="medium" [matBadgeHidden]="!countFaves(item)">
                 favorite_border
               </i>
-              <i class="material-icons favorited icon-button" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)"
-                matTooltip="Tap to remove from your favorites">
+              <i class="material-icons favorited icon-button icon-button-badge-above" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)"
+                matTooltip="Tap to remove from your favorites"
+                [matBadge]="countFaves(item)" matBadgeSize="medium" [matBadgeHidden]="!countFaves(item)">
                 favorite
               </i>
             </span>
@@ -29,7 +33,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content class="content-container">
-      <ng-container *ngIf="!showComments">  
+      <!-- <ng-container *ngIf="!isShowingComments(item)">   -->
         <!-- flexbox horizontal with 2 columns -- picture and text (changes to 2 rows and 1
               column when size is xs -->
         <div class="content-grid" fxLayout.xs="column" fxLayout="row"
@@ -57,10 +61,10 @@
           </div>
           
         </div>
-      </ng-container>
-      <ng-container *ngIf="showComments">
+      <!-- </ng-container>
+      <ng-container *ngIf="isShowingComments(item)">
         <gs-item-comments [item]="item"></gs-item-comments>
-      </ng-container>
+      </ng-container> -->
   </mat-card-content>
 
 </mat-card>

@@ -14,13 +14,11 @@ import { Comment } from './comment';
 })
 export class DataService {
 
-  // itemsRef: AngularFireList<any>;
-  // itemRef: AngularFireObject<Item>;
-  // userRef: AngularFireObject<FirebaseAuth>;
-
   // magical object.  if assigned, then an item is being edited.  If null, then not;
   // used for communicating to the item-edit page
   itemBeingEdited: Item;
+  
+  // Object keeping track of used images for the item-editing page just to simplify data entry.
   photoURLsUsed = {};
   
   readonly ITEM_ROOT: string = 'Items';
@@ -34,8 +32,9 @@ export class DataService {
 
   addComment(comment: Comment, item: Item, user?: User) {
     this.db.list(this.COMMENT_ROOT).push(comment);
-    const updateObj = { commentCount: (item.commentCount || 0) + 1 }
-    this.updateItem(item.key, <Item>updateObj, item)
+    // comment count disabled for now.  definitely causing too many problems with page refreshes
+    //const updateObj = { commentCount: (item.commentCount || 0) + 1 }
+    //this.updateItem(item.key, <Item>updateObj, item)
   }
 
   addItem(item: Item) {

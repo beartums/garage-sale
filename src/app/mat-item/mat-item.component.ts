@@ -6,6 +6,9 @@ import { ItemService } from '../item.service';
 import { AuthService } from '../auth.service';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
+import { ItemCommentsComponent } from '../item-comments/item-comments.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 
 @Component({
   selector: 'gs-item-card',
@@ -19,9 +22,14 @@ export class MatItemComponent implements OnInit {
 
   constructor(private ts: TagService, private fs: FilterService,
             private as: AuthService, private is: ItemService,
-            private ds: DataService, private router: Router) { }
+            private ds: DataService, private router: Router,
+            public dialog: MatDialog) { }
 
   ngOnInit() {
+  }
+
+  countFaves(item: Item) {
+    return this.is.getFavoriteCount(item);
   }
 
   isAdmin(): boolean {
@@ -44,9 +52,18 @@ export class MatItemComponent implements OnInit {
     this.is.toggleFavorite(item, this.as.userId);
   }
 
-  toggleComments() {
-    this.showComments = !this.showComments;
+  toggleComments(item: Item) {
+    let dialogRef: MatDialogRef<ItemCommentsComponent> = this.dialog.open(ItemCommentsComponent, {
+      height: '90%',
+      width: '90%',
+      data: { item: item },
+    })
   }
+
+  isShowingComments(item: Item): boolean {
+    return this.is.isShowingComments(item);
+  }
+
   isFavorited(item: Item): boolean {
     return this.is.isFavoritedBy(item, this.as.userId);
   }

@@ -22,7 +22,9 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
   MatSortModule, MatInputModule, MatSelectModule, MatRadioModule, 
   MatCardModule, MatChipsModule, MatGridListModule, MatMenuModule, MatAutocompleteModule,
   MatBadgeModule, 
-  MatTooltipModule} from '@angular/material';
+  MatTooltipModule,
+  MatDialog,
+  MatDialogModule} from '@angular/material';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -47,6 +49,7 @@ import { ItemCommentsComponent } from './item-comments/item-comments.component';
     DisplayItemComponent,
     ItemCommentsComponent
   ],
+  entryComponents: [ ItemCommentsComponent ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -79,6 +82,7 @@ import { ItemCommentsComponent } from './item-comments/item-comments.component';
     MatMenuModule,
     MatTooltipModule,
     MatAutocompleteModule,
+    MatDialogModule,
   ],
   providers: [AuthService, DataService, ItemService],
   bootstrap: [AppComponent]
