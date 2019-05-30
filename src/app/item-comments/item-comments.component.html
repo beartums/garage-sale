@@ -1,0 +1,21 @@
+<div mat-dialog-title>
+  {{item.name}}
+</div>
+<mat-dialog-content>
+  <div fxLayout="column" class="comment-list-container" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    <div fxFlex class="comment-container" *ngFor="let comment of comments$ | async">
+      <div class="comment">{{comment.comment}}</div>
+      <div class="comment-details">{{getCommentName(comment)}} | {{getCommentTime(comment)}}</div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="input-container">
+    <mat-form-field class="full-width">
+      <input matInput placeholder="comment" class="form-control" name="comment" 
+          [(ngModel)]="newComment" (keydown.enter)="addComment(newComment)">
+      <mat-icon class="icon-button" matSuffix (click)="addComment(newComment)">keyboard_return</mat-icon>
+    </mat-form-field>
+  </div>
+
+</mat-dialog-actions>

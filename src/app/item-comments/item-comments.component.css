@@ -1,0 +1,28 @@
+.comment-list-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow-y: scroll;
+}
+.comment-container {
+    background-color: rgb(247, 226, 220);
+    border-radius: 5px;
+    border: 1px lightslategray solid;
+    margin: 5px;
+    padding: 8px;
+}
+.comment {
+
+}
+.comment-details {
+    font-size: xx-small;
+    font-weight: bold;
+}
+.input-container {
+    position: relative;
+    width: 100%;
+
+}
+.full-width {
+    width: 100%;
+}
