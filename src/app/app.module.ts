@@ -33,6 +33,8 @@ import { MatItemListComponent } from './mat-item-list/mat-item-list.component';
 import { MatItemEditComponent } from './mat-item-edit/mat-item-edit.component';
 import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component';
 import { MatItemComponent } from './mat-item/mat-item.component';
+import { DisplayItemComponent } from './display-item/display-item.component';
+import { ItemCommentsComponent } from './item-comments/item-comments.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { MatItemComponent } from './mat-item/mat-item.component';
     MatItemListComponent,
     MatItemEditComponent,
     MatItemTilesComponent,
-    MatItemComponent
+    MatItemComponent,
+    DisplayItemComponent,
+    ItemCommentsComponent
   ],
   imports: [
     BrowserModule,

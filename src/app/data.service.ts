@@ -7,7 +7,7 @@ import { TagService } from './tag.service';
 import { Observable, Subscribable } from 'rxjs';
 import { FirebaseAuth } from '@angular/fire';
 import { User } from './user';
-
+import { Comment } from './comment';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +26,16 @@ export class DataService {
   readonly ITEM_ROOT: string = 'Items';
   readonly TAG_ROOT: string = 'Tags';
   readonly USER_ROOT: string = 'Users';
+  readonly COMMENT_ROOT: string = 'Comments';
 
   constructor(private db: AngularFireDatabase, private ts: TagService) { 
     //this.itemsRef = this.getItemsRef();
+  }
+
+  addComment(comment: Comment, item: Item, user?: User) {
+    this.db.list(this.COMMENT_ROOT).push(comment);
+    const updateObj = { commentCount: (item.commentCount || 0) + 1 }
+    this.updateItem(item.key, <Item>updateObj, item)
   }
 
   addItem(item: Item) {
@@ -38,6 +45,27 @@ export class DataService {
 
   deleteItem(id: string) {
     this.getItemRef(id).remove();
+  }
+
+  getCommentsRef(): AngularFireList<Comment[]> {
+    return this.db.list(this.COMMENT_ROOT);
+  }
+
+  getItemComments$(id: string): Observable<Comment[]> {
+    const comments$: Observable<Comment[]> = this.getItemCommentsRef(id).snapshotChanges().pipe(
+      map( changes => {
+        return <Comment[]>changes.map(
+          c => ( <unknown>{ key: c.payload.key, ...c.payload.val() } )
+        )
+
+      })
+    )
+    return comments$;
+  }
+
+
+  getItemCommentsRef(itemId: string): AngularFireList<Comment[]> {
+    return this.db.list(this.COMMENT_ROOT, ref => ref.orderByChild('itemId').equalTo(itemId));
   }
 
   getItemRef(id: string): AngularFireObject<Item> {
@@ -65,7 +93,7 @@ export class DataService {
     return items$;
   }
 
-  getItemsRef() {
+  getItemsRef(): AngularFireList<Item> {
     return this.db.list(this.ITEM_ROOT);
   }
 

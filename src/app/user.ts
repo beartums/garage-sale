@@ -7,6 +7,21 @@ export class User {
     photoURL: string;
     lastLogin: string;
     favorites: string[]; // favorited item ids
+    settings: {
+        username: string;
+        newItemEmailTags: string[] | null;
+        emailOnFavoritedNewComment: boolean;
+        emailOnCommentThreadNewComment: boolean;
+        
+        filters: {
+            tagFilters: {
+                included: string[];
+                excluded: string[];
+            };
+            showSold: boolean;
+            showFeatured: boolean;
+        }
+    }
 
     constructor(user?: any) {
         this.uid = user ? user.uid : null;

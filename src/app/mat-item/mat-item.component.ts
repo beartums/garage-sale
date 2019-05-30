@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class MatItemComponent implements OnInit {
 
   @Input() item: Item = new Item();
+  showComments = false;
 
   constructor(private ts: TagService, private fs: FilterService,
             private as: AuthService, private is: ItemService,
@@ -41,6 +42,10 @@ export class MatItemComponent implements OnInit {
 
   toggleFavorite(item: Item) {
     this.is.toggleFavorite(item, this.as.userId);
+  }
+
+  toggleComments() {
+    this.showComments = !this.showComments;
   }
   isFavorited(item: Item): boolean {
     return this.is.isFavoritedBy(item, this.as.userId);

@@ -1,4 +1,5 @@
 <mat-card class="dashboard-card" *ngIf="!isFiltered(item)">
+
     <div fxLayout="row" fxLayoutAlign="center center" *ngIf="isSold(item)" class="overlay"
         matTooltip="So, this item is sold.  Sorry.  If you don't want to look at these, set your filter to exclude 'sold' items (in the filter sidebar, select the 'sold' category, then tap it to turn it red and exclude it)">
       <img class="sold" src="assets/sold.png">
@@ -7,50 +8,59 @@
       <mat-card-title>
         {{item.name}}
         <div class="card-tools">
-          <i class="material-icons-outlined icon-button" *ngIf="isAdmin()" (click)="editItem(item)">
-            edit
-          </i>
-          <span *ngIf="isLoggedIn()">
-            <i class="material-icons-outlined icon-button" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)"
-            matTooltip="Tap to add to your favorites">
-              favorite_border
+            <i class="material-icons-outlined icon-button" *ngIf="isAdmin()" (click)="editItem(item)">
+              edit
             </i>
-            <i class="material-icons favorited icon-button" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)"
-              matTooltip="Tap to remove from your favorites">
-              favorite
+            <i class="material-icons-outlined icon-button" (click)="toggleComments()">
+              chat
             </i>
-          </span>
+            <span *ngIf="isLoggedIn()">
+              <i class="material-icons-outlined icon-button" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)"
+              matTooltip="Tap to add to your favorites">
+                favorite_border
+              </i>
+              <i class="material-icons favorited icon-button" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)"
+                matTooltip="Tap to remove from your favorites">
+                favorite
+              </i>
+            </span>
           <i class="material-icons-outlined icon-button" matTooltip="Ask questions, make an offer, otherwise communicate with us">email</i>
         </div>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content class="content-container">
-      <!-- flexbox horizontal with 2 columns -- picture and text (changes to 2 rows and 1
-            column when size is xs -->
-      <div class="content-grid" fxLayout.xs="column" fxLayout="row"
-        fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
-        fxLayoutGap="15px" >
-        <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''" 
-              matTooltip="These photos are NOT (repeat, NOT) necessarily photos of the actual objects. Taking all those pictures is really hard.  So the internet provides">
-            <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
-        </div>
-        <!-- second column of above flexbox, -->
-        <div fxFlex="60%" class="text-flexbox">
-          <!-- new Flexbox (vertical) for text information of item -->
-          <p class="item-description" [innerHTML]="item.description">
-              
-          </p>
-          <br />
-          <br />
-          <p class="item-details">
-            <span [innerHTML]="formatItemDetails(item, true)" class="item-details-header">
-            </span>
+      <ng-container *ngIf="!showComments">  
+        <!-- flexbox horizontal with 2 columns -- picture and text (changes to 2 rows and 1
+              column when size is xs -->
+        <div class="content-grid" fxLayout.xs="column" fxLayout="row"
+          fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
+          fxLayoutGap="15px" >
+          <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''" 
+                matTooltip="These photos are NOT (repeat, NOT) necessarily photos of the actual objects. Taking all those pictures is really hard.  So the internet provides">
+              <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
+          </div>
+          <!-- second column of above flexbox, -->
+          <div fxFlex="60%" class="text-flexbox">
+            <!-- new Flexbox (vertical) for text information of item -->
+            <p class="item-description" [innerHTML]="item.description">
+                
+            </p>
             <br />
-            <span [innerHTML]="formatItemDetails(item)" class="item-details-header">
-            </span>
-          </p>
+            <br />
+            <p class="item-details">
+              <span [innerHTML]="formatItemDetails(item, true)" class="item-details-header">
+              </span>
+              <br />
+              <span [innerHTML]="formatItemDetails(item)" class="item-details-header">
+              </span>
+            </p>
+          </div>
+          
         </div>
-        
-      </div>
-    </mat-card-content>
-  </mat-card>
+      </ng-container>
+      <ng-container *ngIf="showComments">
+        <gs-item-comments [item]="item"></gs-item-comments>
+      </ng-container>
+  </mat-card-content>
+
+</mat-card>
