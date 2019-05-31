@@ -37,6 +37,7 @@ import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component
 import { MatItemComponent } from './mat-item/mat-item.component';
 import { DisplayItemComponent } from './display-item/display-item.component';
 import { ItemCommentsComponent } from './item-comments/item-comments.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ItemCommentsComponent } from './item-comments/item-comments.component';
     MatItemTilesComponent,
     MatItemComponent,
     DisplayItemComponent,
-    ItemCommentsComponent
+    ItemCommentsComponent,
+    SettingsComponent
   ],
   entryComponents: [ ItemCommentsComponent ],
   imports: [
@@ -55,7 +57,7 @@ import { ItemCommentsComponent } from './item-comments/item-comments.component';
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig,'garage-sale-78809'),
+    AngularFireModule.initializeApp(environment.firebaseConfig, 'garage-sale-78809'),
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
