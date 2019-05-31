@@ -96,11 +96,22 @@ export class DataService {
     return this.db.list(this.ITEM_ROOT);
   }
 
+  getUser$(id: string): Observable<User> {
+    return this.getUserRef(id).valueChanges()
+  }
+  getUserRef(id: string): AngularFireObject<User> {
+    return this.db.object(this.USER_ROOT + '/' + id);
+  }
+
   updateItem(id: string, item: Item, oldItem?: Item) {
     this.getItemRef(id).update(item);
     const tagChanges = this.ts.getTagChanges(item.tags, oldItem.tags);
     if (tagChanges === 'both' || tagChanges === 'remove') {this.ts.removeItemTags(oldItem)};
     if (tagChanges === 'both' || tagChanges === 'add') {this.ts.addItemTags(item)};
+  }
+
+  updateUser(id: string, user: any) {
+    this.getUserRef(id).update(user);
   }
 
   setUserData(user: User) {

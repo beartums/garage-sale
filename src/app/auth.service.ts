@@ -12,7 +12,6 @@ import { DataService } from './data.service';
 
 @Injectable()
 export class AuthService {
-  public user: Observable<firebase.User|any>;
 
   _offlineUser = {
     displayName: 'offline player',
@@ -22,47 +21,63 @@ export class AuthService {
     photoURL: 'no/photo/here.jpg'
   }
 
-  userData: User;
+  public authUser: Observable<firebase.User|any>;
+  user: User;
+  user$: Observable<User>;
   private _isLoggedIn = false;
   private _isAdmin = false;
   private _isLoggedIn$: Observable<boolean>;
   private _isAdmin$: Observable<boolean>;
   private subscription: Subscription;
+  private userSubscription: Subscription;
 
   get isLoggedIn(): boolean {  return this._isLoggedIn; }
   get isAdmin(): boolean {  return this._isAdmin; }
   get isLoggedIn$(): Observable<boolean> {  return this._isLoggedIn$; }
   get isAdmin$(): Observable<boolean> {  return this._isAdmin$; }
-  get userEmail(): string { return this.userData.email; }
-  get userDisplayName(): string { return this.userData.displayName; }
-  get userId(): string { return this.userData.uid; }
+  get userEmail(): string { return this.user.email; }
+  get userDisplayName(): string { return this.user.displayName; }
+  get userId(): string { return this.user.uid; }
 
   constructor(private firebaseAuth: AngularFireAuth, router: Router, private ds: DataService) {
 
     // Wanted to do some offline programming at the hairy lemon, so tried to override the user info
     // here.  Never got this working properly (partly because there was a lot to do at the hairy lemon)
     // this.user = !environment.offline ? firebaseAuth.authState : of(this._offlineUser);
-    this.user = firebaseAuth.authState;
+    this.authUser = firebaseAuth.authState;
 
     // Set private observables -- used mostly by AuthGuards
-    this._isAdmin$ = this.user.pipe (map(user => this.isUserAdmin(user)));
-    this._isLoggedIn$ = this.user.pipe (map(user => user ? true : false));
+    this._isAdmin$ = this.authUser.pipe (map(authUser => this.isUserAdmin(authUser)));
+    this._isLoggedIn$ = this.authUser.pipe (map(authUser => authUser ? true : false));
 
     // Subscribe to the user observable to handle login state changes and set private
     // non-observable state properties
-    this.subscription = this.user.subscribe(user => {
-      this.userData = new User(user);
+    this.subscription = this.authUser.subscribe(authUser => {
+      this.user = new User(authUser);
   
-      if (user) {
+      if (authUser) {
         // Set loggedin and GM status
         this._isLoggedIn = true;
-        this._isAdmin = this.isUserAdmin(user);
-        this.ds.setUserData(this.userData)
+        this._isAdmin = this.isUserAdmin(authUser);
+        this.user$ = this.ds.getUser$(this.user.uid);
+        this.userSubscription = this.user$.subscribe( dbUser => {
+          if (dbUser) {
+            this.user = Object.assign(new User(), dbUser);
+            // Object.setPrototypeOf(this.user, new User());
+            const isChanged = this.user.updateAuthUserData(authUser);
+            if (isChanged) {
+              this.ds.updateUser(this.user.uid, this.user);
+            }
+          } else {
+            this.user = new User(authUser)
+            this.ds.setUserData(this.user);
+          }
+        })
       } else {
         // Set logged out and GM status.  Also clear out the userdata
         this._isLoggedIn = false;
         this._isAdmin = false;
-        this.userData = new User();
+        this.user = new User();
       }
     });
   }

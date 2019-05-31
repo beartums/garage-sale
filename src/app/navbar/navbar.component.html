@@ -40,6 +40,7 @@
           
           <div fxFlex >Griffith Garage Sale</div>
           <div fxFlex  fxLayout="row" fxLayoutAlign="end center">
+            <i class="material-icons icon-button" *ngIf="auth.isLoggedIn" (click)="gotoSettings()" matTooltip="Go to your settings">settings</i>
             <i class="material-icons icon-button" (click)="gotoInfo()" matTooltip="Go to info/help page">info</i>
             <i *ngIf="isCurrentRoute('/mat-item-tiles') && auth.isAdmin" matToolTip="View as list"
                 class="material-icons icon-button" (click)="gotoSaleSettings()">
@@ -51,7 +52,7 @@
               view_module
             </i>
             <span class="icon" *ngIf="auth.isLoggedIn" matTooltip="Logout">
-              <img [src]="auth.userData.photoURL" (click)="logout()" >
+              <img [src]="auth.user.photoURL" (click)="logout()" >
             </span>
             <i class="icon-button material-icons disabled" *ngIf="!auth.isLoggedIn" matTooltip="Log in using Google (to favorite items and save settings)" 
               (click)="login()">

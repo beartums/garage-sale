@@ -49,9 +49,13 @@ export class ItemCommentsComponent implements OnInit {
 
   addComment(comment: string) {
     if ( !comment || comment.trim() === '' ) return;
-    const commentObj = new Comment(comment, this.item.key, this.as.userData.uid, this.as.userData.displayName);
+    const commentObj = new Comment(comment, this.item.key, this.as.user.uid, this.as.user.username);
     this.ds.addComment(commentObj, this.item);
     this.newComment = '';
+  }
+
+  cancel() {
+    this.dialogRef.close();
   }
 
   getCommentName(comment: Comment): string {

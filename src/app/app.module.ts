@@ -24,7 +24,8 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
   MatBadgeModule, 
   MatTooltipModule,
   MatDialog,
-  MatDialogModule} from '@angular/material';
+  MatDialogModule,
+  MatSlideToggleModule} from '@angular/material';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -51,7 +52,7 @@ import { SettingsComponent } from './settings/settings.component';
     ItemCommentsComponent,
     SettingsComponent
   ],
-  entryComponents: [ ItemCommentsComponent ],
+  entryComponents: [ ItemCommentsComponent, SettingsComponent ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -85,6 +86,8 @@ import { SettingsComponent } from './settings/settings.component';
     MatTooltipModule,
     MatAutocompleteModule,
     MatDialogModule,
+    MatSlideToggleModule,
+    MatButtonModule,
   ],
   providers: [AuthService, DataService, ItemService],
   bootstrap: [AppComponent]

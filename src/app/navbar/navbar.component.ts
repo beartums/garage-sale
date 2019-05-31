@@ -5,6 +5,8 @@ import { DataService } from '../data.service';
 import { TagService } from '../tag.service';
 import { FilterService } from '../filter.service';
 import * as _ from 'lodash';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
   selector: 'app-navbar',
@@ -19,13 +21,21 @@ export class NavbarComponent {
 
   constructor(private router: Router, 
     private as: AuthService, private ds: DataService, private ts: TagService,
-    private fs: FilterService) {
+    private fs: FilterService,
+    private dialog: MatDialog) {
       this.auth = as;
       this.filt = fs;
   }
 
   gotoSaleSettings() {
     this.router.navigate(['/mat-item-list'])
+  }
+  gotoSettings() {
+    let dialog = this.dialog.open(SettingsComponent, {
+      height: '80%',
+      width: '80%',
+      data: { user: this.as.user }
+    })
   }
   gotoTileList() {
     this.router.navigate(['/mat-item-tiles'])

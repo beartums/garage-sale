@@ -1,11 +1,88 @@
-<div mat-dialog-title>
-  Profile Settings for {{user.displayName}}
-</div>>
+<div class="full-height">
+  <div mat-dialog-title>
+    <table width="100%">
+        <tr width="100%">
+          <td>{{user.displayName}}</td>
+          <td class="cancel-icon"><button mat-icon-button tabindex="-1" (click)="cancel()">
+            <mat-icon class="cancel-icon">cancel</mat-icon>
+          </button></td>
+        </tr>
+      </table>
+</div>
 
-<mat-dialog-content>
+<div class="settings-container">
+  <table class="settings-table">
+      <tr class="setting-section-row">
+        <td colspan="2" class="settings-section">General Settings</td>
+      </tr>
+      <tr>
+        <td class="setting-label">User Name (for posting comments)</td>
+        <td class="setting-value">
+          <mat-form-field>
+            <input matInput [(ngModel)]="user.settings.username">
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr class="setting-section-row">
+        <td class="settings-section">
+          Emails
+        </td>
+        <td class="text-right settings-section">
+          <mat-slide-toggle [(ngModel)]="user.settings.allowEmails"></mat-slide-toggle>
+        </td>
+      </tr>
+      <tr *ngIf="user.settings.allowEmails">
+        <td class="setting-label">...for new activity on my favorites</td>
+        <td class="setting-value">
+          <mat-slide-toggle [(ngModel)]="user.settings.emailOnFavoritedActivity"></mat-slide-toggle>
+        </td>
+      </tr>
+      <tr *ngIf="user.settings.allowEmails">
+        <td class="setting-label">...for new comments if I commented</td>
+        <td class="setting-value">
+          <mat-slide-toggle [(ngModel)]="user.settings.emailOnCommentThreadNewComment"></mat-slide-toggle>
+        </td>
+      </tr>
+    <tr *ngIf="user.settings.allowEmails">
+      <td class="setting-label">...as often as</td>
+      <td class="setting-value">
+          <mat-select [(ngModel)]="user.settings.emailFrequency" >
+              <mat-option value="always">every change</mat-option>
+              <mat-option value="daily">a daily summary</mat-option>
+              <mat-option value="weekly">a weekly summary</mat-option>
+              <mat-option value="never">nope nope nope nope</mat-option>
+            </mat-select>
+        </td>
+    </tr>
+  </table>
+  <!-- <div fxLayout="column">
+    <div class="row" fxFlex fxLayout="row">
+      <div class="col" fxFlex="100%" class="setting-section">Please send me emails...</div>
+    </div>
+    <div class="row" fxFlex fxLayout="column" fxLayoutGap="30px">
+      <div fxFlex="50%" fxFlexAlign="end center" class="setting-label">...new activity on favorited item</div>
+      <div fxFlex="50%" fxFlexAlign="start center" class="setting-value">
+        <mat-slide-toggle label="Receive emails" [checked]="userreceiveEmails"></mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row" fxFlex fxLayout="column" fxLayoutGap="30px">
+      <div fxFlex="50%" fxFlexAlign="end center" class="setting-label">...new comments items I've comented on</div>
+      <div fxFlex="50%" fxFlexAlign="start center" class="setting-value">
+        <mat-slide-toggle label="Receive emails" [checked]="userreceiveEmails"></mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row" fxFlex fxLayout="column" fxLayoutGap="30px">
+      <div fxFlex="50%" fxFlexAlign="end center" class="setting-label">...with a frequency of</div>
+      <div fxFlex="50%" fxFlexAlign="start center" class="setting-value">
+      </div>
+    </div>
+  </div> -->
+</div>
 
-</mat-dialog-content>
-
-<mat-dialog-actions>
-
+<mat-dialog-actions class="button-div">
+  <div class="text-right full-width">
+      <button mat-button color="warn" mat-dialog-close>cancel</button>
+      <button mat-button color="primary" (click)="saveSettings()">save</button>
+    </div>
 </mat-dialog-actions>
+</div>

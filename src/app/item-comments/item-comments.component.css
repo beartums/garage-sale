@@ -1,7 +1,7 @@
 .comment-list-container {
     position: relative;
     width: 100%;
-    height: 500px;
+    height: 485px;
     overflow-y: scroll;
 }
 .comment-container {
@@ -14,6 +14,13 @@
 .comment {
 
 }
+.dialog-content-noscrollbar {
+    overflow-y: hidden;
+}
+.small-input {
+    height: 24px!important;
+    font-size: smaller;
+}
 .comment-details {
     font-size: xx-small;
     font-weight: bold;
@@ -25,4 +32,15 @@
 }
 .full-width {
     width: 100%;
+}
+.return-button {
+    position: relative;
+    top: 10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.cancel-icon {
+    color: lightgray;
+    text-align: right;
 }
