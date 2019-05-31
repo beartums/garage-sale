@@ -39,6 +39,8 @@ import { MatItemComponent } from './mat-item/mat-item.component';
 import { DisplayItemComponent } from './display-item/display-item.component';
 import { ItemCommentsComponent } from './item-comments/item-comments.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ItemCommentsDialogComponent } from './item-comments-dialog/item-comments-dialog.component';
+import { ShowItemComponent } from './show-item/show-item.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { SettingsComponent } from './settings/settings.component';
     MatItemComponent,
     DisplayItemComponent,
     ItemCommentsComponent,
-    SettingsComponent
+    SettingsComponent,
+    ItemCommentsDialogComponent,
+    ShowItemComponent
   ],
   entryComponents: [ ItemCommentsComponent, SettingsComponent ],
   imports: [
