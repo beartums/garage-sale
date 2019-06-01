@@ -41,6 +41,7 @@ import { ItemCommentsComponent } from './item-comments/item-comments.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ItemCommentsDialogComponent } from './item-comments-dialog/item-comments-dialog.component';
 import { ShowItemComponent } from './show-item/show-item.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { ShowItemComponent } from './show-item/show-item.component';
     MatDialogModule,
     MatSlideToggleModule,
     MatButtonModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [AuthService, DataService, ItemService],
   bootstrap: [AppComponent]
