@@ -67,6 +67,14 @@ export class ItemCommentsComponent implements OnInit {
     return moment(date).format('DD MMM YYYY | hh:mm:ss');
   }
 
+  isLoggedIn(): boolean {
+    return this.as.isLoggedIn;
+  }
+
+  login() {
+    this.as.loginWithGoogle();
+  }
+
   scrollToBottom(container: ElementRef) {
     try {
       container.nativeElement.scrollTop = container.nativeElement.scrollHeight;

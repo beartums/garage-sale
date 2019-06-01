@@ -20,10 +20,13 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="input-container">
-    <mat-form-field class="full-width">
+    <mat-form-field class="full-width" *ngIf="isLoggedIn()">
       <textarea matInput placeholder="comment" class="form-control small-input" name="comment" 
           [(ngModel)]="newComment" (keydown.enter)="addComment(newComment)"></textarea>
       <mat-icon class="return-button" matSuffix (click)="addComment(newComment)">keyboard_return</mat-icon>
     </mat-form-field>
+    <div style="text-align: center">
+      <h4><em>Log in to join the conversation</em> &nbsp; <span><i class="material-icons">account_circle</i></span></h4>
+    </div>
   </div>
 </mat-dialog-actions>

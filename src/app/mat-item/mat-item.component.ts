@@ -38,6 +38,9 @@ export class MatItemComponent implements OnInit {
   isLoggedIn(): boolean {
     return this.as.isLoggedIn;
   }
+  login() {
+    this.as.loginWithGoogle();
+  }
 
   isSold(item: Item): boolean {
     if (!item) return false; // in case this item is null because it's being refreshed async
