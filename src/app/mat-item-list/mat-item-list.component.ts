@@ -18,7 +18,7 @@ export class MatItemListComponent implements AfterViewInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource([]);
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['pictureUrl', 'name', 'tags', 'edit'];
+  displayedColumns = ['pictureUrl', 'name', 'price', 'tags', 'edit'];
 
   constructor(private ds: DataService, private router: Router,
               private is: ItemService, private as: AuthService) {
@@ -58,6 +58,10 @@ export class MatItemListComponent implements AfterViewInit {
 
   toggleFavorited(item: Item) {
     this.is.toggleFavorite(item, this.as.userId);
+  }
+
+  formatPrice(price: number = 0): string {
+    return this.is.formatPrice(price);
   }
 
   ngAfterViewInit() {

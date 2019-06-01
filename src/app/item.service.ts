@@ -18,6 +18,21 @@ export class ItemService {
     return item.favoritedBy.length;
   }
 
+  formatPrice(price: number): string {
+    let priceString = '';
+    
+    if (price !== 0 && !price) return priceString;
+    if (price < 10000) {
+      priceString = price.toString();
+    } else if (price < 1000000) {
+      priceString = (price / 1000).toString() + 'K';
+    } else {
+      priceString = (price / 1000000).toString() + 'M';
+    }
+    priceString += ' ugx';
+    return priceString;
+  }
+
   isFavoritedBy(item: Item, userId: string): boolean {
     if (!item.favoritedBy) { return false; }
     return item.favoritedBy.indexOf(userId) > -1;
@@ -51,5 +66,5 @@ export class ItemService {
   isFeatured(item: Item): boolean {
     return item.tags.indexOf("featured") > -1;
   }
-  
+
 }

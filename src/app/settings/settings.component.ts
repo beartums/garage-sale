@@ -28,6 +28,8 @@ export class SettingsComponent implements OnInit {
   filteredTags: Observable<string[]>;
   chipControl = new FormControl();
 
+  fakeVar = false;
+
   @ViewChild('chipInput') chipInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
