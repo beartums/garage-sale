@@ -11,6 +11,7 @@ export class Item {
     pictureUrl: string;
     tags: Array<string>;
     commentCount: number = 0;
+    lastUpdated: string;
     favoritedBy: Array<string>; // user ids of users who have favorited this item
     oldVersions: Array<any>;
 }

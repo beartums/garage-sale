@@ -8,10 +8,12 @@ export class User {
     phoneNumber: string;
     photoURL: string = '';
     lastLogin: string;
+    firstLogin; string;
     favorites: string[] = []; // favorited item ids
     settings = {
         username: null,
-        newItemEmailTags: null,
+        newItemEmailTags: [],
+        emailOnNewItem: false,
         emailOnFavoritedActivity: false,
         emailOnCommentThreadNewComment: false,
         emailFrequency: 'never',
@@ -23,7 +25,7 @@ export class User {
             },
             showSold: true,
             showFeatured: true,
-        } 
+        }
     };
 
     get username() {

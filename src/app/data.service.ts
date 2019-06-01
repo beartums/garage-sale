@@ -38,6 +38,7 @@ export class DataService {
   }
 
   addItem(item: Item) {
+    item.lastUpdated = new Date().toUTCString();
     this.getItemsRef().push(item);
     this.ts.addItemTags(item);
   }
@@ -104,17 +105,21 @@ export class DataService {
   }
 
   updateItem(id: string, item: Item, oldItem?: Item) {
+    item.lastUpdated = new Date().toUTCString();
     this.getItemRef(id).update(item);
     const tagChanges = this.ts.getTagChanges(item.tags, oldItem.tags);
-    if (tagChanges === 'both' || tagChanges === 'remove') {this.ts.removeItemTags(oldItem)};
-    if (tagChanges === 'both' || tagChanges === 'add') {this.ts.addItemTags(item)};
+    if (tagChanges === 'both' || tagChanges === 'remove') {this.ts.removeItemTags(oldItem)}
+    if (tagChanges === 'both' || tagChanges === 'add') {this.ts.addItemTags(item)}
   }
 
   updateUser(id: string, user: any) {
+    user.lastLogin = new Date().toUTCString();
     this.getUserRef(id).update(user);
   }
 
   setUserData(user: User) {
+    user.firstLogin = new Date().toUTCString();
+    user.lastLogin = user.firstLogin;
     this.db.object(this.USER_ROOT + '/' + user.uid).set(user);
   }
 

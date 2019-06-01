@@ -19,7 +19,7 @@ export class ShowItemComponent implements OnInit {
       route.paramMap.subscribe( params => {
         this.itemId = params.get('itemId');
         this.item$ = this.ds.getItemRef(this.itemId).valueChanges();
-      })
+      });
    }
 
   ngOnInit() {

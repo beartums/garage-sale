@@ -36,12 +36,12 @@ import { MatItemListComponent } from './mat-item-list/mat-item-list.component';
 import { MatItemEditComponent } from './mat-item-edit/mat-item-edit.component';
 import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component';
 import { MatItemComponent } from './mat-item/mat-item.component';
-import { DisplayItemComponent } from './display-item/display-item.component';
 import { ItemCommentsComponent } from './item-comments/item-comments.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ItemCommentsDialogComponent } from './item-comments-dialog/item-comments-dialog.component';
 import { ShowItemComponent } from './show-item/show-item.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 @NgModule({
   declarations: [
@@ -51,11 +51,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MatItemEditComponent,
     MatItemTilesComponent,
     MatItemComponent,
-    DisplayItemComponent,
     ItemCommentsComponent,
     SettingsComponent,
     ItemCommentsDialogComponent,
-    ShowItemComponent
+    ShowItemComponent,
+    ContactUsComponent
   ],
   entryComponents: [ ItemCommentsComponent, SettingsComponent ],
   imports: [

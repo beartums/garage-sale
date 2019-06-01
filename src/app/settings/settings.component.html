@@ -12,37 +12,25 @@
 
 <div class="settings-container">
   <table class="settings-table">
-      <tr class="setting-section-row">
-        <td colspan="2" class="settings-section">General Settings</td>
-      </tr>
-      <tr>
-        <td class="setting-label">User Name (for posting comments)</td>
-        <td class="setting-value">
-          <mat-form-field>
-            <input matInput [(ngModel)]="user.settings.username">
-          </mat-form-field>
-        </td>
-      </tr>
-      <tr class="setting-section-row">
-        <td class="settings-section">
-          Emails
-        </td>
-        <td class="text-right settings-section">
-          <mat-slide-toggle [(ngModel)]="user.settings.allowEmails"></mat-slide-toggle>
-        </td>
-      </tr>
-      <tr *ngIf="user.settings.allowEmails">
-        <td class="setting-label">...for new activity on my favorites</td>
-        <td class="setting-value">
-          <mat-slide-toggle [(ngModel)]="user.settings.emailOnFavoritedActivity"></mat-slide-toggle>
-        </td>
-      </tr>
-      <tr *ngIf="user.settings.allowEmails">
-        <td class="setting-label">...for new comments if I commented</td>
-        <td class="setting-value">
-          <mat-slide-toggle [(ngModel)]="user.settings.emailOnCommentThreadNewComment"></mat-slide-toggle>
-        </td>
-      </tr>
+    <tr class="setting-section-row">
+      <td colspan="2" class="settings-section">General Settings</td>
+    </tr>
+    <tr class="setting-row">
+      <td class="setting-label">User Name (for posting comments)</td>
+      <td class="setting-value">
+        <mat-form-field>
+          <input matInput [(ngModel)]="user.settings.username">
+        </mat-form-field>
+      </td>
+    </tr>
+    <tr class="setting-section-row">
+      <td class="settings-section">
+        Emails
+      </td>
+      <td class="text-right settings-section">
+        <mat-slide-toggle [(ngModel)]="user.settings.allowEmails"></mat-slide-toggle>
+      </td>
+    </tr>
     <tr *ngIf="user.settings.allowEmails">
       <td class="setting-label">...as often as</td>
       <td class="setting-value">
@@ -53,6 +41,52 @@
               <mat-option value="never">nope nope nope nope</mat-option>
             </mat-select>
         </td>
+    </tr>
+    <tr *ngIf="user.settings.allowEmails" class="setting-row">
+      <td class="setting-label">for new activity on my favorites</td>
+      <td class="setting-value">
+        <mat-slide-toggle [(ngModel)]="user.settings.emailOnFavoritedActivity"></mat-slide-toggle>
+      </td>
+    </tr>
+    <!-- <tr *ngIf="user.settings.allowEmails" class="setting-row">
+      <td class="setting-label">for new comments if I commented</td>
+      <td class="setting-value">
+        <mat-slide-toggle [(ngModel)]="user.settings.emailOnCommentThreadNewComment"></mat-slide-toggle>
+      </td>
+    </tr> -->
+    <tr *ngIf="user.settings.allowEmails" class="setting-row">
+      <td class="setting-label">when new items are added</td>
+      <td class="setting-value">
+        <mat-slide-toggle [(ngModel)]="user.settings.emailOnNewItem"></mat-slide-toggle>
+      </td>
+    </tr>
+    <tr *ngIf="user.settings.allowEmails && user.settings.emailOnNewItem" class="setting-row">
+      <!-- <td class="setting-label">categories to email about</td> -->
+      <td colspan="2" class="setting-value">
+        <mat-form-field class="full-width">
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let tag of user.settings.newItemEmailTags" [selectable]="selectable" 
+              [removable]="removable" (removed)="removeTag(tag)">
+              {{tag}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+          <input [matChipInputFor]="chipList" placeholder="Categories of new items to email about" 
+                  #chipInput
+                  [formControl]="chipControl"
+                  [matChipInputFor]="chiplist"
+                  [matAutocomplete]="auto"
+                  [matChipInputSeparatorKeyCodes]="separatorKeyCodes"
+                  [matChipInputAddOnBlur]="addOnBlur"
+                  (matChipInputTokenEnd)="addTagEvent($event)">
+
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="addSelected($event)">
+            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+              {{tag}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </td>
     </tr>
   </table>
   <!-- <div fxLayout="column">

@@ -1,4 +1,4 @@
-<button mat-raised-button color="" type="button" (click)="addItem()">+</button>
+<button mat-raised-button color="" type="button" *ngIf="isAdmin()" (click)="addItem()">+</button>
 <div class="mat-elevation-z8">
   <table mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
     <!-- photo Column -->
@@ -42,7 +42,7 @@
       </ng-container>
         
     <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
-    <tr mat-row *matRowDef="let item; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let item; columns: displayedColumns;" (click)="showItem(item)"></tr>
   </table>
   
   <mat-paginator #paginator

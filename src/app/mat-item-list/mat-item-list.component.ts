@@ -48,6 +48,10 @@ export class MatItemListComponent implements AfterViewInit {
     return tags.join(delim);
   }
 
+  showItem(item) {
+    this.router.navigate(['/show-item',item.key])
+  }
+
   sortTags(tags: string[] = []): string[] {
     return tags.sort();
   }

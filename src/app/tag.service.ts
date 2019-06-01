@@ -49,6 +49,10 @@ export class TagService {
     return tag.trim().toLowerCase();
   }
 
+  getAllTags(): string[] {
+    return Object.keys(this.tags);
+  }
+  
   getItemsInTagsCount(positive: string[], negative: string[] = []): number {
     let items: Item[] = [];
     positive = _.without(positive, ...negative);

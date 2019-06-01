@@ -13,7 +13,10 @@
             </i>
             <!-- Did not like the traditional positioning of matBadge, so did my own with icon-button-badge-below/above (always on right) -->
             <!-- [matBadge]="item.commentCount" matBadgeSize="medium" [matBadgeHidden]="!item.commentCount"> -->
-            <i class="material-icons-outlined icon-button icon-button-badge-above" (click)="toggleComments(item)">
+            <i mat-icon-button
+                class="material-icons-outlined icon-button icon-button-badge-above" 
+                [matBadge]="item.commentCount"  matBadgeSize="medium" [matBadgeHidden]="!item.commentCount"
+                (click)="toggleComments(item)">
               chat
             </i>
             <span *ngIf="isLoggedIn()">
@@ -28,8 +31,13 @@
                 favorite
               </i>
             </span>
-          <i class="material-icons-outlined icon-button" matTooltip="Ask questions, make an offer, otherwise communicate with us">email</i>
-        </div>
+          <!-- <i class="material-icons-outlined icon-button"  [matMenuTriggerFor]="appMenu" 
+                  matTooltip="Ask questions, make an offer, otherwise communicate with us">email</i>
+          <mat-menu #appMenu="matMenu">
+            <button mat-menu-item tabindex="-1" (click)="contactUs()">Contact Us</button>
+            <a mat-menu-item tabindex="-1" [href]="getEmailForItem(item)" taget="_blank">Share by email</a>
+          </mat-menu> -->
+         </div>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content class="content-container">

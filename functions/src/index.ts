@@ -48,7 +48,26 @@ exports.sendMail = functions.https.onRequest(async (req, res) => {
     return sendEmail('eric@griffithnet.com').then( () => {
         res.status(200).send(true);
     })
-})
+});
+
+// pass an itemId to look up and increase the comment count
+exports.updateCommentCount = functions.database.ref("/Comments/{commentId}/itemId").onWrite((snapshot, context) => {
+    let itemId = snapshot.after.exists() ? snapshot.after.val() : snapshot.before.val();
+    console.log(itemId);
+    let countRef = admin.database().ref("/Items").child(itemId + '/commentCount');
+    //let countRef = collectionRef.parent.child('likes_count');
+  
+    return countRef.transaction(function(current) {
+      if (snapshot.after.exists()) {
+        return (current || 0) + 1;
+      }
+      else if (!snapshot.after.exists()) {
+        return (current || 0) - 1;
+      }
+    });
+  });
+
+
 
 function sendEmail(address: any) {
     const mailOptions = {
