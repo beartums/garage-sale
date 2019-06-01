@@ -3,6 +3,12 @@ import * as functions from 'firebase-functions';
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 import * as admin from 'firebase-admin';
 
+import * as nodemailer from 'nodemailer';
+
+const mailTransport = nodemailer.createTransport(
+    'smtps://eric@griffithnet.com:roflaeijbpemxdvf@smtp.gmail.com'
+);
+
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
@@ -34,5 +40,22 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
       // You must return a Promise when performing asynchronous tasks inside a Functions such as
       // writing to the Firebase Realtime Database.
       // Setting an "uppercase" sibling in the Realtime Database returns a Promise.
+      // NOTE: Non-null assertion added to avoid typescript linting error msg
       return snapshot.ref.parent!.child('uppercase').set(uppercase) || 'err';
     });
+
+exports.sendMail = functions.https.onRequest(async (req, res) => {
+    return sendEmail('eric@griffithnet.com').then( () => {
+        res.status(200).send(true);
+    })
+})
+
+function sendEmail(address: any) {
+    const mailOptions = {
+        from: 'garage-sale@griffithnet.com',
+        to: address,
+        subject: 'email subject line',
+        html: '<h1>Big Fucking title</h1>'
+    }
+    return mailTransport.sendMail(mailOptions);
+}
