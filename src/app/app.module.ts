@@ -42,6 +42,7 @@ import { ItemCommentsDialogComponent } from './item-comments-dialog/item-comment
 import { ShowItemComponent } from './show-item/show-item.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
 @NgModule({
   declarations: [
@@ -55,9 +56,10 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     SettingsComponent,
     ItemCommentsDialogComponent,
     ShowItemComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    FilterDialogComponent
   ],
-  entryComponents: [ ItemCommentsComponent, SettingsComponent ],
+  entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent ],
   imports: [
     BrowserModule,
     FormsModule,

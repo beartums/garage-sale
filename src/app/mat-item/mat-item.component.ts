@@ -8,6 +8,7 @@ import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { ItemCommentsComponent } from '../item-comments/item-comments.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { User } from '../user';
 
 
 @Component({
@@ -48,8 +49,9 @@ export class MatItemComponent implements OnInit {
     return tags.some( tag => tag.trim().toLowerCase() == 'sold')
   }
 
-  isFiltered(item: Item): boolean {
-    return this.fs.isFiltered(item);
+  isFiltered(item: Item, user: User = null): boolean {
+    user = user || this.as.user;
+    return this.fs.isFiltered(item, user);
   }
 
   toggleFavorite(item: Item) {

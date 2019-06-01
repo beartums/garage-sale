@@ -5,9 +5,9 @@ import { map } from 'rxjs/operators';
 import { Item } from './item';
 import { TagService } from './tag.service';
 import { Observable, Subscribable } from 'rxjs';
-import { FirebaseAuth } from '@angular/fire';
 import { User } from './user';
 import { Comment } from './comment';
+import { FilterService } from './filter.service';
 
 @Injectable({
   providedIn: 'root'

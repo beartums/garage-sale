@@ -23,8 +23,9 @@ export class User {
                 included: [],
                 excluded: [],
             },
-            showSold: true,
-            showFeatured: true,
+            soldItemFilter: null,
+            featuredItemFilter: null,
+            favoritedItemFilter: null
         }
     };
 

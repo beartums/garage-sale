@@ -25,13 +25,13 @@
     </tr>
     <tr class="setting-section-row">
       <td class="settings-section">
-        Emails
+        Allow Emails
       </td>
       <td class="text-right settings-section">
         <mat-slide-toggle [(ngModel)]="user.settings.allowEmails"></mat-slide-toggle>
       </td>
     </tr>
-    <tr *ngIf="user.settings.allowEmails">
+    <tr *ngIf="user.settings.allowEmails && 1===2">
       <td class="setting-label">...as often as</td>
       <td class="setting-value">
           <mat-select [(ngModel)]="user.settings.emailFrequency" >
@@ -42,7 +42,7 @@
             </mat-select>
         </td>
     </tr>
-    <tr *ngIf="user.settings.allowEmails" class="setting-row">
+    <tr *ngIf="user.settings.allowEmails && 1===2" class="setting-row">
       <td class="setting-label">for new activity on my favorites</td>
       <td class="setting-value">
         <mat-slide-toggle [(ngModel)]="user.settings.emailOnFavoritedActivity"></mat-slide-toggle>
@@ -54,13 +54,13 @@
         <mat-slide-toggle [(ngModel)]="user.settings.emailOnCommentThreadNewComment"></mat-slide-toggle>
       </td>
     </tr> -->
-    <tr *ngIf="user.settings.allowEmails" class="setting-row">
+    <tr *ngIf="user.settings.allowEmails && 1===2" class="setting-row">
       <td class="setting-label">when new items are added</td>
       <td class="setting-value">
         <mat-slide-toggle [(ngModel)]="user.settings.emailOnNewItem"></mat-slide-toggle>
       </td>
     </tr>
-    <tr *ngIf="user.settings.allowEmails && user.settings.emailOnNewItem" class="setting-row">
+    <tr *ngIf="user.settings.allowEmails && user.settings.emailOnNewItem && 1===2" class="setting-row">
       <!-- <td class="setting-label">categories to email about</td> -->
       <td colspan="2" class="setting-value">
         <mat-form-field class="full-width">

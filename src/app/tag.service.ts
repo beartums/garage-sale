@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 export class TagService {
 
   tags: any = {};
+  readonly SPECIAL_TAGS = [ 'featured', 'sold'];
 
   constructor() { }
 
@@ -52,7 +53,7 @@ export class TagService {
   getAllTags(): string[] {
     return Object.keys(this.tags);
   }
-  
+
   getItemsInTagsCount(positive: string[], negative: string[] = []): number {
     let items: Item[] = [];
     positive = _.without(positive, ...negative);
@@ -78,6 +79,10 @@ export class TagService {
     if (isAdded) { return 'add'; };
     if (isRemoved) { return 'remove'; };
     return null;
+  }
+
+  removeSpecialTags(tags: string[]): string[] {
+    return _.without(tags, ...this.SPECIAL_TAGS);
   }
   
 }

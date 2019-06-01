@@ -10,6 +10,7 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { Router } from '@angular/router';
 import { ItemService } from '../item.service';
 import { formatPercent } from '@angular/common';
+import { User } from '../user';
 @Component({
   selector: 'app-mat-item-tiles',
   templateUrl: './mat-item-tiles.component.html',
@@ -52,8 +53,9 @@ export class MatItemTilesComponent {
     return tags.some( tag => tag.trim().toLowerCase() == 'sold')
   }
 
-  isFiltered(item: Item): boolean {
-    return this.fs.isFiltered(item);
+  isFiltered(item: Item, user: User = null): boolean {
+    user = user || this.as.user;
+    return this.fs.isFiltered(item, user);
   }
 
 }

@@ -1,27 +1,6 @@
-<div [gdColumns]="showFilters && isCurrentRoute('/mat-item-tiles') ? '200px auto' : 'auto'" >
-  <div class="filter-nav" *ngIf="showFilters && isCurrentRoute('/mat-item-tiles')">
-    <mat-toolbar color="primary">
-      <span>Filters</span>
-      <span fxFlex="1 1 auto" class="fill-toolbar"></span>
-      <span fxFlex="40px" matTooltip="Tap to close Filter Sidebar">
-        <i class="material-icons icon-button" (click)="toggleFilter()" *ngIf="showFilters">
-          chevron_left
-        </i>
-      </span>
-    </mat-toolbar>
-    <div class="filter-content">
-      <h2>Categories</h2>
-      <mat-chip-list #chipList matTooltip="Tap category to add it to a filter">
-        <ng-container *ngFor="let tag of getTags()" >
-          <mat-chip *ngIf="getTagBadgeCount(tag)>0" 
-            [removable]="false" (click)="selectTag(tag)" class="allow-overflow">
-            {{tag}}
-            <span class="chip-badge-internal">{{getTagBadgeCount(tag)}}</span>
-          </mat-chip>
-        </ng-container>
-      </mat-chip-list>
-    </div>
-  </div>
+<!-- <div [gdColumns]="showFilters && isCurrentRoute('/mat-item-tiles') ? '200px auto' : 'auto'" > -->
+  
+
   <div>
     <mat-toolbar color="primary">
       <!-- <button
@@ -34,8 +13,8 @@
       </button> -->
         
           
-          <i fxFlex="40px" class="material-icons icon-button" (click)="toggleFilter()" *ngIf="!showFilters && isCurrentRoute('/mat-item-tiles')">
-            chevron_right
+          <i fxFlex="40px" class="material-icons icon-button" (click)="toggleFilter()" *ngIf="isCurrentRoute('/mat-item-tiles')">
+            more_vert
           </i>
           
           <div fxFlex >Griffith Garage Sale</div>
@@ -62,19 +41,9 @@
        
 
     </mat-toolbar>
-    <div id="filter-container" *ngIf="getChosenTags().length>0 && isCurrentRoute('/mat-item-tiles')">
-      <br />
-        <mat-chip-list #chipList matTooltip="Tap the 'X' to remove the category; tap the category to negate it (red means do NOT include this category)">
-          <mat-chip [color]="isTagNegative(tag) ? 'warn' : 'primary'" selected *ngFor="let tag of getChosenTags()" 
-            [removable]="true" (click)="toggleTagPolarity(tag)">
-            {{tag}}
-            <mat-icon matChipRemove (click)="removeTag(tag)">cancel</mat-icon>
-          </mat-chip>
-        </mat-chip-list>
-
-    </div>
-    <router-outlet></router-outlet>
   </div>
-</div>
+  <router-outlet></router-outlet>
+<!-- </div> -->
+
 <!--not sure why, but when this '>' is removed, a ghost '>' appears on the display-->
 

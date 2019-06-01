@@ -3,7 +3,12 @@ import { TagService } from './tag.service';
 import { DataService } from './data.service';
 import * as _ from 'lodash';
 import { Item } from './item';
+import { ItemService } from './item.service';
+import { User } from './user';
 
+export enum FilterOptions {
+  'include', 'exclude', 'ignore'
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +17,12 @@ export class FilterService {
   chosenTags: string[] = [];   // tags that are filtereid in the positive (only items that DO have this tag)
   negativeTags: string[] = []; // tags that are filtered in the negative (only items that DON'T have this tag)
 
-  constructor(private ts: TagService, private ds: DataService) {
+  soldItems: FilterOptions;
+  featuredItems: FilterOptions;
+  favoritedItems: FilterOptions;
+
+
+  constructor(private ts: TagService, private is: ItemService) {
 
   }
 
@@ -47,9 +57,16 @@ export class FilterService {
    * Check whether the passed item is filtered out
    * @param item item to check against filters
    */
-  isFiltered(item: Item, chosen: string[] = null, negative: string[] = null): boolean {
+  isFiltered(item: Item, user: User = null, chosen: string[] = null, negative: string[] = null): boolean {
     chosen = chosen || this.chosenTags;
     negative = negative || this.negativeTags;
+
+    if (user && this.is.isFavoritedBy(item, user.uid) && this.favoritedItems === FilterOptions.exclude) { return true; }
+    if (this.is.isSold(item) && this.soldItems === FilterOptions.exclude) { return true; }
+    if (this.is.isFeatured(item) && this.featuredItems === FilterOptions.exclude) { return true; }
+    if (user && !this.is.isFavoritedBy(item, user.uid) && this.favoritedItems === FilterOptions.include) { return true; }
+    if (!this.is.isSold(item) && this.soldItems === FilterOptions.include) { return true; }
+    if (!this.is.isFeatured(item) && this.featuredItems === FilterOptions.include) { return true; }
     
     // if no filterTags are chosen, then this item is not filtered
     if (chosen.length === 0) { return false; }

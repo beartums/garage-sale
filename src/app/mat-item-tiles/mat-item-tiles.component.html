@@ -4,7 +4,7 @@
       gdColumns.lt-md="1fr" gdColumns.md="1fr 1fr" gdColumns.lg="1fr 1fr 1fr" gdColumns.xl="1fr 1fr 1fr 1fr"
       gdGap="20px">
       <ng-container *ngFor="let item of items$ | async" >
-        <gs-item-card *ngIf="!isFiltered(item)" [item]="item"></gs-item-card>
+        <gs-item-card *ngIf="!isFiltered(item, user)" [item]="item"></gs-item-card>
       </ng-container>
 
   </div>

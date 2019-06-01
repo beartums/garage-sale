@@ -44,4 +44,12 @@ export class ItemService {
   isShowingComments(item: Item): boolean {
     return this.itemsShowingComments.indexOf(item.key) > -1;
   }
+
+  isSold(item: Item): boolean {
+    return item.tags.indexOf("sold") > -1;
+  }
+  isFeatured(item: Item): boolean {
+    return item.tags.indexOf("featured") > -1;
+  }
+  
 }

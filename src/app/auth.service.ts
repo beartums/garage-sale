@@ -9,6 +9,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from './user';
 import { DataService } from './data.service';
+import { FilterService } from './filter.service';
 
 @Injectable()
 export class AuthService {
@@ -39,7 +40,8 @@ export class AuthService {
   get userDisplayName(): string { return this.user.displayName; }
   get userId(): string { return this.user.uid; }
 
-  constructor(private firebaseAuth: AngularFireAuth, router: Router, private ds: DataService) {
+  constructor(private firebaseAuth: AngularFireAuth, router: Router, private ds: DataService,
+            private fs: FilterService) {
 
     // Wanted to do some offline programming at the hairy lemon, so tried to override the user info
     // here.  Never got this working properly (partly because there was a lot to do at the hairy lemon)
@@ -63,10 +65,13 @@ export class AuthService {
         this.userSubscription = this.user$.subscribe( dbUser => {
           if (dbUser) {
             this.user = Object.assign(new User(), dbUser);
-            // Object.setPrototypeOf(this.user, new User());
+            // Update the loaded user with current data from the Authorized User and save
             const isChanged = this.user.updateAuthUserData(authUser);
             if (isChanged) {
               this.ds.updateUser(this.user.uid, this.user);
+            }
+            if (this.user.settings && this.user.settings.filters) {
+              this.updateFilters(this.user.settings.filters);
             }
           } else {
             this.user = new User(authUser)
@@ -146,5 +151,14 @@ export class AuthService {
   logout() {
     this.firebaseAuth.auth.signOut();
   }
+
+   updateFilters(filters: any) {
+    this.fs.chosenTags = filters.tagFilters ? filters.tagFilters.included || [] : [];
+    this.fs.negativeTags = filters.tagFilters ? filters.tagFilters.excluded || [] : [];
+    this.fs.soldItems = filters.soldItemFilter;
+    this.fs.featuredItems =filters.featuredItemFilter;
+    this.fs.favoritedItems = filters.favoritedItemFilter;
+  }
+
 
 }

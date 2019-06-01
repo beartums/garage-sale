@@ -7,6 +7,7 @@ import { FilterService } from '../filter.service';
 import * as _ from 'lodash';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { SettingsComponent } from '../settings/settings.component';
+import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +16,6 @@ import { SettingsComponent } from '../settings/settings.component';
 })
 export class NavbarComponent {
 
-  showFilters = false;
   auth: AuthService;
   filt: FilterService;
 
@@ -55,35 +55,12 @@ export class NavbarComponent {
     this.as.logout();
   }
 
-  selectTag(tag: string) {
-    this.fs.addTagToFilter(tag);
-  }
-  removeTag(tag: string) {
-    this.fs.removeTagFromFilter(tag);
-  }
-
   toggleFilter() {
-    this.showFilters = !this.showFilters;
+    let dialogRef = this.dialog.open(FilterDialogComponent, {
+      width: '90%',
+      height: '90%',
+      data: { user: this.as.user }
+    })
   }
-  getTags(): string[] {
-    return this.fs.getAvailableTags(this.fs.chosenTags)
-  }
-  getChosenTags(): string[] {
-    return this.filt.chosenTags;
-  }
-  getTagBadgeCount(tag: string = null, chosenTags: string[] = null, negativeTags: string[] = null): number {
-    chosenTags = chosenTags || this.fs.chosenTags;
-    negativeTags = negativeTags || this.fs.negativeTags;
-
-    const allTags = tag ? _.concat(chosenTags, tag) : chosenTags;
-    const count = this.ts.getItemsInTagsCount(allTags, negativeTags);
-    return count;
-  }
-  isTagNegative(tag: string): boolean {
-    return this.fs.isTagNegative(tag);
-  }
-  toggleTagPolarity(tag) {
-    this.fs.toggleTagPolarity(tag);
-  }
-
+ 
 }
