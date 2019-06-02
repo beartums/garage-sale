@@ -21,7 +21,7 @@
           <div fxFlex  fxLayout="row" fxLayoutAlign="end center">
             <i class="material-icons icon-button" *ngIf="auth.isLoggedIn" (click)="gotoSettings()" matTooltip="Go to your settings">settings</i>
             
-            <button mat-icon-button (click)="gotoInbox()" *ngIf="newMessageCount > 0" 
+            <button mat-icon-button (click)="gotoInbox()" *ngIf=" messageCount>0" 
               matTooltip="Message waiting in your inbox" [matBadge]="newMessageCount"
               class="icon-button-badge-above " matBadgeColor="warn">
               <mat-icon>email</mat-icon>

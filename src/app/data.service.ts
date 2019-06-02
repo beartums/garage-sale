@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { Item } from './item';
 import { TagService } from './tag.service';
-import { Observable, Subscribable } from 'rxjs';
+import { Observable, Subscribable, of } from 'rxjs';
 import { User } from './user';
 import { Comment } from './comment';
 import { FilterService } from './filter.service';
@@ -115,9 +115,13 @@ export class DataService {
     }
   }
   getMessages$(toUserId: string = null): Observable<Message[]> {
-    return this.getMessagesRef(toUserId).snapshotChanges().pipe (
-      map( changes => <Message[]>changes.map( c => <unknown>{ key: c.payload.key, ...c.payload.val() } )  )
-    );
+    if (toUserId) {
+      return this.getMessagesRef(toUserId).snapshotChanges().pipe (
+        map( changes => <Message[]>changes.map( c => <unknown>{ key: c.payload.key, ...c.payload.val() } )  )
+      );
+    } else {
+      return of([])
+    }
   }
 
   getUser$(id: string): Observable<User> {

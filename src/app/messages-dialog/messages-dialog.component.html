@@ -1,3 +1,27 @@
-<p>
-  messages-dialog works!
-</p>
+<div class="full-width" fxLayout="column">
+  <div fxFlex="15%">
+        <div fxLayout="row" class="full-width">
+          <div fxFlex="90%" fxFlexAlign="start center" tabindex="-1">
+            <mat-card-title>
+            Messages
+          </mat-card-title>
+        </div>
+          <div fxFlex fxFlexAlign="end center">
+            <button mat-icon-button class="icon-button" (click)="cancel()" tabindex="-1">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+        </div>
+    </div>
+    <div id="content" class="messages-content" fxFlex="70%" fxLayout="row">
+        <div id="sidebar" class="permanent-sidebar" fxFlex="20%">
+          <gs-message-sidebar [messages]="messages" [adminMessages]="adminMessages" 
+              (message)="message" [user]="user" *ngIf="messages"></gs-message-sidebar>
+        </div>
+        <div id="message" class="message" fxFlex="80%">
+          <gs-message [message]="message" [user]="user" *ngIf="message"></gs-message>
+        </div>
+              
+      
+    </div>
+

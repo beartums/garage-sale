@@ -11,6 +11,8 @@ export class Message {
     isRead: boolean = false;
     reason: string;
     message: string;
+    threadId: string;
+    replyingToId: string;
     item: Item;
     user: User;
 }

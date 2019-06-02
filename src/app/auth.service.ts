@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 
-import { Observable, Subscription, Subject } from 'rxjs';
+import { Observable, Subscription, Subject, of } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 import { User } from './user';
@@ -78,6 +78,7 @@ export class AuthService {
           } else {
             this.user = new User(authUser)
             this.ds.setUserData(this.user);
+            this.user$ = of(this.user)
           }
 
         })
@@ -100,7 +101,7 @@ export class AuthService {
    * @returns True if user is a gm
    */
   isUserAdmin(user: firebase.User): boolean {
-    const emailArray = user.email.split('@');
+    const emailArray = user? user.email.split('@') : '';
     if (emailArray.length !== 2) { return false; };
 
     return emailArray[1].toLowerCase() === 'griffithnet.com';

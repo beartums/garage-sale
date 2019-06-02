@@ -25,7 +25,9 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
   MatTooltipModule,
   MatDialog,
   MatDialogModule,
-  MatSlideToggleModule} from '@angular/material';
+  MatSlideToggleModule,
+  MatNestedTreeNode,
+  MatTreeModule} from '@angular/material';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -45,6 +47,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MessagesDialogComponent } from './messages-dialog/messages-dialog.component';
+import { MessageComponent } from './message/message.component';
+import { MessageSidebarComponent } from './message-sidebar/message-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -60,9 +64,11 @@ import { MessagesDialogComponent } from './messages-dialog/messages-dialog.compo
     ShowItemComponent,
     ContactUsComponent,
     FilterDialogComponent,
-    MessagesDialogComponent
+    MessagesDialogComponent,
+    MessageComponent,
+    MessageSidebarComponent
   ],
-  entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, ContactUsComponent ],
+  entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, ContactUsComponent, MessagesDialogComponent ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -98,6 +104,7 @@ import { MessagesDialogComponent } from './messages-dialog/messages-dialog.compo
     MatDialogModule,
     MatSlideToggleModule,
     MatButtonModule,
+    MatTreeModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   

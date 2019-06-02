@@ -11,6 +11,7 @@ import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component'
 import { take, map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Message } from '../message';
+import { MessagesDialogComponent } from '../messages-dialog/messages-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -42,7 +43,7 @@ export class NavbarComponent {
       this.filt = fs;
 
       this.subs.push(this.as.authUser.pipe( 
-        switchMap( user => this.ds.getMessages$(user.uid) ))
+        switchMap( user => this.ds.getMessages$(user ? user.uid : null) ))
         .subscribe( msgs => this.userMessages = msgs));
       this.subs.push(this.as.authUser.pipe( 
         switchMap( user => {
@@ -75,6 +76,18 @@ export class NavbarComponent {
   gotoTileList() {
     this.router.navigate(['/mat-item-tiles'])
   }
+
+  gotoInbox() {
+    let dialogRef = this.dialog.open(MessagesDialogComponent, {
+      height: '90%',
+      width: '90%',
+      data: { user: this.as.user,
+              messages: this.userMessages || [],
+              adminMessages: this.adminMessages || [],
+      }
+    });
+  }
+
   gotoInfo() {
     console.log('should be going to info page now')
   }
@@ -87,6 +100,8 @@ export class NavbarComponent {
   }
 
   logout() {
+    this.userMessages = [];
+    this.adminMessages = [];
     this.as.logout();
   }
 
