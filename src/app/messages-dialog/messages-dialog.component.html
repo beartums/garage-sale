@@ -7,14 +7,14 @@
           </mat-card-title>
         </div>
           <div fxFlex fxFlexAlign="end center">
-            <button mat-icon-button class="icon-button" (click)="cancel()" tabindex="-1">
+            <button mat-icon-button class="icon-button" (click)="close()" tabindex="-1">
               <mat-icon>cancel</mat-icon>
             </button>
           </div>
         </div>
     </div>
     <div id="content" class="messages-content" fxFlex="70%" fxLayout="row">
-        <div id="sidebar" class="permanent-sidebar" fxFlex="20%">
+        <div id="sidebar" class="permanent-sidebar" fxFlex="200px">
           <gs-message-sidebar [messages]="messages" [adminMessages]="adminMessages" 
               (message)="message" [user]="user" *ngIf="messages"></gs-message-sidebar>
         </div>

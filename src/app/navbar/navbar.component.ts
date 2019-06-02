@@ -12,6 +12,7 @@ import { take, map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Message } from '../message';
 import { MessagesDialogComponent } from '../messages-dialog/messages-dialog.component';
+import { MessageNavDialogComponent } from '../message-nav-dialog/message-nav-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -78,7 +79,7 @@ export class NavbarComponent {
   }
 
   gotoInbox() {
-    let dialogRef = this.dialog.open(MessagesDialogComponent, {
+    let dialogRef = this.dialog.open(MessageNavDialogComponent, {
       height: '90%',
       width: '90%',
       data: { user: this.as.user,

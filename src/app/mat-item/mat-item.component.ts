@@ -92,6 +92,12 @@ export class MatItemComponent implements OnInit {
     this.router.navigate(['/mat-item-edit', item.key]);
   }
 
+  favoriteTooltip(tooltipType: 'add' | 'remove', isLoggedIn: boolean ): string {
+    if (!isLoggedIn) { return 'Login to manage your favorites' };
+    if (tooltipType === 'add') { return 'Click/tap to add to favorites' };
+    return 'Click/tap to remove from favorites';
+  }
+
   formatPrice(price: number = 0): string {
     return this.is.formatPrice(price);
   }

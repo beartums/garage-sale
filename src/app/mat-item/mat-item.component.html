@@ -19,14 +19,14 @@
                 (click)="toggleComments(item)">
               chat
             </i>
-            <span *ngIf="isLoggedIn()">
+            <span>
               <i class="material-icons-outlined icon-button icon-button-badge-above" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)"
-              matTooltip="Tap to add to your favorites"
+              [matTooltip]="favoriteTooltip('add',isLoggedIn())"
               [matBadge]="countFaves(item)" matBadgeSize="medium" [matBadgeHidden]="!countFaves(item)">
                 favorite_border
               </i>
               <i class="material-icons favorited icon-button icon-button-badge-above" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)"
-                matTooltip="Tap to remove from your favorites"
+                [matTooltip]="favoriteTooltip('remove',isLoggedIn())"
                 [matBadge]="countFaves(item)" matBadgeSize="medium" [matBadgeHidden]="!countFaves(item)">
                 favorite
               </i>

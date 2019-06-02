@@ -21,7 +21,7 @@ export class MessageSidebarComponent implements OnInit {
 
   faEnvelope = faEnvelope;
   faEnvelopeOpen = faEnvelopeOpen;
-  
+
   userMessageBundles: any[];
 
   constructor() { }
@@ -34,7 +34,7 @@ export class MessageSidebarComponent implements OnInit {
   }
 
   showMessage(message: Message) {
-    this.message.emit(message)
+    this.message.emit(message);
   }
 
   readMessages(messages: Message[]): Message[] {
@@ -46,7 +46,15 @@ export class MessageSidebarComponent implements OnInit {
   }
   formatDate(message: Message): string {
     const date = new Date(message.entryDateTime);
-    return moment(date).format('DD MMM YYYY | hh:mm:ss');
+    return moment(date).format('DD MMM | hh:mm');
+  }
+  getTooltip(message: Message): string {
+    let rtn = '';
+    let date = new Date(message.entryDateTime);
+    rtn += moment(date).format('DD MMM YYYY | HH:mm:ss');
+    rtn += ' | ' + message.fromName;
+    rtn += ' | ' + message.reason;
+    return rtn;
   }
 
 }

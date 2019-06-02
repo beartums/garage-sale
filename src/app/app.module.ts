@@ -49,6 +49,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MessagesDialogComponent } from './messages-dialog/messages-dialog.component';
 import { MessageComponent } from './message/message.component';
 import { MessageSidebarComponent } from './message-sidebar/message-sidebar.component';
+import { MessageNavDialogComponent } from './message-nav-dialog/message-nav-dialog.component';
 
 @NgModule({
   declarations: [
@@ -66,9 +67,11 @@ import { MessageSidebarComponent } from './message-sidebar/message-sidebar.compo
     FilterDialogComponent,
     MessagesDialogComponent,
     MessageComponent,
-    MessageSidebarComponent
+    MessageSidebarComponent,
+    MessageNavDialogComponent
   ],
-  entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, ContactUsComponent, MessagesDialogComponent ],
+  entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, ContactUsComponent, MessagesDialogComponent,
+                      MessageNavDialogComponent ],
   imports: [
     BrowserModule,
     FormsModule,

@@ -24,8 +24,8 @@ export class MessageComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.item) {
-
+    if (changes.message) {
+      //console.log(changes);
     }
   }
 

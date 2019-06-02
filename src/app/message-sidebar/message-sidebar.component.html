@@ -2,12 +2,12 @@
   <table style="font-size: smaller">
     <ng-container *ngFor="let messageBundle of userMessageBundles">
       <tr>
-        <td colspan="4">{{messageBundle.userName}}</td>
+        <td colspan="4">{{messageBundle.userName}} ({{messageBundle.messages.length}})</td>
       </tr>
       <tr>
         <td>  </td>
         <td><i class="far fa-envelope-open"></i></td> 
-        <td>Read Messages ({{readMessages(messageBundle.messages).length}})</td>
+        <td colspan="2">Read ({{readMessages(messageBundle.messages).length}})</td>
       </tr>
       <tr  *ngFor="let message of readMessages(messageBundle.messages)">
         <td>  </td>
@@ -16,8 +16,9 @@
         <td>
           <table>
             <tr>
-              <td>{{formatDate(message.entryDateTime)}}</td>
-              <td>{{message.user.displayName}}</td>
+              <td (click)="showMessage(message)" [matTooltip]="getTooltip(message)">
+                {{formatDate(message)}} | {{message.user.displayName}}
+              </td>
             </tr>
           </table>
         </td>
@@ -25,7 +26,7 @@
       <tr>
         <td>  </td>
         <td><i class="far fa-envelope"></i></td> 
-        <td>unread Messages ({{unreadMessages(messageBundle.messages).length}})</td>
+        <td colspan="2">Unread ({{unreadMessages(messageBundle.messages).length}})</td>
       </tr>
       <tr  *ngFor="let message of unreadMessages(messageBundle.messages)">
           <td>  </td>
@@ -34,10 +35,9 @@
           <td>
             <table class="detail-text">
               <tr>
-                <td>{{formatDate(message.entryDateTime)}}</td>
-              </tr>
-              <tr>
-                <td>{{message.user.displayName}}</td>
+                <td (click)="showMessage(message)" [matTooltip]="getTooltip(message)" class="clickable">
+                  {{formatDate(message)}} | {{message.user.displayName}}
+                </td>
               </tr>
             </table>
           </td>
