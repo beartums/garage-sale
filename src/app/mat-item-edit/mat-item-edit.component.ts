@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,7 +10,8 @@ import { ITEM_PICS } from '../itemPics';
 import { MatChipInputEvent, MatAutocompleteSelectedEvent,  MatAutocomplete } from '@angular/material';
 import { FilterService } from '../filter.service';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, take } from 'rxjs/operators';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-mat-item-edit',
@@ -42,11 +43,15 @@ export class MatItemEditComponent {
 
   @ViewChild('chipInput') chipInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
   
   constructor(private fb: FormBuilder, private ds: DataService, 
     private router: Router,  private route: ActivatedRoute,
-    private _location: Location, private fs: FilterService) {
+    private _location: Location, private fs: FilterService,
+    private _ngZone: NgZone) {
 
+      this._ngZone.onStable.pipe( take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
+      
       this.filteredTags = this.chipControl.valueChanges.pipe(
         startWith(null),
         map((tag: string | null) => tag ? this._filter(tag) : this.fs.getAvailableTags(this.itemTags).slice()));

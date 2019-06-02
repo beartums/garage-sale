@@ -1,7 +1,18 @@
 <form [formGroup]="contactForm" novalidate>
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Contact Us</mat-card-title>
+        <div fxLayout="row" class="full-width">
+          <div fxFlex="90%" fxFlexAlign="start center" tabindex="-1">
+            <mat-card-title>
+            Contact Us
+          </mat-card-title>
+        </div>
+          <div fxFlex fxFlexAlign="end center">
+            <button mat-icon-button class="icon-button" (click)="cancel()" tabindex="-1">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+        </div>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
@@ -22,7 +33,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <mat-select placeholder="Reason" formControlName="reason">
-              <mat-option *ngFor="let reason of reasons" [value]="reason.value">
+              <mat-option *ngFor="let reason of reasons" [value]="reason.text" tabindex="0">
                 {{ reason.text }}
               </mat-option>
             </mat-select>
@@ -32,13 +43,17 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <textarea matInput placeholder="Your Message" formControlName="details"></textarea>
+            <textarea matInput placeholder="Your Message" formControlName="details"
+                cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="8">
+          </textarea>
           </mat-form-field>
         </div>
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary">Submit</button>
-    </mat-card-actions>
+        <button mat-raised-button color="warn" (click)="cancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="send()">Send</button>
+      </mat-card-actions>
   </mat-card>
 </form>

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ItemCommentsComponent } from '../item-comments/item-comments.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { User } from '../user';
+import { ContactUsComponent } from '../contact-us/contact-us.component';
 
 
 @Component({
@@ -70,12 +71,11 @@ export class MatItemComponent implements OnInit {
     let email = '';
     email += 'MailTo: someone@somewhere.com';
     email += '?subject=Check it out: ' + item.name;
-    email += '&body=%C3h2%CE';
-    email += '%C3a href="https://garageSale.griffithnet.com/show-item/' + item.key + '"%CE';
-    email += item.name + '%C3%2Fa%CE';
-    email += '%C3%2Fh2%CE';
-    email += '%C3p%CE' + item.description + '%C3%2Fp%CE';
-
+    email += '&body=Thought you might be interested in this:%0D%0A%0D%0A';
+    email += item.name + ' -- ';
+    email += item.description;
+    email += '%0D%0A%0D%0Ahttps://garage-sale.griffithnet.com/show-item/' + item.key;
+    
     return email;
   }
 
@@ -124,6 +124,17 @@ export class MatItemComponent implements OnInit {
 
     return output;
 
+  }
+
+  contactUs(item: ItemService) {
+    const dialogRef: MatDialogRef<ContactUsComponent> = this.dialog.open(ContactUsComponent, {
+      height: '90%',
+      width: '90%',
+      data: {
+        item: item,
+        user: this.as.user
+      }
+    });
   }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, HostListener, Inject } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, HostListener, Inject, NgZone } from '@angular/core';
 
 import { DataService } from '../data.service';
 import { ItemService } from '../item.service';
@@ -8,6 +8,8 @@ import { AuthService } from '../auth.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'gs-item-comments',
@@ -17,6 +19,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class ItemCommentsComponent implements OnInit {
 
   @Input() item: Item;
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   newComment: string;
 
@@ -26,7 +29,10 @@ export class ItemCommentsComponent implements OnInit {
 
   constructor(private ds: DataService, private is: ItemService, private as: AuthService,
         public dialogRef: MatDialogRef<ItemCommentsComponent>, 
-        @Inject(MAT_DIALOG_DATA)public data: any) {
+        @Inject(MAT_DIALOG_DATA)public data: any,
+        private _ngZone: NgZone) {
+
+        this._ngZone.onStable.pipe( take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
    }
 
   ngOnInit() {

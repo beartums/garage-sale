@@ -1,10 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Inject, ViewChild, NgZone } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 import { AuthService } from '../auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Item } from '../item';
 import { User } from '../user';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { take } from 'rxjs/operators';
+import { Message } from '../message';
 
 @Component({
   selector: 'gs-contact-us',
@@ -24,6 +27,8 @@ export class ContactUsComponent {
   @Input() item: Item;
   @Input() user: User;
 
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+
   reasons = [
     { value: 'ask', text: 'Ask a Question' },
     { value: 'offer', text: 'Make an offer' },
@@ -34,15 +39,36 @@ export class ContactUsComponent {
   constructor(private fb: FormBuilder,
             private ds: DataService,
             private as: AuthService,
-            private router: Router,
-            private route: ActivatedRoute) {
+            private dialogRef: MatDialogRef<ContactUsComponent>,
+            @Inject(MAT_DIALOG_DATA) public data,
+            private _ngZone: NgZone) {
 
-    this.route.paramMap.subscribe( params => {
-      this.itemId = params.get('itemId');
+    this.user = data.user;
+    this.item = data.item;
 
-      this.contactForm.get('email').setValue(this.user.email);
-      this.contactForm.get('name').setValue(this.user.username);
-    })
+    this.contactForm.get('email').setValue(this.user.email);
+    this.contactForm.get('name').setValue(this.user.username);
+
+    this._ngZone.onStable.pipe( take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
+  }
+
+  send() {
+    let message = new Message();
+    message.fromEmail = this.contactForm.controls['email'].value;
+    message.fromName = this.contactForm.controls['name'].value;
+    message.fromUserId = this.user.uid;
+    message.reason = this.contactForm.controls['reason'].value;
+    message.message = this.contactForm.controls['details'].value;
+    message.entryDateTime = new Date().toISOString();
+    message.toUserId = '<admin>';
+    message.user = this.user || null;
+    message.item = this.item || null;
+    this.ds.addMessage(message);
+    this.dialogRef.close();
+  }
+
+  cancel() {
+    this.dialogRef.close();
   }
 
 }

@@ -43,6 +43,7 @@ import { ShowItemComponent } from './show-item/show-item.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
     ContactUsComponent,
     FilterDialogComponent
   ],
-  entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent ],
+  entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, ContactUsComponent ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -97,6 +98,7 @@ import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
     MatButtonModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
+  
   providers: [AuthService, DataService, ItemService],
   bootstrap: [AppComponent]
 })

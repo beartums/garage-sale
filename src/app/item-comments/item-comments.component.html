@@ -22,7 +22,9 @@
     <div class="input-container">
     <mat-form-field class="full-width" *ngIf="isLoggedIn()">
       <textarea matInput placeholder="comment" class="form-control small-input" name="comment" 
-          [(ngModel)]="newComment" (keydown.enter)="addComment(newComment)"></textarea>
+          [(ngModel)]="newComment" (keydown.enter)="addComment(newComment)"
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"></textarea>
       <mat-icon class="return-button" matSuffix (click)="addComment(newComment)">keyboard_return</mat-icon>
     </mat-form-field>
     <div style="text-align: center">

@@ -8,6 +8,7 @@ import { Observable, Subscribable } from 'rxjs';
 import { User } from './user';
 import { Comment } from './comment';
 import { FilterService } from './filter.service';
+import { Message } from './message';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class DataService {
   readonly TAG_ROOT: string = 'Tags';
   readonly USER_ROOT: string = 'Users';
   readonly COMMENT_ROOT: string = 'Comments';
+  readonly MESSAGE_ROOT: string = 'Messages';
 
   constructor(private db: AngularFireDatabase, private ts: TagService) { 
     //this.itemsRef = this.getItemsRef();
@@ -38,9 +40,14 @@ export class DataService {
   }
 
   addItem(item: Item) {
-    item.lastUpdated = new Date().toUTCString();
+    item.lastUpdated = new Date().toISOString();
     this.getItemsRef().push(item);
     this.ts.addItemTags(item);
+  }
+
+  addMessage(message: Message) {
+    message.entryDateTime = new Date().toISOString();
+    this.getMessagesRef().push(message);
   }
 
   deleteItem(id: string) {
@@ -95,6 +102,22 @@ export class DataService {
 
   getItemsRef(): AngularFireList<Item> {
     return this.db.list(this.ITEM_ROOT);
+  }
+
+  getMessageRef(id: string): AngularFireObject<Message> {
+    return this.db.object(this.MESSAGE_ROOT + '/' + id);
+  }
+  getMessagesRef(toUserId: string = null): AngularFireList<Message> {
+    if (!toUserId) {
+      return this.db.list(this.MESSAGE_ROOT);
+    } else {
+      return this.db.list(this.MESSAGE_ROOT, ref => ref.orderByChild('toUserId').equalTo(toUserId));
+    }
+  }
+  getMessages$(toUserId: string = null): Observable<Message[]> {
+    return this.getMessagesRef(toUserId).snapshotChanges().pipe (
+      map( changes => <Message[]>changes.map( c => <unknown>{ key: c.payload.key, ...c.payload.val() } )  )
+    );
   }
 
   getUser$(id: string): Observable<User> {
