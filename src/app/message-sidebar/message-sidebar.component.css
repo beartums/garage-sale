@@ -1,0 +1,8 @@
+.detail-text {
+    font-size: smaller;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+td {
+    padding: 5px;
+}

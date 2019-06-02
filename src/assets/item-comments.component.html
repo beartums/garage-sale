@@ -1,0 +1,34 @@
+<div mat-dialog-title>
+  <table width="100%">
+    <tr width="100%">
+      <td>{{item.name}}</td>
+      <td class="cancel-icon"><button mat-icon-button tabindex="-1" (click)="cancel()">
+        <mat-icon class="cancel-icon">cancel</mat-icon>
+      </button></td>
+    </tr>
+  </table>
+  <hr />
+</div>
+<mat-dialog-content class="dialog-content-noscrollbar">
+  <div fxLayout="column" class="comment-list-container" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    <div fxFlex class="comment-container" *ngFor="let comment of comments$ | async">
+      <div class="comment">{{comment.comment}}</div>
+      <div class="comment-details">{{getCommentName(comment)}} | {{getCommentTime(comment)}}</div>
+    </div>
+  </div>
+  <hr />
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="input-container">
+    <mat-form-field class="full-width" *ngIf="isLoggedIn()">
+      <textarea matInput placeholder="comment" class="form-control small-input" name="comment" 
+          [(ngModel)]="newComment" (keydown.enter)="addComment(newComment)"
+          cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"></textarea>
+      <mat-icon class="return-button" matSuffix (click)="addComment(newComment)">keyboard_return</mat-icon>
+    </mat-form-field>
+    <div style="text-align: center">
+      <h4><em>Log in to join the conversation</em> &nbsp; <span><i class="material-icons">account_circle</i></span></h4>
+    </div>
+  </div>
+</mat-dialog-actions>
