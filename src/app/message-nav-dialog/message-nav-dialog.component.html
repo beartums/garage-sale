@@ -1,0 +1,34 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="false"
+      [attr.role]="(isHandset) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset) ? 'over' : 'side'" 
+      [opened]="!(isHandset)">
+      <!-- -->
+    <mat-toolbar>Messages</mat-toolbar>
+    <div>
+      <gs-message-sidebar [messages]="messages" [adminMessages]="adminMessages" 
+          (message)="setMessage($event)" [user]="user" *ngIf="messages"></gs-message-sidebar>
+    </div>
+    <!-- <mat-nav-list>
+      <a mat-list-item href="#">Link 1</a>
+      <a mat-list-item href="#">Link 2</a>
+      <a mat-list-item href="#">Link 3</a>
+    </mat-nav-list> -->
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Messages</span>
+    </mat-toolbar>
+    <div>
+      <gs-message [message]="message" [user]="user" *ngIf="message"></gs-message>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
