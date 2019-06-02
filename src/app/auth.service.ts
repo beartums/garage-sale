@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Subject } from 'rxjs';
 
 import { map } from 'rxjs/operators';
 import { User } from './user';
+import { Message } from './message';
 import { DataService } from './data.service';
 import { FilterService } from './filter.service';
 
@@ -25,6 +26,7 @@ export class AuthService {
   public authUser: Observable<firebase.User|any>;
   user: User;
   user$: Observable<User>;
+
   private _isLoggedIn = false;
   private _isAdmin = false;
   private _isLoggedIn$: Observable<boolean>;
@@ -77,12 +79,14 @@ export class AuthService {
             this.user = new User(authUser)
             this.ds.setUserData(this.user);
           }
+
         })
       } else {
         // Set logged out and GM status.  Also clear out the userdata
         this._isLoggedIn = false;
         this._isAdmin = false;
         this.user = new User();
+
       }
     });
   }

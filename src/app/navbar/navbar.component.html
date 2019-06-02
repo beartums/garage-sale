@@ -20,23 +20,37 @@
           <div fxFlex >Griffith Garage Sale</div>
           <div fxFlex  fxLayout="row" fxLayoutAlign="end center">
             <i class="material-icons icon-button" *ngIf="auth.isLoggedIn" (click)="gotoSettings()" matTooltip="Go to your settings">settings</i>
+            
+            <button mat-icon-button (click)="gotoInbox()" *ngIf="newMessageCount > 0" 
+              matTooltip="Message waiting in your inbox" [matBadge]="newMessageCount"
+              class="icon-button-badge-above " matBadgeColor="warn">
+              <mat-icon>email</mat-icon>
+            </button>
+
             <i class="material-icons icon-button" (click)="gotoInfo()" matTooltip="Go to info/help page">info</i>
             <i *ngIf="isCurrentRoute('/mat-item-tiles') && auth.isAdmin" matToolTip="View as list"
                 class="material-icons icon-button" (click)="gotoSaleSettings()">
               view_list
             </i>
           
-            <i class="icon-button material-icons" *ngIf="!isCurrentRoute('/mat-item-tiles')" matTooltip="View as cards"
+            <button mat-icon-button *ngIf="!isCurrentRoute('/mat-item-tiles')" matTooltip="View as cards"
               (click)="gotoTileList()">
-              view_module
-            </i>
-            <span class="icon" *ngIf="auth.isLoggedIn" matTooltip="Logout">
+              <mat-icon>view_module</mat-icon>
+          </button>
+
+          <button mat-icon-button  *ngIf="auth.isLoggedIn" matTooltip="Logout">
+            <span class="icon">
               <img [src]="auth.user.photoURL" (click)="logout()" >
             </span>
-            <i class="icon-button material-icons disabled" *ngIf="!auth.isLoggedIn" matTooltip="Log in using Google (to favorite items and save settings)" 
+          </button>
+
+            <button mat-icon-button *ngIf="!auth.isLoggedIn" matTooltip="Log in using Google (to favorite items and save settings)" 
               (click)="login()">
-              account_circle
-            </i>
+              <mat-icon>
+                account_circle
+              </mat-icon>
+            </button>
+
           </div>
        
 

@@ -44,6 +44,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MessagesDialogComponent } from './messages-dialog/messages-dialog.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
     ItemCommentsDialogComponent,
     ShowItemComponent,
     ContactUsComponent,
-    FilterDialogComponent
+    FilterDialogComponent,
+    MessagesDialogComponent
   ],
   entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, ContactUsComponent ],
   imports: [

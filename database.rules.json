@@ -4,6 +4,9 @@
     ".write": "auth != null",
       "Comments": {
         ".indexOn": ["itemId"]
+      },
+      "Messages": {
+        ".indexOn": ["toUserId","fromUserId"]
       }
   }
 }

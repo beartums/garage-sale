@@ -19,3 +19,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .favorited {
     color: gold;
 }
+
+/* .mat-badge-content {
+  left: 18px;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+  line-height: 16px;
+  opacity: .9;
+} */
+.icon-button-badge-below > .mat-badge-content {
+  top: 18px!important;
+  left: 20px;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+  line-height: 16px;
+  opacity: .9;
+}
+.icon-button-badge-above > .mat-badge-content {
+  top: -1px!important;
+  left: 20px;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+  line-height: 16px;
+  opacity: .9;
+}  

@@ -8,6 +8,9 @@ import * as _ from 'lodash';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { SettingsComponent } from '../settings/settings.component';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
+import { take, map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { Message } from '../message';
 
 @Component({
   selector: 'app-navbar',
@@ -19,12 +22,44 @@ export class NavbarComponent {
   auth: AuthService;
   filt: FilterService;
 
+  subs: any[] = [];
+
+  userMessages: Message[] = [];
+  adminMessages: Message[] = []
+
+  get messageCount() {
+    return this.userMessages.concat(this.adminMessages).length;
+  }
+  get newMessageCount() {
+    return this.userMessages.concat(this.adminMessages).filter( msg => !msg.isRead).length;
+  }
+
   constructor(private router: Router, 
     private as: AuthService, private ds: DataService, private ts: TagService,
     private fs: FilterService,
     private dialog: MatDialog) {
       this.auth = as;
       this.filt = fs;
+
+      this.subs.push(this.as.authUser.pipe( 
+        switchMap( user => this.ds.getMessages$(user.uid) ))
+        .subscribe( msgs => this.userMessages = msgs));
+      this.subs.push(this.as.authUser.pipe( 
+        switchMap( user => {
+          if (this.as.isUserAdmin(user)) {
+            return this.ds.getMessages$('<admin>');
+          } else {
+            return of([]);
+          }
+        } ))
+        .subscribe( msgs => this.adminMessages = msgs));
+    }
+
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach( sub => sub.unsubscribe() );
   }
 
   gotoSaleSettings() {
@@ -53,6 +88,13 @@ export class NavbarComponent {
 
   logout() {
     this.as.logout();
+  }
+
+  isAdmin(): boolean {
+    return this.as.isAdmin;
+  }
+  isLoggedIn(): boolean {
+    return this.as.isLoggedIn;
   }
 
   toggleFilter() {
