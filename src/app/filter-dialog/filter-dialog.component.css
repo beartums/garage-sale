@@ -23,3 +23,10 @@
   .ignore {
       color: gray
   }
+
+  mat-form-field {
+      width: 100%!important;
+  }
+  .mat-form-field-flex div .mat-form-field-infix {
+      width: 100px!important;
+  }

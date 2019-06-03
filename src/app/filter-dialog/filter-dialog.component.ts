@@ -82,7 +82,13 @@ export class FilterDialogComponent implements OnInit {
   removeTag(tag: string) {
     this.fs.removeTagFromFilter(tag);
   }
-
+  getHintLabel(itemType: string, filterType: FilterOptions): string {
+    if (filterType === FilterOptions.ignore) return 'Items will show whether or not they are ' +itemType.toUpperCase();
+    let hint = 'Items will only show if they are';
+    hint += filterType == FilterOptions.exclude ? ' NOT' : '';
+    hint += ' ' + itemType.toLocaleUpperCase();
+    return hint
+  }
   getTags(): string[] {
     let tags = this.fs.getAvailableTags(this.fs.chosenTags);
     return this.ts.removeSpecialTags(tags);

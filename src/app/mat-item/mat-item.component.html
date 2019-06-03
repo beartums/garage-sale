@@ -13,7 +13,7 @@
             </i>
             <!-- Did not like the traditional positioning of matBadge, so did my own with icon-button-badge-below/above (always on right) -->
             <!-- [matBadge]="item.commentCount" matBadgeSize="medium" [matBadgeHidden]="!item.commentCount"> -->
-            <i mat-icon-button
+            <i mat-icon-button matTooltip="Read comments (add comments if you are logged in)"
                 class="material-icons-outlined icon-button icon-button-badge-above" 
                 [matBadge]="item.commentCount"  matBadgeSize="medium" [matBadgeHidden]="!item.commentCount"
                 (click)="toggleComments(item)">
@@ -34,8 +34,18 @@
           <i class="material-icons-outlined icon-button"  [matMenuTriggerFor]="appMenu" 
                   matTooltip="Ask questions, make an offer, otherwise communicate with us">email</i>
           <mat-menu #appMenu="matMenu">
-            <button mat-menu-item tabindex="-1" (click)="contactUs()">Contact Us</button>
-            <a mat-menu-item tabindex="-1" [href]="getEmailForItem(item)" target="_blank">Share by email</a>
+            <a mat-menu-item tabindex="-1" [href]="getAdminEmailForItem(item)" target="_blank">
+              <mat-icon>email</mat-icon>
+              <span>Email Us</span>
+            </a>
+            <a mat-menu-item tabindex="-1" [href]="getEmailForItem(item)" target="_blank">
+              <mat-icon>contact_mail</mat-icon>
+              <span>Share by email</span>
+            </a>
+            <button mat-menu-item tabindex="-1" (click)="contactUs()">
+              <mat-icon>message</mat-icon>
+              <span>Message Us</span>
+            </button>
           </mat-menu>
          </div>
       </mat-card-title>

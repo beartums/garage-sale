@@ -79,6 +79,16 @@ export class MatItemComponent implements OnInit {
     return email;
   }
 
+  getAdminEmailForItem(item: Item): string {
+    let email = '';
+    email += 'MailTo: garage-sale@griffithnet.com';
+    email += '?subject=RE: ' + item.name;
+    email += '&body=RE: ';
+    email += 'https://garage-sale.griffithnet.com/show-item/' + item.key;
+    
+    return email;
+  }
+
   isShowingComments(item: Item): boolean {
     return this.is.isShowingComments(item);
   }

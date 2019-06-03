@@ -3,18 +3,9 @@
     <span fxFlex="1 1 auto" class="fill-toolbar"></span>
   </mat-toolbar>
   
-  <mat-card>
-    <!-- <table>
-      <tr>
-        <td class="label">Sold Items</td>
-        <td class="value">
-          <fa-icon class="large-icon" [icon]="faHandHoldingUsd" (click)="toggleSoldFilter()"
-             [ngClass]="FilterOptions[soldItemFilter]">
-          </fa-icon>
-        </td>
-      </tr>
-    </table> -->
-    <mat-form-field>
+  <div fxLayout.lt-md="column" fxLayout="row">
+    <mat-card fxFlex="1fr">
+    <mat-form-field [hintLabel]="getHintLabel('sold',soldItemFilter)">
       <mat-label>Sold Items</mat-label>
       <mat-select [(value)]="soldItemFilter" [matTooltip]="filterOptions[soldItemFilter].tooltip">
         <mat-option *ngFor="let filterOption of filterOptions" [value]="filterOption.value">
@@ -23,9 +14,9 @@
       </mat-select>
     </mat-form-field>
   </mat-card>
-  <mat-card>
-      <mat-form-field>
-        <mat-label>Featured Items</mat-label>
+  <mat-card fxFlex="1fr">
+      <mat-form-field [hintLabel]="getHintLabel('featured',featuredItemFilter)">
+          <mat-label>Featured Items</mat-label>
         <mat-select [(value)]="featuredItemFilter" [matTooltip]="filterOptions[featuredItemFilter].tooltip">
           <mat-option *ngFor="let filterOption of filterOptions" [value]="filterOption.value">
             {{filterOption.text}}
@@ -33,9 +24,9 @@
         </mat-select>
       </mat-form-field>
   </mat-card>
-  <mat-card>
-      <mat-form-field>
-        <mat-label>Favorited Items</mat-label>
+  <mat-card fxFlex="1fr">
+      <mat-form-field [hintLabel]="getHintLabel('favorited',favoritedItemFilter)">
+          <mat-label>Favorited Items</mat-label>
         <mat-select [(value)]="favoritedItemFilter" [matTooltip]="filterOptions[favoritedItemFilter].tooltip">
           <mat-option *ngFor="let filterOption of filterOptions" [value]="filterOption.value">
             {{filterOption.text}}
@@ -43,12 +34,12 @@
         </mat-select>
       </mat-form-field>
   </mat-card>
+  </div>
 
   <mat-card>
-    <h2>Categories</h2>
-    <p>Click/tap on a grey category to add it to the filters.  Once added, you will ONLY see items that belongs to that category.  If you click
-      on the now-purple category, it will turn red which means you will ONLY see items that do NOT belong to that category.  Click on the 'x' to 
-      remove the category from the filters all together.
+    <h4>Categories</h4>
+    <p>Click/tap on a grey category to add it to the filters.  Once added, you will ONLY see items that belongs to that 
+      category/those categories.
     </p>
     <mat-chip-list #chipList matTooltip="Tap category to add it to a filter">
       <ng-container *ngFor="let tag of getTags()" >
@@ -60,10 +51,11 @@
       </ng-container>
     </mat-chip-list>
   </mat-card>
-  
-  <mat-card>
-    <div id="filter-container">
-      <br />
+  <mat-card *ngIf="getChosenTags().length>0">
+      <p *ngIf="getChosenTags().length>0">Click on a purple category to turn it red and exclude it.  Items will only show in your 
+        list if they INCLUDE all the purple categories
+          AND do NOT include any of the red categories.</p>
+          <div id="filter-container">
       <mat-chip-list #chipList matTooltip="Tap the 'X' to remove the category; tap the category to negate it (red means do NOT include this category)">
         <mat-chip [color]="isTagNegative(tag) ? 'warn' : 'primary'" selected *ngFor="let tag of getChosenTags()" 
           [removable]="true" (click)="toggleTagPolarity(tag)">
