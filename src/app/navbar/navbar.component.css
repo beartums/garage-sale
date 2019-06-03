@@ -100,3 +100,26 @@
   padding: 0px 10px 12px 10px;
   text-align: center;
 }
+
+.menu {
+  position: relative;
+  top: 5px;
+}
+
+.badge {
+  position: relative;
+  top: 2px;
+  right: 8px;
+  font-size: x-small;
+  color: white;
+  background-color: red;
+  border-radius: 50%;
+  width: 16px!important;
+  height: 16px;
+}
+
+.badged-button {
+  display: relative;
+  /* top: -4px; */
+  right: -8px;
+}

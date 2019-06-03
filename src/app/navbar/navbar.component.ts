@@ -8,11 +8,12 @@ import * as _ from 'lodash';
 import { MatDialog } from '@angular/material';
 import { SettingsComponent } from '../settings/settings.component';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
 import { Message } from '../message';
 import { PATHS } from '../constants';
 import { MessageNavDialogComponent } from '../message-center/message-center-dialog/message-center-dialog.component';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-navbar',
@@ -29,6 +30,13 @@ export class NavbarComponent {
   userMessages: Message[] = [];
   adminMessages: Message[] = []
 
+  isXs: boolean;
+
+  isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)
+  .pipe(
+    map(result => this.isXs = result.matches)
+  );
+
   get messageCount() {
     return this.userMessages.concat(this.adminMessages).length;
   }
@@ -38,11 +46,15 @@ export class NavbarComponent {
 
   constructor(private router: Router, 
     private as: AuthService, private ds: DataService, private ts: TagService,
-    private fs: FilterService,
+    private fs: FilterService, private breakpointObserver: BreakpointObserver,
     private dialog: MatDialog) {
       this.auth = as;
       this.filt = fs;
 
+      // subscribe to breakpoint observer because fxHide.xs doesn't always work
+      this.subs.push( this.isXs$.subscribe( result => this.isXs = result ));
+
+      // keep up to date on messages and admingmessages
       this.subs.push(this.as.authUser.pipe( 
         switchMap( user => this.ds.getMessages$(user ? user.uid : null) ))
         .subscribe( msgs => this.userMessages = msgs));

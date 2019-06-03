@@ -13,46 +13,39 @@
       </button> -->
         
           
-          <i fxFlex="40px" class="material-icons icon-button" (click)="toggleFilter()" *ngIf="isCurrentRoute('tiles')">
-            more_vert
-          </i>
-          
-          <div fxFlex >Griffith Garage Sale</div>
-          <div fxFlex  fxLayout="row" fxLayoutAlign="end center">
-            
-            <i class="material-icons icon-button" *ngIf="auth.isLoggedIn" (click)="gotoSettings()" matTooltip="Go to your settings">settings</i>
-            
-            <button mat-icon-button (click)="gotoInbox()" *ngIf=" messageCount>0" 
-              matTooltip="Message waiting in your inbox" [matBadge]="newMessageCount"
-              class="icon-button-badge-above " matBadgeColor="warn">
-              <mat-icon>email</mat-icon>
-            </button>
+      <div fxFlex >Griffith Garage Sale</div>
+      <div fxFlex  fxLayout="row" fxLayoutAlign="end center">
+       
+          <span *ngIf="!isXs"><ng-container *ngTemplateOutlet="toolbuttons"></ng-container></span>
+          <span *ngIf="isXs" >
+            <mat-icon class="menu" [matMenuTriggerFor]="hiddenMenu">menu</mat-icon>
+            <mat-menu #hiddenMenu="matMenu">
+              <ng-container *ngTemplateOutlet="toolbuttons"></ng-container>
+            </mat-menu>
+          </span>
+     
+        <!-- <span fxHide.gt-xs>
+          <mat-icon class="menu" [matMenuTriggerFor]="hiddenMenu">menu</mat-icon>
+          <mat-menu #hiddenMenu="matMenu">
+            <ng-container *ngTemplateOutlet="toolbuttons"></ng-container>
+          </mat-menu>
+        </span>
+        <span ><ng-container fxHide *ngTemplateOutlet="toolbuttons"></ng-container></span> -->
+        
+        <button mat-icon-button *ngIf="!auth.isLoggedIn" matTooltip="Log in using Google (to favorite items and save settings)" 
+          (click)="login()">
+          <mat-icon>
+            account_circle
+          </mat-icon>
+        </button>
+        
+        <button mat-icon-button  *ngIf="auth.isLoggedIn" matTooltip="Logout">
+          <span class="icon">
+            <img [src]="auth.user.photoURL" (click)="logout()" >
+          </span>
+        </button>
 
-            <i class="material-icons icon-button" (click)="gotoInfo()" matTooltip="Go to info/help page">info</i>
-            <i *ngIf="isCurrentRoute('tiles') && auth.isAdmin" matToolTip="View as list"
-                class="material-icons icon-button" (click)="gotoSaleSettings()">
-              view_list
-            </i>
-          
-            <button mat-icon-button *ngIf="!isCurrentRoute('tiles')" matTooltip="View as cards"
-              (click)="gotoTileList()">
-              <mat-icon>view_module</mat-icon>
-          </button>
-
-          <button mat-icon-button  *ngIf="auth.isLoggedIn" matTooltip="Logout">
-            <span class="icon">
-              <img [src]="auth.user.photoURL" (click)="logout()" >
-            </span>
-          </button>
-
-            <button mat-icon-button *ngIf="!auth.isLoggedIn" matTooltip="Log in using Google (to favorite items and save settings)" 
-              (click)="login()">
-              <mat-icon>
-                account_circle
-              </mat-icon>
-            </button>
-
-          </div>
+      </div>
        
 
     </mat-toolbar>
@@ -70,7 +63,37 @@
     </span>
   </div>
   <router-outlet></router-outlet>
-<!-- </div> -->
 
-<!--not sure why, but when this '>' is removed, a ghost '>' appears on the display-->
 
+<ng-template #toolbuttons>
+  <button mat-icon-button fxFlex="40px" class="material-icons" (click)="toggleFilter()" *ngIf="isCurrentRoute('tiles')"
+    matTooltip="Choose what to display based on item type/status">
+    <mat-icon>filter_list</mat-icon>
+  </button>
+  
+  <button mat-icon-button class="material-icons" 
+    *ngIf="auth.isLoggedIn" (click)="gotoSettings()" matTooltip="Go to your settings">
+    <mat-icon>settings</mat-icon>
+  </button>
+  
+  <button mat-icon-button (click)="gotoInbox()" *ngIf=" messageCount>0" class="badged-button"
+    matTooltip="Message waiting in your inbox">
+    <mat-icon>email</mat-icon>
+  </button>
+  <div class="badge" *ngIf=" messageCount>0" >{{newMessageCount}}</div>
+
+  <button mat-icon-button (click)="gotoInfo()" matTooltip="Go to info/help page">
+    <mat-icon>info</mat-icon>
+  </button>
+
+  <button mat-icon-button *ngIf="isCurrentRoute('tiles') && auth.isAdmin" matTooltip="View as list" (click)="gotoSaleSettings()">
+    <mat-icon>view_list</mat-icon>
+  </button>
+
+  <button mat-icon-button *ngIf="!isCurrentRoute('tiles')" matTooltip="View as cards"
+    (click)="gotoTileList()">
+    <mat-icon>view_module</mat-icon>
+  </button>
+
+
+</ng-template>
