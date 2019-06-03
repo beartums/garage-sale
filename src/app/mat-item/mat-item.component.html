@@ -7,47 +7,16 @@
     <mat-card-header>
       <mat-card-title>
         {{item.name}}
+        
         <div class="card-tools">
-            <i class="material-icons-outlined icon-button" *ngIf="isAdmin()" (click)="editItem(item)">
-              edit
-            </i>
-            <!-- Did not like the traditional positioning of matBadge, so did my own with icon-button-badge-below/above (always on right) -->
-            <!-- [matBadge]="item.commentCount" matBadgeSize="medium" [matBadgeHidden]="!item.commentCount"> -->
-            <i mat-icon-button matTooltip="Read comments (add comments if you are logged in)"
-                class="material-icons-outlined icon-button icon-button-badge-above" 
-                [matBadge]="item.commentCount"  matBadgeSize="medium" [matBadgeHidden]="!item.commentCount"
-                (click)="toggleComments(item)">
-              chat
-            </i>
-            <span>
-              <i class="material-icons-outlined icon-button icon-button-badge-above" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)"
-              [matTooltip]="favoriteTooltip('add',isLoggedIn())"
-              [matBadge]="countFaves(item)" matBadgeSize="medium" [matBadgeHidden]="!countFaves(item)">
-                favorite_border
-              </i>
-              <i class="material-icons favorited icon-button icon-button-badge-above" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)"
-                [matTooltip]="favoriteTooltip('remove',isLoggedIn())"
-                [matBadge]="countFaves(item)" matBadgeSize="medium" [matBadgeHidden]="!countFaves(item)">
-                favorite
-              </i>
-            </span>
-          <i class="material-icons-outlined icon-button"  [matMenuTriggerFor]="appMenu" 
-                  matTooltip="Ask questions, make an offer, otherwise communicate with us">email</i>
-          <mat-menu #appMenu="matMenu">
-            <a mat-menu-item tabindex="-1" [href]="getAdminEmailForItem(item)" target="_blank">
-              <mat-icon>email</mat-icon>
-              <span>Email Us</span>
-            </a>
-            <a mat-menu-item tabindex="-1" [href]="getEmailForItem(item)" target="_blank">
-              <mat-icon>contact_mail</mat-icon>
-              <span>Share by email</span>
-            </a>
-            <button mat-menu-item tabindex="-1" (click)="contactUs()">
-              <mat-icon>message</mat-icon>
-              <span>Message Us</span>
-            </button>
-          </mat-menu>
-         </div>
+          <span fxHide.xs><ng-container *ngTemplateOutlet="buttons"></ng-container></span>
+          <span fxHide.gt-xs >
+            <mat-icon class="menu" [matMenuTriggerFor]="hiddenMenu">menu</mat-icon>
+            <mat-menu #hiddenMenu="matMenu">
+              <ng-container *ngTemplateOutlet="buttons"></ng-container>
+            </mat-menu>
+          </span>
+        </div>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content class="content-container">
@@ -86,3 +55,46 @@
   </mat-card-content>
 
 </mat-card>
+
+<ng-template #buttons>
+    <i class="material-icons-outlined icon-button" *ngIf="isAdmin()" (click)="editItem(item)">
+        edit
+      </i>
+      <!-- Did not like the traditional positioning of matBadge, so did my own with icon-button-badge-below/above (always on right) -->
+      <!-- [matBadge]="item.commentCount" matBadgeSize="medium" [matBadgeHidden]="!item.commentCount"> -->
+      <i mat-icon-button matTooltip="Read comments (add comments if you are logged in)"
+          class="material-icons-outlined icon-button icon-button-badge-above" 
+          [matBadge]="item.commentCount"  matBadgeSize="medium" [matBadgeHidden]="!item.commentCount"
+          (click)="toggleComments(item)">
+        chat
+      </i>
+      <span>
+        <i class="material-icons-outlined icon-button icon-button-badge-above" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)"
+        [matTooltip]="favoriteTooltip('add',isLoggedIn())"
+        [matBadge]="countFaves(item)" matBadgeSize="medium" [matBadgeHidden]="!countFaves(item)">
+          favorite_border
+        </i>
+        <i class="material-icons favorited icon-button icon-button-badge-above" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)"
+          [matTooltip]="favoriteTooltip('remove',isLoggedIn())"
+          [matBadge]="countFaves(item)" matBadgeSize="medium" [matBadgeHidden]="!countFaves(item)">
+          favorite
+        </i>
+      </span>
+    <i class="material-icons-outlined icon-button"  [matMenuTriggerFor]="itemMenu" 
+            matTooltip="Ask questions, make an offer, otherwise communicate with us">email</i>
+    <mat-menu #itemMenu="matMenu">
+      <a mat-menu-item tabindex="-1" [href]="getAdminEmailForItem(item)" target="_blank">
+        <mat-icon>email</mat-icon>
+        <span>Email Us</span>
+      </a>
+      <a mat-menu-item tabindex="-1" [href]="getEmailForItem(item)" target="_blank">
+        <mat-icon>contact_mail</mat-icon>
+        <span>Share by email</span>
+      </a>
+      <button mat-menu-item tabindex="-1" (click)="contactUs()">
+        <mat-icon>message</mat-icon>
+        <span>Message Us</span>
+      </button>
+    </mat-menu>
+
+</ng-template>

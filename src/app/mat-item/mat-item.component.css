@@ -150,6 +150,11 @@
     font-variant: small-caps;
   }
 
+  .menu {
+    position: relative;
+    top: 10px;
+  }
+
   
 .mat-badge-content {
   left: 18px;
