@@ -27,7 +27,7 @@
           cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"></textarea>
       <mat-icon class="return-button" matSuffix (click)="addComment(newComment)">keyboard_return</mat-icon>
     </mat-form-field>
-    <div style="text-align: center">
+    <div style="text-align: center" *ngIf="!isLoggedIn()">
       <h4><em>Log in to join the conversation</em> &nbsp; <span><i class="material-icons">account_circle</i></span></h4>
     </div>
   </div>

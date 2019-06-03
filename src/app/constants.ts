@@ -1,5 +1,8 @@
 export const PATHS = {
     assets: 'assets/',
     itemPics: 'assets/items/',
-    tilesUrl: '/mat-item-tiles',
+    tilesUrl: 'tile-list',
+    listUrl: 'table-list',
+    editUrl: 'edit-item',
+    itemUrl: 'show-item',
 }

@@ -10,6 +10,7 @@
     border: 1px lightslategray solid;
     margin: 5px;
     padding: 8px;
+    height: auto;
 }
 .comment {
 

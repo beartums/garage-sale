@@ -3,8 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Message } from '../message';
-import { User } from '../user';
+import { Message } from '../../message';
+import { User } from '../../user';
 
 export class MessagesDialogData {
   user: User;
@@ -13,9 +13,9 @@ export class MessagesDialogData {
 }
 
 @Component({
-  selector: 'app-message-nav-dialog',
-  templateUrl: './message-nav-dialog.component.html',
-  styleUrls: ['./message-nav-dialog.component.css']
+  selector: 'app-message-center-dialog',
+  templateUrl: './message-center-dialog.component.html',
+  styleUrls: ['./message-center-dialog.component.css']
 })
 export class MessageNavDialogComponent {
 

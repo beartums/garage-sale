@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {faEnvelope, faEnvelopeOpen} from '@fortawesome/free-solid-svg-icons';
-import { Message } from '../message';
+import { Message } from '../../message';
 import { Observable } from 'rxjs';
 import { take, map } from 'rxjs/operators';
-import { User } from '../user';
+import { User } from '../../user';
 import * as moment from 'moment';
 
 @Component({

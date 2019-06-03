@@ -6,6 +6,7 @@ import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { ItemService } from '../item.service';
 import { AuthService } from '../auth.service';
+import { PATHS } from '../constants';
 
 @Component({
   selector: 'app-mat-item-list',
@@ -28,12 +29,12 @@ export class MatItemListComponent implements AfterViewInit {
 
   editItem(item: Item) {
     this.ds.itemBeingEdited = item;
-    this.router.navigate(['/mat-item-edit', item.key]);
+    this.router.navigate([PATHS.editUrl, item.key]);
   }
 
   addItem() {
     this.ds.itemBeingEdited = null;
-    this.router.navigate(['/mat-item-edit', 'new']);
+    this.router.navigate([PATHS.editUrl, 'new']);
   }
 
   isAdmin() {
@@ -49,7 +50,7 @@ export class MatItemListComponent implements AfterViewInit {
   }
 
   showItem(item) {
-    this.router.navigate(['/show-item',item.key])
+    this.router.navigate([PATHS.itemUrl,item.key])
   }
 
   sortTags(tags: string[] = []): string[] {

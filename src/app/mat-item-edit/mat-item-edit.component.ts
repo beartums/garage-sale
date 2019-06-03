@@ -95,12 +95,10 @@ export class MatItemEditComponent {
     } else {
       this.ds.updateItem(this.ds.itemBeingEdited.key, item, this.ds.itemBeingEdited);
     }
-    // this.router.navigate(['/mat-item-list/']);
     this._location.back()
   }
 
   cancel() {
-    // this.router.navigate(['/mat-item-list/']);
     this._location.back()
   }
 

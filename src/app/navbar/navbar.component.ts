@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { DataService } from '../data.service';
 import { TagService } from '../tag.service';
 import { FilterService } from '../filter.service';
 import * as _ from 'lodash';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { SettingsComponent } from '../settings/settings.component';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
-import { take, map, switchMap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { Message } from '../message';
-import { MessagesDialogComponent } from '../messages-dialog/messages-dialog.component';
-import { MessageNavDialogComponent } from '../message-nav-dialog/message-nav-dialog.component';
+import { PATHS } from '../constants';
+import { MessageNavDialogComponent } from '../message-center/message-center-dialog/message-center-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -65,7 +65,7 @@ export class NavbarComponent {
   }
 
   gotoSaleSettings() {
-    this.router.navigate(['/mat-item-list'])
+    this.router.navigate([PATHS.listUrl])
   }
   gotoSettings() {
     let dialog = this.dialog.open(SettingsComponent, {
@@ -75,7 +75,7 @@ export class NavbarComponent {
     })
   }
   gotoTileList() {
-    this.router.navigate(['/mat-item-tiles'])
+    this.router.navigate([PATHS.tilesUrl])
   }
 
   gotoInbox() {
@@ -93,7 +93,12 @@ export class NavbarComponent {
     console.log('should be going to info page now')
   }
   isCurrentRoute(route: string): boolean {
-    return route === this.router.url;
+    if (route === 'tiles') {
+      return this.router.url === '/' + PATHS.tilesUrl;
+    } else if (route === 'list') {
+      return this.router.url === '/' + PATHS.listUrl;
+    }
+    return false;
   }
 
   login() {

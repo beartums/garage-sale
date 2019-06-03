@@ -9,7 +9,7 @@ import {
   MatToolbarModule,
 } from '@angular/material';
 
-import { MessageNavDialogComponent } from './message-nav-dialog.component';
+import { MessageNavDialogComponent } from './message-center-dialog.component';
 
 describe('MessageNavDialogComponent', () => {
   let component: MessageNavDialogComponent;

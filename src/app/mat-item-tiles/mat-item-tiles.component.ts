@@ -9,15 +9,14 @@ import { faLinkedin, faFacebook,
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { Router } from '@angular/router';
 import { ItemService } from '../item.service';
-import { formatPercent } from '@angular/common';
 import { User } from '../user';
+
 @Component({
   selector: 'app-mat-item-tiles',
   templateUrl: './mat-item-tiles.component.html',
   styleUrls: ['./mat-item-tiles.component.css']
 })
 export class MatItemTilesComponent {
-
   faLinkedin = faLinkedin;
   faFacebook = faFacebook;
   faTwitter = faTwitter;

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, HostListener, Inject, NgZone } from '@angular/core';
 
-import { DataService } from '../data.service';
-import { ItemService } from '../item.service';
-import { Comment } from '../comment';
-import { Item } from '../item';
-import { AuthService } from '../auth.service';
+import { DataService } from '../../data.service';
+import { ItemService } from '../../item.service';
+import { Comment } from '../../comment';
+import { Item } from '../../item';
+import { AuthService } from '../../auth.service';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';

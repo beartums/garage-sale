@@ -6,10 +6,11 @@ import { ItemService } from '../item.service';
 import { AuthService } from '../auth.service';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
-import { ItemCommentsComponent } from '../item-comments/item-comments.component';
+import { ItemCommentsComponent } from '../item-comments/item-comments/item-comments.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { User } from '../user';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
+import { PATHS } from '../constants';
 
 
 @Component({
@@ -74,7 +75,7 @@ export class MatItemComponent implements OnInit {
     email += '&body=Thought you might be interested in this:%0D%0A%0D%0A';
     email += item.name + ' -- ';
     email += item.description;
-    email += '%0D%0A%0D%0Ahttps://garage-sale.griffithnet.com/show-item/' + item.key;
+    email += '%0D%0A%0D%0Ahttps://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
     
     return email;
   }
@@ -84,7 +85,7 @@ export class MatItemComponent implements OnInit {
     email += 'MailTo: garage-sale@griffithnet.com';
     email += '?subject=RE: ' + item.name;
     email += '&body=RE: ';
-    email += 'https://garage-sale.griffithnet.com/show-item/' + item.key;
+    email += 'https://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
     
     return email;
   }
@@ -99,7 +100,7 @@ export class MatItemComponent implements OnInit {
 
   editItem(item: Item) {
     this.ds.itemBeingEdited = item;
-    this.router.navigate(['/mat-item-edit', item.key]);
+    this.router.navigate([PATHS.editUrl, item.key]);
   }
 
   favoriteTooltip(tooltipType: 'add' | 'remove', isLoggedIn: boolean ): string {

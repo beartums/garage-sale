@@ -1,4 +1,4 @@
-<!-- <div [gdColumns]="showFilters && isCurrentRoute('/mat-item-tiles') ? '200px auto' : 'auto'" > -->
+<!-- <div [gdColumns]="showFilters && isCurrentRoute('tiles') ? '200px auto' : 'auto'" > -->
   
 
   <div>
@@ -13,7 +13,7 @@
       </button> -->
         
           
-          <i fxFlex="40px" class="material-icons icon-button" (click)="toggleFilter()" *ngIf="isCurrentRoute('/mat-item-tiles')">
+          <i fxFlex="40px" class="material-icons icon-button" (click)="toggleFilter()" *ngIf="isCurrentRoute('tiles')">
             more_vert
           </i>
           
@@ -29,12 +29,12 @@
             </button>
 
             <i class="material-icons icon-button" (click)="gotoInfo()" matTooltip="Go to info/help page">info</i>
-            <i *ngIf="isCurrentRoute('/mat-item-tiles') && auth.isAdmin" matToolTip="View as list"
+            <i *ngIf="isCurrentRoute('tiles') && auth.isAdmin" matToolTip="View as list"
                 class="material-icons icon-button" (click)="gotoSaleSettings()">
               view_list
             </i>
           
-            <button mat-icon-button *ngIf="!isCurrentRoute('/mat-item-tiles')" matTooltip="View as cards"
+            <button mat-icon-button *ngIf="!isCurrentRoute('tiles')" matTooltip="View as cards"
               (click)="gotoTileList()">
               <mat-icon>view_module</mat-icon>
           </button>
