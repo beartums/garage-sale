@@ -20,6 +20,7 @@ export class MessagesDialogComponent implements OnInit {
   messages: Message[];
   adminMessages: Message[];
   user: User;
+  message: Message;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: MessagesDialogData,
           private dialogRef: MatDialogRef<MessagesDialogComponent>) {

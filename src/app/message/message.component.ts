@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone, Input, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, Input, SimpleChange, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { Message } from '../message';
@@ -14,6 +14,8 @@ export class MessageComponent implements OnInit {
   @Input() message: Message;
   @Input() user: User;
 
+  reply: string;
+
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(private _ngZone: NgZone) {
@@ -28,5 +30,7 @@ export class MessageComponent implements OnInit {
       //console.log(changes);
     }
   }
+
+  end() {}
 
 }
