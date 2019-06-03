@@ -57,6 +57,18 @@
 
     </mat-toolbar>
   </div>
+  <div class="small-text">
+    <span><mat-icon class="text-icon">mail_outline</mat-icon><span> to contact us;&nbsp;&nbsp;</span></span> 
+    <span><mat-icon class="text-icon material-icons-outlined">chat_outline</mat-icon><span> to leave comments;&nbsp;&nbsp;</span></span>  
+    <span>
+      <mat-icon class="text-icon">favorite_outline</mat-icon>
+      <span> to mark as a favorite  </span>
+      <span *ngIf="!auth.isLoggedIn">(requires login using
+        <mat-icon class="text-icon">account_circle</mat-icon>
+        <span> above)</span>
+      </span>
+    </span>
+  </div>
   <router-outlet></router-outlet>
 <!-- </div> -->
 

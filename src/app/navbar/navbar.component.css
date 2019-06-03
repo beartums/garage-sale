@@ -87,3 +87,15 @@
   padding: 2px 6px 2px 6px;
   background-color: rgba(173, 168, 168, 0.6)
 }
+
+.text-icon {
+  position: relative;
+  top: 8px
+}
+
+.small-text {
+  font-size: smaller;
+  width: 100%;
+  background-color: lightgrey;
+  padding: 0px 10px 12px 10px;
+}
