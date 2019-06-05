@@ -14,6 +14,7 @@ import { Message } from '../message';
 import { PATHS } from '../constants';
 import { MessageNavDialogComponent } from '../message-center/message-center-dialog/message-center-dialog.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { InfoPageComponent } from '../info-page/info-page.component';
 
 @Component({
   selector: 'app-navbar',
@@ -103,8 +104,13 @@ export class NavbarComponent {
   }
 
   gotoInfo() {
+    let dialogRef = this.dialog.open(InfoPageComponent, {
+      height: '95%',
+      width: '95%',
+    })
     console.log('should be going to info page now')
   }
+
   isCurrentRoute(route: string): boolean {
     if (route === 'tiles') {
       return this.router.url === '/' + PATHS.tilesUrl;

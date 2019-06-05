@@ -9,7 +9,8 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
   MatCardModule, MatChipsModule, MatGridListModule, MatMenuModule, MatAutocompleteModule,
   MatBadgeModule, MatTooltipModule, MatDialogModule, MatSlideToggleModule,
   MatTreeModule,
-  MatProgressSpinnerModule} from '@angular/material';
+  MatProgressSpinnerModule,
+  MatExpansionModule} from '@angular/material';
 
 @NgModule({
   declarations: [],
@@ -20,7 +21,7 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
     MatSelectModule, MatRadioModule, MatCardModule, MatChipsModule,
     MatBadgeModule, MatGridListModule, MatMenuModule, MatTooltipModule,
     MatAutocompleteModule, MatDialogModule, MatSlideToggleModule, MatButtonModule,
-    MatTreeModule, MatProgressSpinnerModule
+    MatTreeModule, MatProgressSpinnerModule, MatExpansionModule
   ],
   exports: [
     CommonModule, LayoutModule, FlexLayoutModule, MatToolbarModule,
@@ -29,7 +30,7 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
     MatSelectModule, MatRadioModule, MatCardModule, MatChipsModule,
     MatBadgeModule, MatGridListModule, MatMenuModule, MatTooltipModule,
     MatAutocompleteModule, MatDialogModule, MatSlideToggleModule, MatButtonModule,
-    MatTreeModule, MatProgressSpinnerModule
+    MatTreeModule, MatProgressSpinnerModule, MatExpansionModule
   ]
 })
 export class MaterialModule { }

@@ -52,7 +52,7 @@ import { InfoPageComponent } from './info-page/info-page.component';
     InfoPageComponent,
   ],
   entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, 
-                    ContactUsComponent,  MessageNavDialogComponent ],
+                    ContactUsComponent,  MessageNavDialogComponent, InfoPageComponent ],
   imports: [
     BrowserModule,
     FormsModule, ReactiveFormsModule,

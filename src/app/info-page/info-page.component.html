@@ -1,4 +1,10 @@
-<h2>About our Online Garage Sale</h2>>
+<mat-toolbar color="primary">
+    <h2>About our Online Garage Sale</h2>
+    <span fxFlex="auto"></span>
+    <button mat-icon-button tabindex="-1" (click)="cancel()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+</mat-toolbar>
 <p>Looks like we are actually leaving this time.  We're planning to be back in the states by the end of the 
   first week of August.  But - boy! - do we have a lot of stuff.  After almost 5 years of dragging back bag after bag of 
   goodies from our visits home and beautifying our home with locally made furniture, we have to get rid of all of it.  
@@ -16,12 +22,19 @@
   it's all yours!
 </p>
 <p>Now, I know you still have questions, so here are the FAQs you've been waiting for:</p>
-<mat-accordion>
-  <mat-expansion-panel *ngFor="let faq of faqs$">
-      <mat-expansion-panel-header>
-        <h3>{{faq.question}}</h3>
-      </mat-expansion-panel-header>
-    <p>{{faq.answer}}</p>
-  </mat-expansion-panel>
-</mat-accordion>
-
+<br/>
+<table>
+  <ng-container *ngFor="let faq of faqs$ | async">
+    <tr class="faq-question" >
+      <td>
+        <mat-icon [hidden]="faq.show">keyboard_arrow_right</mat-icon>
+        <mat-icon [hidden]="!faq.show">keyboard_arrow_down</mat-icon>
+      </td>
+      <td [innerHTML]="faq.question" class="faq-question" (click)="toggleFaq(faq)"></td>
+    </tr>
+    <tr [hidden]="!faq.show">
+      <td></td>
+      <td class="faq-answer" [innerHTML]="faq.answer"></td>
+    </tr>
+  </ng-container>
+</table>

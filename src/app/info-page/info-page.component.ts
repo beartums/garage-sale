@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FAQS } from '../constants';
+import { of } from 'rxjs';
+import { MatDialog, MatDialogRef } from '@angular/material';
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoPageComponent implements OnInit {
 
-  constructor() { }
+  faqs$ = of(FAQS);
+
+  constructor(private dialogRef: MatDialogRef<InfoPageComponent>) { }
 
   ngOnInit() {
+  }
+
+  cancel() {
+    this.dialogRef.close()
+  }
+
+  toggleFaq(faq) {
+    faq.show = !faq.show;
   }
 
 }
