@@ -1,0 +1,27 @@
+<h2>About our Online Garage Sale</h2>>
+<p>Looks like we are actually leaving this time.  We're planning to be back in the states by the end of the 
+  first week of August.  But - boy! - do we have a lot of stuff.  After almost 5 years of dragging back bag after bag of 
+  goodies from our visits home and beautifying our home with locally made furniture, we have to get rid of all of it.  
+  And that redounds to your benefit.
+</p>
+<p>Everything will be for sale online until it is sold or the week of June 29, when we will probably have an IRL, actual, 
+  real garage sale.  There will be a lot of stuff there that you will not see on the site, because we just can't 
+  post it all.  So make sure you keep your eye out for that.  If you do happen to want something on the site, you can always
+  contact us by clickng on the email icon at the top of the item and letting us know.  Or contact us by Whatsapp, Phone, email,
+  Facebook, or any other contact information you have for us.
+</p>
+<p>We came up with prices based on our original costs, how much effort went into it, how much we're going to miss it, 
+  and what we think it's worth.  So, for the moment, the prices are firm.  But if you want to make an offer, please do!
+  We'll hold onto it until either the time is sold or we're leaving.  If it's still around and your offer was the highest,
+  it's all yours!
+</p>
+<p>Now, I know you still have questions, so here are the FAQs you've been waiting for:</p>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let faq of faqs$">
+      <mat-expansion-panel-header>
+        <h3>{{faq.question}}</h3>
+      </mat-expansion-panel-header>
+    <p>{{faq.answer}}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+
