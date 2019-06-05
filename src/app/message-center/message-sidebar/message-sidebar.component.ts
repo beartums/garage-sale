@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import {faEnvelope, faEnvelopeOpen} from '@fortawesome/free-solid-svg-icons';
 import { Message } from '../../message';
-import { Observable } from 'rxjs';
-import { take, map } from 'rxjs/operators';
 import { User } from '../../user';
 import * as moment from 'moment';
+import { DataService } from 'src/app/data.service';
+import { Observable, of } from 'rxjs';
+// import { DataService } from 'src/app/data.service';
 
 @Component({
   selector: 'gs-message-sidebar',
@@ -13,8 +14,8 @@ import * as moment from 'moment';
 })
 export class MessageSidebarComponent implements OnInit {
 
-  @Input() messages: Message[];
-  @Input() adminMessages: Message[]
+  @Input() messages$: Observable<Message[]>;
+  @Input() adminMessages$: Observable<Message[]>;
   @Input() user: User;
 
   @Output() message: EventEmitter<Message> = new EventEmitter();
@@ -24,17 +25,35 @@ export class MessageSidebarComponent implements OnInit {
 
   userMessageBundles: any[];
 
-  constructor() { }
+  messages: Message[];
+  adminMessages: Message[];
+
+  constructor(private ds: DataService) { 
+  }
 
   ngOnInit() {
     this.userMessageBundles = [
-      { user: this.user, userName: this.user.displayName, messages: this.messages || []},
-      { user: this.user, userName: 'Admin', messages: this.adminMessages || []},
-    ]
+      { user: this.user, userName: this.user.displayName, messages$: this.messages$ || of([])},
+      { user: this.user, userName: 'Admin', messages$: this.adminMessages$},
+      this.adminMessages$.subscribe( msgs => {
+        this.adminMessages = msgs;
+      })
+    ];
+
+  }
+
+  ngOnChange(changes: SimpleChanges) {
+    // if (changes.messages$) {
+    //   this.userMessageBundles[0].messages = changes.messages$.currentValue;
+    // }
+    // if (changes.adminMessages$) {
+    //   this.userMessageBundles[1].messages = changes.adminMessages$.currentValue;
+    // }
   }
 
   showMessage(message: Message) {
     this.message.emit(message);
+   if (!message.isRead) this.toggleRead(message);
   }
 
   readMessages(messages: Message[]): Message[] {
@@ -56,5 +75,13 @@ export class MessageSidebarComponent implements OnInit {
     rtn += ' | ' + message.reason;
     return rtn;
   }
+  // deleteMessage(msg: Message) {
+  //   return;
+  // }
+  toggleRead(msg: Message) {
+    const readState = { isRead: !msg.isRead };
+    this.ds.updateMessage(msg.key, readState);
+  }
+  
 
 }

@@ -150,5 +150,14 @@ export class DataService {
     this.db.object(this.USER_ROOT + '/' + user.uid).set(user);
   }
 
+  updateMessage(id: string, msg: any) {
+    this.getMessageRef(id).update(msg);
+  }
+
+  deleteMessage(id: string) {
+    // TODO: do we want to do something if there are messages that refer to this one?
+    this.getMessageRef(id).remove()
+  }
+
 
 }

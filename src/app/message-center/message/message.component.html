@@ -1,15 +1,26 @@
-<div class="message-div">
+<mat-toolbar class="short-toolbar" width="100%">
+  <span fxFlex="auto"></span>
+  <span >
+    <button mat-icon-button (click)="setUnread(message)">
+      <mat-icon class="small-icons">markunread_mailbox</mat-icon>
+    </button>
+    <button mat-icon-button (click)="deleteMessage(message)">
+      <mat-icon class="small-icons">delete_forever</mat-icon>
+    </button>
+  </span>
+</mat-toolbar>
+<div class="message-div" *ngIf="message">
   <p>
     {{message.message}}
   </p>
 </div>
-<div class="reply-div"> 
+<div class="reply-div" *ngIf="message"> 
   <mat-form-field>
     <textarea matInput [(ngModel)]="reply" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
         cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4">
     </textarea>
   </mat-form-field>
 </div>
-<div class="bottom-div">
+<div class="bottom-div" *ngIf="message">
   <button mat-raised-button color="primary" (click)="end()">Done</button>
 </div>

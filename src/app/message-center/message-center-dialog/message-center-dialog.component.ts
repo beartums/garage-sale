@@ -8,8 +8,8 @@ import { User } from '../../user';
 
 export class MessagesDialogData {
   user: User;
-  messages: Message[];
-  adminMessages: Message[]
+  messages$: Observable<Message[]>;
+  adminMessages$: Observable<Message[]>;
 }
 
 @Component({
@@ -19,8 +19,8 @@ export class MessagesDialogData {
 })
 export class MessageNavDialogComponent {
 
-  messages: Message[] = [];
-  adminMessages: Message[]  = [];
+  messages$: Observable<Message[]>;
+  adminMessages$: Observable<Message[]>;
   user: User;
   message: Message;
 
@@ -34,8 +34,8 @@ export class MessageNavDialogComponent {
   constructor(private breakpointObserver: BreakpointObserver,
          @Inject(MAT_DIALOG_DATA) public data: MessagesDialogData,
           private dialogRef: MatDialogRef<MessageNavDialogComponent>) {
-    this.messages = data.messages;
-    this.adminMessages = data.adminMessages;
+    this.messages$ = data.messages$;
+    this.adminMessages$ = data.adminMessages$;
     this.user = data.user;
     this.isHandset$.subscribe(result => this.isHandset = result);
 }

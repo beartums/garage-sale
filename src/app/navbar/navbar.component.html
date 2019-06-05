@@ -76,11 +76,11 @@
     <mat-icon>settings</mat-icon>
   </button>
   
-  <button mat-icon-button (click)="gotoInbox()" *ngIf=" messageCount>0" class="badged-button"
-    matTooltip="Message waiting in your inbox">
+  <button mat-icon-button (click)="gotoInbox()" *ngIf="messageCount > 0" [ngClass]="{'badged-button': newMessageCount>0}"
+    matTooltip="Message in your inbox">
     <mat-icon>email</mat-icon>
   </button>
-  <div class="badge" *ngIf=" messageCount>0" >{{newMessageCount}}</div>
+  <div class="badge" *ngIf="newMessageCount>0" >{{newMessageCount}}</div>
 
   <button mat-icon-button (click)="gotoInfo()" matTooltip="Go to info/help page">
     <mat-icon>info</mat-icon>

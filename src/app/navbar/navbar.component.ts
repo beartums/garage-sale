@@ -8,8 +8,8 @@ import * as _ from 'lodash';
 import { MatDialog } from '@angular/material';
 import { SettingsComponent } from '../settings/settings.component';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
-import { switchMap, map } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
+import { switchMap, map, reduce } from 'rxjs/operators';
+import { of, Observable, forkJoin } from 'rxjs';
 import { Message } from '../message';
 import { PATHS } from '../constants';
 import { MessageNavDialogComponent } from '../message-center/message-center-dialog/message-center-dialog.component';
@@ -28,7 +28,18 @@ export class NavbarComponent {
   subs: any[] = [];
 
   userMessages: Message[] = [];
-  adminMessages: Message[] = []
+  adminMessages: Message[] = [];
+  userMessages$: Observable<Message[]>;
+  adminMessages$: Observable<Message[]>;
+
+  get messageCount() {
+    return this.userMessages.length + this.adminMessages.length;
+  }
+  get newMessageCount() {
+    const messages = this.userMessages.concat(this.adminMessages);
+    const count = messages.filter(msg => !msg.isRead).length;
+    return count;
+  }
 
   isXs: boolean;
 
@@ -36,13 +47,6 @@ export class NavbarComponent {
   .pipe(
     map(result => this.isXs = result.matches)
   );
-
-  get messageCount() {
-    return this.userMessages.concat(this.adminMessages).length;
-  }
-  get newMessageCount() {
-    return this.userMessages.concat(this.adminMessages).filter( msg => !msg.isRead).length;
-  }
 
   constructor(private router: Router, 
     private as: AuthService, private ds: DataService, private ts: TagService,
@@ -55,18 +59,15 @@ export class NavbarComponent {
       this.subs.push( this.isXs$.subscribe( result => this.isXs = result ));
 
       // keep up to date on messages and admingmessages
-      this.subs.push(this.as.authUser.pipe( 
-        switchMap( user => this.ds.getMessages$(user ? user.uid : null) ))
-        .subscribe( msgs => this.userMessages = msgs));
-      this.subs.push(this.as.authUser.pipe( 
-        switchMap( user => {
-          if (this.as.isUserAdmin(user)) {
-            return this.ds.getMessages$('<admin>');
-          } else {
-            return of([]);
-          }
-        } ))
-        .subscribe( msgs => this.adminMessages = msgs));
+      this.userMessages$ = this.as.authUser.pipe(
+        switchMap( user => this.ds.getMessages$(user ? user.uid : null) ));
+      this.adminMessages$ = this.as.authUser.pipe(
+        switchMap( user => this.as.isUserAdmin(user) ? this.ds.getMessages$('<admin>') : of([]))
+      );
+      
+      this.subs.push(this.userMessages$.subscribe( msgs => this.userMessages = msgs));
+      this.subs.push(this.adminMessages$.subscribe( msgs => this.adminMessages = msgs));
+
     }
 
   ngOnInit() {
@@ -95,8 +96,8 @@ export class NavbarComponent {
       height: '90%',
       width: '90%',
       data: { user: this.as.user,
-              messages: this.userMessages || [],
-              adminMessages: this.adminMessages || [],
+              messages$: this.userMessages$ || [],
+              adminMessages$: this.adminMessages$ || [],
       }
     });
   }

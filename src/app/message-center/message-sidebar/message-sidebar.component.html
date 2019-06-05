@@ -1,47 +1,35 @@
 <div class="message-sidebar" >
   <table style="font-size: smaller">
     <ng-container *ngFor="let messageBundle of userMessageBundles">
-      <tr>
-        <td colspan="4">{{messageBundle.userName}} ({{messageBundle.messages.length}})</td>
+      <ng-container *ngIf="messageBundle.messages$ | async as messages">
+      <tr class="user-row">
+        <td colspan="4">{{messageBundle.userName}} ({{messages.length}})</td>
       </tr>
-      <tr>
+      <tr class="message-group">
         <td>  </td>
         <td><i class="far fa-envelope-open"></i></td> 
-        <td colspan="2">Read ({{readMessages(messageBundle.messages).length}})</td>
+        <td colspan="2">Messages ({{unreadMessages(messages).length}}/{{messages.length}})</td>
       </tr>
-      <tr  *ngFor="let message of readMessages(messageBundle.messages)">
+      <tr  *ngFor="let message of messages" class="message-row">
         <td>  </td>
-        <td>  </td>
-        <td>  </td>
+        <td></td> 
+        <td></td> 
         <td>
           <table>
             <tr>
-              <td (click)="showMessage(message)" [matTooltip]="getTooltip(message)">
-                {{formatDate(message)}} | {{message.user.displayName}}
+              <td (click)="showMessage(message)" [matTooltip]="getTooltip(message)" 
+              [ngClass]="{'read': message.isRead, 'unread': !message.isRead }" class="message-row">
+                {{message.user.displayName}}
+                <span class="message-date">{{formatDate(message)}}</span>
               </td>
             </tr>
           </table>
         </td>
       </tr>
-      <tr>
-        <td>  </td>
-        <td><i class="far fa-envelope"></i></td> 
-        <td colspan="2">Unread ({{unreadMessages(messageBundle.messages).length}})</td>
-      </tr>
-      <tr  *ngFor="let message of unreadMessages(messageBundle.messages)">
-          <td>  </td>
-          <td>  </td>
-          <td>  </td>
-          <td>
-            <table class="detail-text">
-              <tr>
-                <td (click)="showMessage(message)" [matTooltip]="getTooltip(message)" class="clickable">
-                  {{formatDate(message)}} | {{message.user.displayName}}
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
+      </ng-container>
     </ng-container>
   </table>
 </div>
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>

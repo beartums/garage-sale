@@ -3,6 +3,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { Message } from '../../message';
 import { User } from '../../user';
+import { DataService } from 'src/app/data.service';
 
 @Component({
   selector: 'gs-message',
@@ -18,7 +19,7 @@ export class MessageComponent implements OnInit {
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
-  constructor(private _ngZone: NgZone) {
+  constructor(private _ngZone: NgZone, private ds: DataService) {
     this._ngZone.onStable.pipe( take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
@@ -26,9 +27,19 @@ export class MessageComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.message) {
-      //console.log(changes);
-    }
+  }
+
+  closeMessage() {
+    this.message = null;
+  }
+  deleteMessage(msg: Message) {
+    this.ds.deleteMessage(msg.key);
+    this.closeMessage()
+  }
+  setUnread(msg: Message) {
+    //if ( !msg.isRead ) return;
+    this.ds.updateMessage(msg.key, { isRead: false });
+    this.closeMessage();
   }
 
   end() {}
