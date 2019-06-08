@@ -1,5 +1,6 @@
-.full-width-table {
+.full-width {
   width: 100%;
+  position: relative;
 }
 
 button {
@@ -21,6 +22,10 @@ button {
 }
 .material-cell {
   border-bottom: 1px solid lightgrey;
-  padding-left: 6px;
+  padding-left: 10px;
   padding-right: 6px;
+}
+.chip-list-div {
+  padding: 10px;
+  overflow-x: hidden;
 }

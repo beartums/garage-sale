@@ -1,59 +1,83 @@
 <button mat-raised-button color="" type="button" *ngIf="isAdmin()" (click)="addItem()">+</button>
-<div class="mat-elevation-z8">
-  <table class="material-table full-width-table" >
-    <!-- photo Column -->
-    <tr *ngFor="let item of itemList$ | async">
-        <td class="material-cell" matTooltip="Don't trust these photos!" (click)="showItem(item)">
-            <span class="table-img" *ngIf="item.pictureUrl && item.pictureUrl > ''">
-              <img class="table-img" object-fit="contain" [src]="'assets/items/' + item.pictureUrl">
-            </span>
-        </td>
-        <td class="material-cell" (click)="showItem(item)">{{item.name}}</td>
-        <td class="material-cell" (click)="showItem(item)">{{formatPrice(item.price)}}</td>
-        <td class="material-cell"(click)="showItem(item)">
-            <span class="tags">
-              <mat-chip-list>
-                <mat-chip class="small-chip" *ngFor="let tag of sortTags(item.tags)">{{tag}}</mat-chip>
-              </mat-chip-list>
-            </span>
+<div class="mat-elevation-z8" width="100%">
+  <table class="material-table full-width" >
+    <ng-container  *ngFor="let item of itemList$ | async">
+      <tr *ngIf="!isFiltered(item)" class="full-width">
+          <td class="material-cell" matTooltip="Don't trust these photos!" (click)="showItem(item)">
+              <span class="table-img" *ngIf="item.pictureUrl && item.pictureUrl > ''">
+                <img class="table-img" object-fit="contain" [src]="'assets/items/' + item.pictureUrl">
+              </span>
           </td>
-        <td class="material-cell">
-            <i class="material-icons icon-button" *ngIf="isAdmin()" (click)="editItem(item)">edit</i>
-            <i *ngIf="!isFavorited(item)" class="material-icons-outlined icon-button" (click)="toggleFavorited(item)">
-              favorite_border
-            </i>
-            <i *ngIf="isFavorited(item)" class="material-icons icon-button favorited" (click)="toggleFavorited(item)">
-              favorite
-            </i>
-            <i mat-icon-button matTooltip="Read comments (add comments if you are logged in)"
-                  class="material-icons-outlined icon-button icon-button-badge-above" 
-                  [matBadge]="item.commentCount"  matBadgeSize="medium" [matBadgeHidden]="!item.commentCount"
-                  (click)="toggleComments(item)">
-                chat
-            </i>
-            <i class="material-icons-outlined icon-button"  [matMenuTriggerFor]="appMenu" 
-                  matTooltip="Ask questions, make an offer, otherwise communicate with us">email</i>
-            <mat-menu #appMenu="matMenu">
-              <a mat-menu-item tabindex="-1" [href]="getAdminEmailForItem(item)" target="_blank">
-                <mat-icon>email</mat-icon>
-                <span>Email Us</span>
-              </a>
-              <a mat-menu-item tabindex="-1" [href]="getEmailForItem( item)" target="_blank">
-                <mat-icon>contact_mail</mat-icon>
-                <span>Share by email</span>
-              </a>
-            </mat-menu>
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-  </table>
-  
-  <mat-paginator #paginator
-      [length]="dataSource.data.length"
-      [pageIndex]="0"
-      [pageSize]="50"
-      [pageSizeOptions]="[10, 25, 50, 100, 250]">
-  </mat-paginator>
+          <td class="material-cell" (click)="showItem(item)">{{item.name}}</td>
+          <td class="material-cell" (click)="showItem(item)">{{formatPrice(item.price)}}</td>
+          <td class="material-cell"(click)="showItem(item)">
+              <span class="tags" *ngIf="bpEq(['md','lg','xl'])">
+                <mat-chip-list>
+                  <mat-chip class="small-chip" *ngFor="let tag of sortTags(item.tags)">{{tag}}</mat-chip>
+                </mat-chip-list>
+              </span>
+              <span class="tags" *ngIf="bpEq(['sm','xs'])">
+                <mat-chip-list>
+                  <mat-chip class="small-chip" [matMenuTriggerFor]="hiddenCats">categories ({{item.tags.length}})</mat-chip>
+                </mat-chip-list>
+                <mat-menu #hiddenCats="matMenu">
+                  <div class="chip-list-div">
+                    <mat-chip-list>
+                      <mat-chip class="small-chip" *ngFor="let tag of sortTags(item.tags)">{{tag}}</mat-chip>
+                    </mat-chip-list>
+                  </div>
+                </mat-menu>
+              </span>
+            </td>
+          <td class="material-cell" style="text-align: right;">
+              <span *ngIf="bpEq(['sm','md','lg','xl','xxl'])">
+                <ng-container *ngTemplateOutlet="buttons;context:{item:item}"></ng-container>
+              </span>
+              <span *ngIf="bpEq(['xs','xxs'])" >
+                <mat-icon class="menu" [matMenuTriggerFor]="hiddenMenu">menu</mat-icon>
+                <mat-menu #hiddenMenu="matMenu">
+                  <ng-container *ngTemplateOutlet="buttons;context:{item:item}"></ng-container>
+                </mat-menu>
+              </span>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </ng-container>
+    </table>
 </div>
+
+<ng-template #buttons let-item="item">
+    <i mat-icon-button class="icon-button material-icons" *ngIf="isAdmin()" (click)="editItem(item)">
+      edit
+    </i>
+    <i mat-icon-button class="icon-button material-icons-outlined" 
+    *ngIf="!isFavorited(item)" (click)="toggleFavorited(item)">
+      favorite_border
+    </i>
+    <i mat-icon-button class="icon-button material-icons favorited" 
+      *ngIf="isFavorited(item)" (click)="toggleFavorited(item)">
+      favorite
+    </i>
+    <i mat-icon-button class="icon-button material-icons-outlined icon-button-badge-above" 
+          matTooltip="Read comments (add comments if you are logged in)"  
+          [matBadge]="item ? item.commentCount : ''"  matBadgeSize="medium" [matBadgeHidden]="!item || !item.commentCount"
+          (click)="toggleComments(item)">
+        chat
+    </i>
+    <i mat-icon-button class="icon-button material-icons-outlined" [matMenuTriggerFor]="appMenu" 
+          matTooltip="Ask questions, make an offer, otherwise communicate with us">
+      email
+    </i>
+    <mat-menu #appMenu="matMenu">
+      <a mat-menu-item tabindex="-1" [href]="getAdminEmailForItem(item)" target="_blank">
+        <mat-icon>email</mat-icon>
+        <span>Email Us</span>
+      </a>
+      <a mat-menu-item tabindex="-1" [href]="getEmailForItem( item)" target="_blank">
+        <mat-icon>contact_mail</mat-icon>
+        <span>Share by email</span>
+      </a>
+    </mat-menu>
+  </ng-template>

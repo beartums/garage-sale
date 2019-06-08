@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource, MatDialogRef, MatDialog } from '@angular/material';
+import { MatPaginator, MatSort, MatDialogRef, MatDialog } from '@angular/material';
 
 import { Item } from '../item';
 import { DataService } from '../data.service';
@@ -8,34 +8,48 @@ import { ItemService } from '../item.service';
 import { AuthService } from '../auth.service';
 import { PATHS } from '../constants';
 import { ItemCommentsComponent } from '../item-comments/item-comments/item-comments.component';
-import { ItemCommentsDialogComponent } from '../item-comments/item-comments-dialog/item-comments-dialog.component';
-import { map } from 'rxjs/operators';
 import { FilterService } from '../filter.service';
 import { User } from '../user';
 import { Observable } from 'rxjs';
+import {breakpointsProvider, BreakpointsService, BreakpointConfig, BreakpointEvent} from '../breakpoint.service';
 
+const breakpointConfig: BreakpointConfig = {
+  xxs: { max: 475 },
+  xs: { min: 475, max: 768 },
+  sm: { min: 768, max: 992 },
+  md: { min: 992, max: 1200 },
+  lg: { min: 1200, max: 1500 },
+  xxl: { min: 1500 }
+}
 @Component({
   selector: 'app-mat-item-list',
   templateUrl: './mat-item-list.component.html',
-  styleUrls: ['./mat-item-list.component.css']
+  styleUrls: ['./mat-item-list.component.css'],
+  providers: [breakpointsProvider(breakpointConfig)]
 })
+
 export class MatItemListComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  dataSource: MatTableDataSource<Observable<Item>> = new MatTableDataSource();
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['pictureUrl', 'name', 'price', 'tags', 'edit'];
+  bp: BreakpointEvent;
   itemList$: Observable<Item[]>;
+  bpList: string[] = ['xxs', 'xs', 'sm', 'md', 'lg', 'xxl'];
+  bpSub: any;
 
   constructor(private ds: DataService, private router: Router,
               private is: ItemService, private as: AuthService,
-              private dialog: MatDialog, private fs: FilterService) {
+              private dialog: MatDialog, private fs: FilterService,
+              private breakpointsService: BreakpointsService) {
     this.itemList$ = this.ds.getItemList$();
-    // this.dataSource = new MatTableDataSource(itemList);
-    // itemList.pipe(
-    //   map( list => list.filter(item => this.isFiltered(item, this.as.user))))
-    //   .subscribe( list => { this.dataSource = new MatTableDataSource(list); } );
+
+    this.bpSub = this.breakpointsService.changes.subscribe((event: BreakpointEvent) => {
+      this.bp = event;
+    });
+  }
+
+  ngOnDestroy() {
+    this.bpSub.unsubscribe();
   }
 
   editItem(item: Item) {
@@ -48,11 +62,32 @@ export class MatItemListComponent implements AfterViewInit {
     this.router.navigate([PATHS.editUrl, 'new']);
   }
 
+  bpEq(names: string[]) {
+    return names.indexOf(this.bp.name)>-1;
+  }
+
+  bpGt(name: string): boolean {
+    name = name.toLowerCase();
+    let idx = this.bpList.indexOf(name);
+    if (idx === -1) { return false; }
+    let rtn = idx > this.bpList.indexOf(this.bp.name);
+    return rtn;
+  }
+
+  bpLt(name: string): boolean {
+    name = name.toLowerCase();
+    let idx = this.bpList.indexOf(name);
+    if (idx === -1) { return false; }
+    let rtn =  idx < this.bpList.indexOf(this.bp.name);
+    return rtn;
+  }
+
   isAdmin() {
     return this.as.isAdmin;
   }
 
   isFavorited(item: Item): boolean {
+    if (!item) { return false; }
     return this.is.isFavoritedBy(item, this.as.userId)
   }
 
@@ -77,6 +112,7 @@ export class MatItemListComponent implements AfterViewInit {
   }
   
   getEmailForItem(item: Item): string {
+    if (!item) { return '' };
     let email = '';
     email += 'MailTo: someone@somewhere.com';
     email += '?subject=Check it out: ' + item.name;
@@ -89,9 +125,10 @@ export class MatItemListComponent implements AfterViewInit {
   }
 
   getAdminEmailForItem(item: Item): string {
+    if (!item) { return '' };
     let email = '';
     email += 'MailTo: garage-sale@griffithnet.com';
-    email += '?subject=RE: ' + item.name;
+    email += '?subject=RE: ' + ( item ? item.name : '???');
     email += '&body=RE: ';
     email += 'https://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
     

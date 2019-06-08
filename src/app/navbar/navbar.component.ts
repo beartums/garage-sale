@@ -15,7 +15,8 @@ import { PATHS } from '../constants';
 import { MessageNavDialogComponent } from '../message-center/message-center-dialog/message-center-dialog.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { InfoPageComponent } from '../info-page/info-page.component';
-import { faSignOutAlt, faUserCog } from '@fortawesome/free-solid-svg-icons';
+import { faSignOutAlt, faUserCog, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -25,6 +26,9 @@ export class NavbarComponent {
 
   faSignOutAlt = faSignOutAlt;
   faUserCog = faUserCog;
+  faToggleOn = faToggleOn;
+  faToggleOff = faToggleOff;
+  faEdit = faEdit;
 
   auth: AuthService;
   filt: FilterService;
@@ -126,7 +130,15 @@ export class NavbarComponent {
   isFilterOn(): boolean {
     return this.fs.isCurrentlyFiltering;
   }
-  
+
+  isFilterPaused(): boolean {
+    return this.fs.isPaused;
+  }
+  toggleFilterState() {
+    this.fs.toggleFilterState();
+  }
+
+
   login() {
     this.as.loginWithGoogle();
   }
@@ -144,7 +156,7 @@ export class NavbarComponent {
     return this.as.isLoggedIn;
   }
 
-  toggleFilter() {
+  editFilter() {
     let dialogRef = this.dialog.open(FilterDialogComponent, {
       width: '90%',
       height: '90%',

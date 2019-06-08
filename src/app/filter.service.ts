@@ -111,5 +111,8 @@ export class FilterService {
       this.negativeTags.splice(idx, 1);
     }
   }
+  toggleFilterState() {
+    this.isPaused = ! this.isPaused;
+  }
 
 }
