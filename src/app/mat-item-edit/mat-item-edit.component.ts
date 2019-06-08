@@ -1,17 +1,17 @@
-import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
-import { FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DataService } from '../data.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Location } from '@angular/common';
-
+import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, startWith, take } from 'rxjs/operators';
+import { DataService } from '../data.service';
+import { FilterService } from '../filter.service';
 import { Item } from '../item';
 import { ITEM_PICS } from '../itemPics';
-import { MatChipInputEvent, MatAutocompleteSelectedEvent,  MatAutocomplete } from '@angular/material';
-import { FilterService } from '../filter.service';
-import { Observable } from 'rxjs';
-import { startWith, map, take } from 'rxjs/operators';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+
 
 @Component({
   selector: 'app-mat-item-edit',
@@ -36,7 +36,7 @@ export class MatItemEditComponent {
   addOnBlur = true;
   removable = true;
   selected: string;
-  readonly separatorKeyCodes: number[] = [ENTER, COMMA, SPACE]
+  readonly separatorKeyCodes: number[] = [ENTER, COMMA, SPACE];
   readonly itemPics = ITEM_PICS;
   chipControl = new FormControl();
   filteredTags: Observable<string[]>;
@@ -44,14 +44,14 @@ export class MatItemEditComponent {
   @ViewChild('chipInput') chipInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
-  
-  constructor(private fb: FormBuilder, private ds: DataService, 
+
+  constructor(private fb: FormBuilder, private ds: DataService,
     private router: Router,  private route: ActivatedRoute,
     private _location: Location, private fs: FilterService,
     private _ngZone: NgZone) {
 
       this._ngZone.onStable.pipe( take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
-      
+
       this.filteredTags = this.chipControl.valueChanges.pipe(
         startWith(null),
         map((tag: string | null) => tag ? this._filter(tag) : this.fs.getAvailableTags(this.itemTags).slice()));
@@ -61,9 +61,9 @@ export class MatItemEditComponent {
 
     this.route.paramMap.subscribe( params => {
       this.itemKey = params.get('key');
-    })
+    });
 
-    const item = Object.assign(new Item(),this.ds.itemBeingEdited);
+    const item = Object.assign(new Item(), this.ds.itemBeingEdited);
 
     this.itemEditForm.controls['itemName'].setValue(item.name || '');
     this.itemEditForm.controls['itemPrice'].setValue(item.price || '');
@@ -81,7 +81,7 @@ export class MatItemEditComponent {
   }
 
   save() {
-    let item = new Item();
+    const item = new Item();
     item.name = this.itemEditForm.controls['itemName'].value || '';
     item.price = this.itemEditForm.controls['itemPrice'].value || '';
     item.description = this.itemEditForm.controls['itemDescription'].value || '';
@@ -95,11 +95,11 @@ export class MatItemEditComponent {
     } else {
       this.ds.updateItem(this.ds.itemBeingEdited.key, item, this.ds.itemBeingEdited);
     }
-    this._location.back()
+    this._location.back();
   }
 
   cancel() {
-    this._location.back()
+    this._location.back();
   }
 
   addTagEvent(event: MatChipInputEvent) {

@@ -21,6 +21,17 @@ export class FilterService {
   featuredItems: FilterOptions;
   favoritedItems: FilterOptions;
 
+  isPaused = false;
+
+  get isCurrentlyFiltering(): boolean {
+    if (this.isPaused) { return false; }
+    if (this.chosenTags.length > 0) { return true; }
+    if (this.negativeTags.length > 0) { return true; }
+    if (this.soldItems !== FilterOptions.ignore) { return true; }
+    if (this.featuredItems !== FilterOptions.ignore) { return true; }
+    if (this.favoritedItems !== FilterOptions.ignore) { return true; }
+  }
+
 
   constructor(private ts: TagService, private is: ItemService) {
 
@@ -58,6 +69,10 @@ export class FilterService {
    * @param item item to check against filters
    */
   isFiltered(item: Item, user: User = null, chosen: string[] = null, negative: string[] = null): boolean {
+
+    // if filtering is paused, do not filter anything
+    if (this.isPaused) { return false; }
+
     chosen = chosen || this.chosenTags;
     negative = negative || this.negativeTags;
 

@@ -9,6 +9,10 @@ import { AuthService } from '../auth.service';
 import { PATHS } from '../constants';
 import { ItemCommentsComponent } from '../item-comments/item-comments/item-comments.component';
 import { ItemCommentsDialogComponent } from '../item-comments/item-comments-dialog/item-comments-dialog.component';
+import { map } from 'rxjs/operators';
+import { FilterService } from '../filter.service';
+import { User } from '../user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mat-item-list',
@@ -18,16 +22,20 @@ import { ItemCommentsDialogComponent } from '../item-comments/item-comments-dial
 export class MatItemListComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  dataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  dataSource: MatTableDataSource<Observable<Item>> = new MatTableDataSource();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['pictureUrl', 'name', 'price', 'tags', 'edit'];
+  itemList$: Observable<Item[]>;
 
   constructor(private ds: DataService, private router: Router,
               private is: ItemService, private as: AuthService,
-              private dialog: MatDialog) {
-    const itemList = this.ds.getItemList$();
-    itemList.subscribe( list => { this.dataSource = new MatTableDataSource(list); } );
+              private dialog: MatDialog, private fs: FilterService) {
+    this.itemList$ = this.ds.getItemList$();
+    // this.dataSource = new MatTableDataSource(itemList);
+    // itemList.pipe(
+    //   map( list => list.filter(item => this.isFiltered(item, this.as.user))))
+    //   .subscribe( list => { this.dataSource = new MatTableDataSource(list); } );
   }
 
   editItem(item: Item) {
@@ -89,6 +97,12 @@ export class MatItemListComponent implements AfterViewInit {
     
     return email;
   }
+  
+  isFiltered(item: Item, user: User = null): boolean {
+    user = user || this.as.user;
+    return this.fs.isFiltered(item, user);
+  }
+
   
   toggleComments(item: Item) {
     let dialogRef: MatDialogRef<ItemCommentsComponent> = this.dialog.open(ItemCommentsComponent, {

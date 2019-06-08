@@ -21,3 +21,10 @@ p {
     padding-bottom: 15px;
     padding-top: 0
 }
+
+a:hover {
+    color: whitesmoke
+}
+a { 
+    color: lightgray;
+}

@@ -12,14 +12,15 @@ export const FAQS = [
         category: 'Website',
         question: `A lot of things are already sold.  You obviously have lots of great stuff!
             But it makes it hard to see the things that I want to buy.  How do I hide the sold items?`,
-        answer: `Click on the 'filter' icon (<mat-icon>filter_list</mat-icon>) in the toolbar at the top of the page.
+        answer: `Click on the 'filter' icon (down-arrow in the main toolbar) in the toolbar at the top of the main page.
             that will give you a lot of options for choosing what you want to see.  The very first drop-down will
             allow you to 'Exclude' sold items from the display (NOTE: if you are logged in, your filter choices will
             be saved between visits)`},
     { category: 'Your Stuff',
         question: `I want one of your cool things, but I think you're trying to rip me off and would rather not pay
             what you're asking.  Can I have it for less?`, 
-        answer: `Sure thing!  Maybe.  Simply click on the email icon for that item and send us a mmessage about 
+        answer: `Sure thing!  Maybe.  Simply click on the email icon (or email us directly at garage-sale@griffithnet.com) 
+            for that item and send us a message about 
             what you want to pay.  We're leaving Jinja in August, so if your's is the largest offer (and no one has bought
             it for the asking price in the meantime) then it will be all yours!`},
         { category: `Jinja`,
@@ -38,7 +39,8 @@ export const FAQS = [
         { category: `Website`,
             question: `I can't keep track of everything.  Can't you make it easier to use?`,
             answer: `Sorry, I had to hack this together in a couple of weekends and it's a little rough.  Right now your best option is
-            to 'favorite' some items.  You can do that by logging in (<mat-icon>account_circle</mat-icon>) and then clicking on the heart
+            to 'favorite' some items.  You can do that by logging in (greay circle with a silhouette in the main toolbar) 
+            and then clicking on the heart
             icon for the items you're interested in.  Then you can show ONLY the items you have favorited by adding a filter to 'Include'
             favorited items (NOTE: once you do that, you won't be able to see any other items, even new ones, until you remove that filter)`},
         { category: `You`,

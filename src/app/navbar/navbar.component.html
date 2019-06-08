@@ -23,14 +23,7 @@
               <ng-container *ngTemplateOutlet="toolbuttons"></ng-container>
             </mat-menu>
           </span>
-     
-        <!-- <span fxHide.gt-xs>
-          <mat-icon class="menu" [matMenuTriggerFor]="hiddenMenu">menu</mat-icon>
-          <mat-menu #hiddenMenu="matMenu">
-            <ng-container *ngTemplateOutlet="toolbuttons"></ng-container>
-          </mat-menu>
-        </span>
-        <span ><ng-container fxHide *ngTemplateOutlet="toolbuttons"></ng-container></span> -->
+
         
         <button mat-icon-button *ngIf="!auth.isLoggedIn" matTooltip="Log in using Google (to favorite items and save settings)" 
           (click)="login()">
@@ -39,12 +32,23 @@
           </mat-icon>
         </button>
         
-        <button mat-icon-button  *ngIf="auth.isLoggedIn" matTooltip="Logout">
-          <span class="icon">
-            <img [src]="auth.user.photoURL" (click)="logout()" >
-          </span>
-        </button>
-
+        <ng-container *ngIf="auth.isLoggedIn">
+          <button mat-icon-button matTooltip="Account actions"  [matMenuTriggerFor]="accountMenu" >
+            <span class="icon">
+              <img [src]="auth.user.photoURL">
+            </span>
+          </button>
+          <mat-menu #accountMenu="matMenu">
+            <button mat-menu-item tabindex="-1" (click)="logout()">
+              <fa-icon [icon]="faSignOutAlt"></fa-icon>&nbsp;
+              <span>Sign Out</span>
+            </button>
+            <button mat-menu-item tabindex="-1"  (click)="gotoSettings()">
+                <fa-icon [icon]="faUserCog"></fa-icon>&nbsp;
+                <span>Profile</span>
+            </button>
+          </mat-menu>
+        </ng-container>
       </div>
        
 
@@ -68,14 +72,9 @@
 <ng-template #toolbuttons>
   <button mat-icon-button fxFlex="40px" class="material-icons" (click)="toggleFilter()" *ngIf="isCurrentRoute('tiles')"
     matTooltip="Choose what to display based on item type/status">
-    <mat-icon>filter_list</mat-icon>
+    <mat-icon [color]="isFilterOn() ? 'warn' : 'primary'">filter_list</mat-icon>
   </button>
-  
-  <button mat-icon-button class="material-icons" 
-    *ngIf="auth.isLoggedIn" (click)="gotoSettings()" matTooltip="Go to your settings">
-    <mat-icon>settings</mat-icon>
-  </button>
-  
+
   <button mat-icon-button (click)="gotoInbox()" *ngIf="messageCount > 0" [ngClass]="{'badged-button': newMessageCount>0}"
     matTooltip="Message in your inbox">
     <mat-icon>email</mat-icon>

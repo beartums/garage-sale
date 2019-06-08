@@ -36,6 +36,7 @@ import { MessageNavDialogComponent } from './message-center/message-center-dialo
 import { MaterialModule } from './material/material.module';
 import { ItemCommentsComponent } from './item-comments/item-comments/item-comments.component';
 import { InfoPageComponent } from './info-page/info-page.component';
+import { UncleanHtmlPipe } from './unclean-html.pipe';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { InfoPageComponent } from './info-page/info-page.component';
     ContactUsComponent,
     FilterDialogComponent,
     InfoPageComponent,
+    UncleanHtmlPipe,
   ],
   entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, 
                     ContactUsComponent,  MessageNavDialogComponent, InfoPageComponent ],

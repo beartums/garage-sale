@@ -15,13 +15,16 @@ import { PATHS } from '../constants';
 import { MessageNavDialogComponent } from '../message-center/message-center-dialog/message-center-dialog.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { InfoPageComponent } from '../info-page/info-page.component';
-
+import { faSignOutAlt, faUserCog } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+
+  faSignOutAlt = faSignOutAlt;
+  faUserCog = faUserCog;
 
   auth: AuthService;
   filt: FilterService;
@@ -120,6 +123,10 @@ export class NavbarComponent {
     return false;
   }
 
+  isFilterOn(): boolean {
+    return this.fs.isCurrentlyFiltering;
+  }
+  
   login() {
     this.as.loginWithGoogle();
   }
