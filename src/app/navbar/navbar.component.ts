@@ -40,6 +40,10 @@ export class NavbarComponent {
   userMessages$: Observable<Message[]>;
   adminMessages$: Observable<Message[]>;
 
+  get filterIsPaused() {
+    return this.fs.isPaused;
+  }
+
   get messageCount() {
     return this.userMessages.length + this.adminMessages.length;
   }

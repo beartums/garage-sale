@@ -18,7 +18,9 @@
               </span>
               <span class="tags" *ngIf="bpEq(['sm','xs'])">
                 <mat-chip-list>
-                  <mat-chip class="small-chip" [matMenuTriggerFor]="hiddenCats">categories ({{item.tags.length}})</mat-chip>
+                  <mat-chip class="small-chip" [matMenuTriggerFor]="hiddenCats">categories 
+                    <span class="chip-badge-internal">{{item.tags.length}}</span>
+                  </mat-chip>
                 </mat-chip-list>
                 <mat-menu #hiddenCats="matMenu">
                   <div class="chip-list-div">
