@@ -33,7 +33,7 @@ export const FAQS = [
                 it off because of a bug that used up my outgoing email quota of 10,000 per day in half an hour). Also, as
                 mentioned elsewhere, we will have lots of smaller stuff that we will sell directly on the last week we're here.`},
         { category: `Your Stuff`,
-            question: `Can I see the stuff before I buy it?`,
+            question: `Can I see the stuff in person before I buy it?`,
             answer: `Absolutely.  Email us directly at garage-sale@griffithnet.com or by clicking on the envelope icon at the top
             of the item you're interested in.  We're glad to set up a convenient viewing.`},
         { category: `Website`,
@@ -46,4 +46,20 @@ export const FAQS = [
         { category: `You`,
             question: `How much money is this website making you?`,
             answer: `Buttloads.`},
+            { category: `Prices`,
+            question: `I'd rather pay in dollars.  Can I do that?`,
+            answer: `YES!  We love dollars.  We love them so much, that if you want to pay in 
+            dollars, we will take them at a rate of 4000 ugx = 1 dollar.`},
+            { category: `Timing`,
+            question: `I want to buy something, but it's not available yet.  What do I do?`,
+            answer: `Contact us!  The item will be for sale until we take money for it.  If the 
+            item is not available yet, then we will mark it sold and hold onto the item (and keep
+            using it) until the date it is available.  The available dates are usually negotiable,`},
+            { category: `Timing`,
+            question: `What does it mean when it says the item is available in August or late July?`,
+            answer: `That basically means we are selling it, but we need it until we leave.  In order
+            to secure the item, you must pay for it -- at which point we will mark it sold and not
+            offer it for sale on the site, but you still won't be able to take posession until the
+            marked available date (sorry).`},
+        
 ]

@@ -132,7 +132,7 @@ export class FilterService {
 
   sort(items: Item[] = []): Item[] {
     if (!items) return [];
-    return items.sort( (a,b) => this.compareForSort(a,b));
+    return items.sort( (a, b) => this.compareForSort(a, b));
   }
 
 }
