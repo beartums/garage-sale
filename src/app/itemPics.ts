@@ -1,4 +1,5 @@
 export const ITEM_PICS=[ 
+	'49Lh590V.jpg',
 	'african-lamp.jpg',
 	'ailipu.png',
 	'asus_tf300t.jpg',
