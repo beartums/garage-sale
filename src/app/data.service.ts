@@ -41,6 +41,7 @@ export class DataService {
 
   addItem(item: Item) {
     item.lastUpdated = new Date().toISOString();
+    item.datePosted = new Date().toISOString();
     this.getItemsRef().push(item);
     this.ts.addItemTags(item);
   }
@@ -132,7 +133,8 @@ export class DataService {
   }
 
   updateItem(id: string, item: Item, oldItem?: Item) {
-    item.lastUpdated = new Date().toUTCString();
+    item.dateAvailable = item.dateAvailable || item.lastUpdated;
+    item.lastUpdated = new Date().toISOString();
     this.getItemRef(id).update(item);
     const tagChanges = this.ts.getTagChanges(item.tags, oldItem.tags);
     if (tagChanges === 'both' || tagChanges === 'remove') {this.ts.removeItemTags(oldItem)}

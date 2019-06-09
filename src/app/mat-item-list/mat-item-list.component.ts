@@ -148,7 +148,10 @@ export class MatItemListComponent implements AfterViewInit {
       data: { item: item },
     })
   }
-
+  sortItems(items: Item[] = []): Item[] {
+    if (!this.fs) { return []; }
+    return this.fs.sort(items);
+  }
   ngAfterViewInit() {
     //this.dataSource = new MatItemListDataSource(this.paginator, this.sort);
   }

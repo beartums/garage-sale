@@ -77,12 +77,13 @@
     left: 0;
     right: 0;
     display: table-cell;
-    vertical-align: middle
+    vertical-align: middle;
+    text-align: center;
   }
   
   .flex-image img {
-    width: 100%;
-  
+    max-width: 100%;
+    max-height: 300px;
   }
   .overlay {
     position: absolute;

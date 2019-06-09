@@ -1,7 +1,7 @@
 <button mat-raised-button color="" type="button" *ngIf="isAdmin()" (click)="addItem()">+</button>
 <div class="mat-elevation-z8" width="100%">
   <table class="material-table full-width" >
-    <ng-container  *ngFor="let item of itemList$ | async">
+    <ng-container  *ngFor="let item of sortItems(itemList$ | async)">
       <tr *ngIf="!isFiltered(item)" class="full-width">
           <td class="material-cell" matTooltip="Don't trust these photos!" (click)="showItem(item)">
               <span class="table-img" *ngIf="item.pictureUrl && item.pictureUrl > ''">

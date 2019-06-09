@@ -1,4 +1,5 @@
 import { FirebaseAuth } from '@angular/fire';
+import { FilterOptions } from './filter.service';
 
 export class User {
     key?: string;
@@ -23,7 +24,7 @@ export class User {
                 included: [],
                 excluded: [],
             },
-            soldItemFilter: null,
+            soldItemFilter: FilterOptions.exclude,
             featuredItemFilter: null,
             favoritedItemFilter: null
         }

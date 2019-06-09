@@ -134,6 +134,15 @@ export class MatItemEditComponent {
   isPhotoUsed(url: string): boolean {
     return this.ds.photoURLsUsed[url] === true;
   }
+  photoUrlsSort(urls: string[] = []): string[] {
+    return urls.sort((a, b) => {
+      if (this.isPhotoUsed(a) && !this.isPhotoUsed(b)) { return 1; }
+      if (!this.isPhotoUsed(a) && this.isPhotoUsed(b)) { return -1; }
+      if (a < b) { return -1; }
+      if (a > b) { return 1; }
+      return 0;
+    })
+  }
 
   removeTag(tag: string) {
     const idx = this.itemTags.indexOf(tag);

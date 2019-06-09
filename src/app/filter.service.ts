@@ -73,6 +73,9 @@ export class FilterService {
     // if filtering is paused, do not filter anything
     if (this.isPaused) { return false; }
 
+    // if the item is null, go ahead and filter it
+    if (!item) { return true; }
+
     chosen = chosen || this.chosenTags;
     negative = negative || this.negativeTags;
 
@@ -113,6 +116,23 @@ export class FilterService {
   }
   toggleFilterState() {
     this.isPaused = ! this.isPaused;
+  }
+
+  compareForSort(item1: Item, item2: Item): number {
+    if (this.is.isSold(item1)) { return 1 };
+    if (this.is.isSold(item2)) { return -1 };
+    if (this.is.isFeatured(item1) && !this.is.isFeatured(item2)) { return -1 };
+    if (this.is.isFeatured(item2) && !this.is.isFeatured(item1)) { return 1 };
+    const date1 = new Date(item1.datePosted || item1.lastUpdated);
+    const date2 = new Date(item2.datePosted || item2.lastUpdated);
+    if (date1 > date2) { return -1 };
+    if (date2 > date1) { return 1 };
+    return 0;
+  }
+
+  sort(items: Item[] = []): Item[] {
+    if (!items) return [];
+    return items.sort( (a,b) => this.compareForSort(a,b));
   }
 
 }

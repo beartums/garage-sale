@@ -57,4 +57,9 @@ export class MatItemTilesComponent {
     return this.fs.isFiltered(item, user);
   }
 
+  sortItems(items: Item[]): Item[] {
+    if (!this.fs || !items) { return []; }
+    return this.fs.sort(items);
+  }
+
 }

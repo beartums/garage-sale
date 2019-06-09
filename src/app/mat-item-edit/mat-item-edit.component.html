@@ -57,7 +57,7 @@
                   <mat-label>Select an option</mat-label>
                   <mat-select [(value)]="selected" formControlName="itemPictureUrl">
                     <mat-option>None</mat-option>
-                    <mat-option *ngFor="let itemPic of itemPics" [value]="itemPic" [ngClass]="{used: isPhotoUsed(itemPic)}">
+                    <mat-option *ngFor="let itemPic of photoUrlsSort(itemPics)" [value]="itemPic" [ngClass]="{used: isPhotoUsed(itemPic)}">
                       {{itemPic}}
                     </mat-option>
                   </mat-select>

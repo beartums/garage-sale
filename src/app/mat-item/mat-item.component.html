@@ -1,62 +1,64 @@
-<mat-card class="dashboard-card" *ngIf="!isFiltered(item)">
+<ng-container *ngIf="item">
 
-    <div fxLayout="row" fxLayoutAlign="center center" *ngIf="isSold(item)" class="overlay"
-        matTooltip="So, this item is sold.  Sorry.  If you don't want to look at these, set your filter to exclude 'sold' items (in the filter sidebar, select the 'sold' category, then tap it to turn it red and exclude it)">
-      <img class="sold" src="assets/sold.png">
-    </div>
-    <mat-card-header>
-      <mat-card-title>
-        {{item.name}}
-        
-        <div class="card-tools">
-          <span fxHide.xs><ng-container *ngTemplateOutlet="buttons"></ng-container></span>
-          <span fxHide.gt-xs >
-            <mat-icon class="menu" [matMenuTriggerFor]="hiddenMenu">menu</mat-icon>
-            <mat-menu #hiddenMenu="matMenu">
-              <ng-container *ngTemplateOutlet="buttons"></ng-container>
-            </mat-menu>
-          </span>
-        </div>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="content-container">
-      <!-- <ng-container *ngIf="!isShowingComments(item)">   -->
-        <!-- flexbox horizontal with 2 columns -- picture and text (changes to 2 rows and 1
-              column when size is xs -->
-        <div class="content-grid" fxLayout.xs="column" fxLayout="row"
-          fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
-          fxLayoutGap="15px" >
-          <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''" 
-                matTooltip="These photos are NOT (repeat, NOT) necessarily photos of the actual objects. Taking all those pictures is really hard.  So the internet provides">
-              <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
-          </div>
-          <!-- second column of above flexbox, -->
-          <div fxFlex="60%" class="text-flexbox">
-            <!-- new Flexbox (vertical) for text information of item -->
-            <p class="item-description" [innerHTML]="item.description">
-                
-            </p>
-            <br />
-            <br />
-            <p class="item-details">
-              <span [innerHTML]="formatItemDetails(item, true)" class="item-details-header">
-              </span>
-              <br />
-              <span [innerHTML]="formatItemDetails(item)" class="item-details-header">
-              </span>
-            </p>
-          </div>
+  <mat-card class="dashboard-card" *ngIf="!isFiltered(item)">
+
+      <div fxLayout="row" fxLayoutAlign="center center" *ngIf="isSold(item)" class="overlay"
+          matTooltip="So, this item is sold.  Sorry.  If you don't want to look at these, set your filter to exclude 'sold' items (in the filter sidebar, select the 'sold' category, then tap it to turn it red and exclude it)">
+        <img class="sold" src="assets/sold.png">
+      </div>
+      <mat-card-header>
+        <mat-card-title>
+          {{item.name}}
           
-        </div>
-      <!-- </ng-container>
-      <ng-container *ngIf="isShowingComments(item)">
-        <gs-item-comments [item]="item"></gs-item-comments>
-      </ng-container> -->
-  </mat-card-content>
+          <div class="card-tools">
+            <span fxHide.xs><ng-container *ngTemplateOutlet="buttons;context:{item:item}"></ng-container></span>
+            <span fxHide.gt-xs >
+              <mat-icon class="menu" [matMenuTriggerFor]="hiddenMenu">menu</mat-icon>
+              <mat-menu #hiddenMenu="matMenu">
+                <ng-container *ngTemplateOutlet="buttons;context:{item:item}"></ng-container>
+              </mat-menu>
+            </span>
+          </div>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="content-container">
+        <!-- <ng-container *ngIf="!isShowingComments(item)">   -->
+          <!-- flexbox horizontal with 2 columns -- picture and text (changes to 2 rows and 1
+                column when size is xs -->
+          <div class="content-grid" fxLayout.xs="column" fxLayout="row"
+            fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
+            fxLayoutGap="15px" >
+            <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''" 
+                  matTooltip="These photos are NOT (repeat, NOT) necessarily photos of the actual objects. Taking all those pictures is really hard.  So the internet provides">
+                <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
+            </div>
+            <!-- second column of above flexbox, -->
+            <div fxFlex="60%" class="text-flexbox">
+              <!-- new Flexbox (vertical) for text information of item -->
+              <p class="item-description" [innerHTML]="item.description">
+                  
+              </p>
+              <br />
+              <br />
+              <p class="item-details">
+                <span [innerHTML]="formatItemDetails(item, true)" class="item-details-header">
+                </span>
+                <br />
+                <span [innerHTML]="formatItemDetails(item)" class="item-details-header">
+                </span>
+              </p>
+            </div>
+            
+          </div>
+        <!-- </ng-container>
+        <ng-container *ngIf="isShowingComments(item)">
+          <gs-item-comments [item]="item"></gs-item-comments>
+        </ng-container> -->
+    </mat-card-content>
 
-</mat-card>
-
-<ng-template #buttons>
+  </mat-card>
+</ng-container>
+<ng-template #buttons let-item="item">
     <i class="material-icons-outlined icon-button" *ngIf="isAdmin()" (click)="editItem(item)">
         edit
       </i>

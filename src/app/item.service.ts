@@ -34,6 +34,7 @@ export class ItemService {
   }
 
   isFavoritedBy(item: Item, userId: string): boolean {
+    if (!item) { return false; }
     if (!item.favoritedBy) { return false; }
     return item.favoritedBy.indexOf(userId) > -1;
   }
