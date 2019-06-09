@@ -1,0 +1,18 @@
+<div fxLayout="column" class="dialog-container">
+  <div fxFlex="40px" class="title">
+    {{item.name}}
+  </div>
+  <div fxFlex="auto">
+    <div class="selected-pic-container" fxFlex="auto" fxLayoutAlign="center center">
+      <img class="selected-pic" [src]="'assets/items/' + selectedPic">
+    </div>
+  </div>
+  <div fxFlex="100px" fxLayout="row" fxLayoutAlign="center center" class="selectable-pics-container">
+    <div class="selectable-pic" fxFlex="25%" *ngFor="let pic of allPics" (click)="selectPic(pic)">
+      <img class="selectable-pic" [src]="'assets/items/' + pic">
+    </div>
+  </div>
+  <div fxFlex="60px" fxFlexAlign="center right" class="actions">
+    <button mat-raised-button (click)="close()">Done</button>
+  </div>
+</div>

@@ -11,6 +11,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { User } from '../user';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
 import { PATHS } from '../constants';
+import { ItemPicsComponent } from '../item-pics/item-pics.component';
 
 
 @Component({
@@ -21,14 +22,8 @@ import { PATHS } from '../constants';
 export class MatItemComponent implements OnInit {
 
   @Input() item: Item = new Item();
-  @Input() showAllPics: boolean = false;
 
   showComments = false;
-
-  get allPics(): string[] {
-    if (!this.item.pictureUrl) { return this.item.additionalPics || []; }
-    return [this.item.pictureUrl].concat(this.item.additionalPics || []);
-  }
 
   constructor(private ts: TagService, private fs: FilterService,
             private as: AuthService, private is: ItemService,
@@ -61,6 +56,15 @@ export class MatItemComponent implements OnInit {
   isFiltered(item: Item, user: User = null): boolean {
     user = user || this.as.user;
     return this.fs.isFiltered(item, user);
+  }
+
+  showAllPics(item: Item) {
+    if (!item.additionalPics || item.additionalPics.length < 1) { return; }
+    let dialogRef = this.dialog.open(ItemPicsComponent, {
+      height: '80%',
+      width: '80%',
+      data: {item:item}
+    })
   }
 
   toggleFavorite(item: Item) {

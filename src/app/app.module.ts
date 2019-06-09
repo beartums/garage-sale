@@ -38,6 +38,7 @@ import { ItemCommentsComponent } from './item-comments/item-comments/item-commen
 import { InfoPageComponent } from './info-page/info-page.component';
 import { UncleanHtmlPipe } from './unclean-html.pipe';
 import { MatTabsModule } from '@angular/material';
+import { ItemPicsComponent } from './item-pics/item-pics.component';
 
 @NgModule({
   declarations: [
@@ -53,9 +54,11 @@ import { MatTabsModule } from '@angular/material';
     FilterDialogComponent,
     InfoPageComponent,
     UncleanHtmlPipe,
+    ItemPicsComponent,
   ],
   entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, 
-                    ContactUsComponent,  MessageNavDialogComponent, InfoPageComponent ],
+                    ContactUsComponent,  MessageNavDialogComponent, InfoPageComponent,
+                  ItemPicsComponent ],
   imports: [
     BrowserModule,
     FormsModule, ReactiveFormsModule,

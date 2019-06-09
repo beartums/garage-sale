@@ -1,0 +1,34 @@
+.selected-pic {
+    max-width: 75%;
+    max-height: 100%;
+    vertical-align: middle;
+    text-align: center;
+}
+.selected-pic-container {
+    max-width: 90%;
+    max-height: 80%;
+    vertical-align: middle;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.selected-pic-container-parent {
+    vertical-align: middle;
+    text-align: center;
+}
+.selectable-pic {
+    max-width: 100%;
+    max-height: 100px;
+    padding: 8px;
+}
+.dialog-container {
+    max-height: 100%
+}
+.actions {
+    padding-top:20px;
+    text-align: right;
+    vertical-align: middle;
+}
+.title {
+    font-weight: bold;
+    font-size: larger;
+}

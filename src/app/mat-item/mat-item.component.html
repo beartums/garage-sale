@@ -29,16 +29,15 @@
             fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
             fxLayoutGap="15px" >
             <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''" 
-                  matTooltip="These photos are NOT (repeat, NOT) necessarily photos of the actual objects. Taking all those pictures is really hard.  So the internet provides">
+                  matTooltip="These photos are NOT (repeat, NOT) necessarily photos of the actual objects. Taking all those pictures is really hard.  So the internet provides"
+                  (click)="showAllPics(item)">
                 <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
             </div>
             <!-- second column of above flexbox, -->
             <div fxFlex="60%" class="text-flexbox">
               <!-- new Flexbox (vertical) for text information of item -->
-              <p class="item-description" [innerHTML]="item.description">
-                  
+              <p class="item-description" [innerHTML]="item.description"> 
               </p>
-              <br />
               <br />
               <p class="item-details">
                 <span [innerHTML]="formatItemDetails(item, true)" class="item-details-header">
@@ -50,13 +49,6 @@
             </div>            
           </div>
     </mat-card-content>
-    <ng-container *ngIf="showAllPics===true">
-        <div class="images-container" fxLayout="row wrap">
-          <div fxFlex="120px" *ngFor="let pic of allPics">
-            <img class="additional-pics" [src]="'assets/items/' + pic">
-          </div>
-        </div>
-      </ng-container>
 
   </mat-card>
 </ng-container>
@@ -102,3 +94,4 @@
     </mat-menu>
 
 </ng-template>
+
