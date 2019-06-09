@@ -21,7 +21,14 @@ import { PATHS } from '../constants';
 export class MatItemComponent implements OnInit {
 
   @Input() item: Item = new Item();
+  @Input() showAllPics: boolean = false;
+
   showComments = false;
+
+  get allPics(): string[] {
+    if (!this.item.pictureUrl) { return this.item.additionalPics || []; }
+    return [this.item.pictureUrl].concat(this.item.additionalPics || []);
+  }
 
   constructor(private ts: TagService, private fs: FilterService,
             private as: AuthService, private is: ItemService,

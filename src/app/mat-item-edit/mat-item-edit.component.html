@@ -54,8 +54,9 @@
           <div class="row">
             <div class="col">
               <mat-form-field class="full-width">
-                  <mat-label>Select an option</mat-label>
-                  <mat-select [(value)]="selected" formControlName="itemPictureUrl">
+                  <mat-label>Select a primary photo</mat-label>
+                  <mat-select [(value)]="primaryPic" formControlName="itemPictureUrl" 
+                    (selectionChange)="selectPic(primaryPic)">
                     <mat-option>None</mat-option>
                     <mat-option *ngFor="let itemPic of photoUrlsSort(itemPics)" [value]="itemPic" [ngClass]="{used: isPhotoUsed(itemPic)}">
                       {{itemPic}}
@@ -89,10 +90,34 @@
               </mat-form-field>
             </div>
           </div>
+          <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                    <mat-label>Select a (optional) additonal photos</mat-label>
+                    <mat-select [(value)]="additionalPics" formControlName="additionalPics" multiple="true">
+                      <mat-option>None</mat-option>
+                      <mat-option *ngFor="let itemPic of photoUrlsSort(itemPics)" [value]="itemPic" 
+                      [ngClass]="{used: isPhotoUsed(itemPic)}">
+                        {{itemPic}}
+                      </mat-option>
+                    </mat-select>
+  
+                </mat-form-field>
+              </div>
+            </div>
+              
+        
+        <div class="row">
+            <div class="col">
+              <span class="additional-pics" *ngFor="let picUrl of allPics">
+                <img [src]="'assets/items/' + picUrl" (click)="selectPic(picUrl)">
+              </span>
+            </div>
+          </div>
             
-        </div>
-        <div class="col" width="50%" *ngIf="selected>''">
-          <img [src]="'assets/items/' + selected" width="75%">
+      </div>
+      <div class="col" width="50%" *ngIf="selectedPic>''">
+          <img [src]="'assets/items/' + selectedPic" style="max-height: 350px; max-width:75%">
         </div>
       </div>
     </mat-card-content>

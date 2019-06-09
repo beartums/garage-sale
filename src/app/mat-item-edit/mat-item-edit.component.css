@@ -28,3 +28,14 @@
 .used {
   text-decoration: line-through; 
 }
+.additional-pics {
+  max-width: 20%;
+  max-height: 75px;
+  padding: 10px;
+}
+.additional-pics img {
+  max-width: 20%;
+  max-height: 75px;
+
+
+}

@@ -173,3 +173,8 @@
   top: -3px!important;
 }  
   
+.additional-pics {
+  max-height: 100px;
+  max-width: 100px;
+  padding: 10px;
+}

@@ -3,6 +3,7 @@ import { DataService } from '../data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Item } from '../item';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-show-item',
@@ -18,8 +19,11 @@ export class ShowItemComponent implements OnInit {
     private route: ActivatedRoute) {
       route.paramMap.subscribe( params => {
         this.itemId = params.get('itemId');
-        this.item$ = this.ds.getItemRef(this.itemId).valueChanges();
+        this.item$ = this.ds.getItemRef(this.itemId).snapshotChanges().pipe(
+          map( c => <Item>{ key: c.payload.key, ...c.payload.val()})
+        )
       });
+    
    }
 
   ngOnInit() {

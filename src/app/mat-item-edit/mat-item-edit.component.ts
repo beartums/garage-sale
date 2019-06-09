@@ -25,7 +25,8 @@ export class MatItemEditComponent {
     itemPrice: [null, Validators.required],
     itemCondition: [null, Validators.required],
     itemDateAvailable: [null, Validators.required],
-    itemPictureUrl: [null]
+    itemPictureUrl: [null],
+    additionalPics: [null],
   });
 
   itemTags: string[] = [];
@@ -35,7 +36,9 @@ export class MatItemEditComponent {
   selectable = true;
   addOnBlur = true;
   removable = true;
-  selected: string;
+  selectedPic: string = "";
+  primaryPic: string;
+  additionalPics: string[] = [];
   readonly separatorKeyCodes: number[] = [ENTER, COMMA, SPACE];
   readonly itemPics = ITEM_PICS;
   chipControl = new FormControl();
@@ -44,6 +47,11 @@ export class MatItemEditComponent {
   @ViewChild('chipInput') chipInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
+
+  get allPics() {
+    if (!this.primaryPic) { return this.additionalPics || []; };
+    return [ this.primaryPic ].concat(this.additionalPics || []);
+  }
 
   constructor(private fb: FormBuilder, private ds: DataService,
     private router: Router,  private route: ActivatedRoute,
@@ -72,8 +80,10 @@ export class MatItemEditComponent {
     this.itemEditForm.controls['itemDateAvailable'].setValue(item.dateAvailable || new Date().toISOString().split('T')[0]);
     this.itemTags = item.tags || [];
     this.itemEditForm.controls['itemPictureUrl'].setValue(item.pictureUrl || '');
-    this.selected = item.pictureUrl || '';
-
+    this.primaryPic = item.pictureUrl || '';
+    this.itemEditForm.controls['additionalPics'].setValue(item.additionalPics || []);
+    this.additionalPics = item.additionalPics || [];
+    this.selectedPic = this.primaryPic;
   }
 
   ngOnDestroy() {
@@ -89,6 +99,7 @@ export class MatItemEditComponent {
     item.dateAvailable = this.itemEditForm.controls['itemDateAvailable'].value || new Date().toISOString();
     item.tags = this.itemTags || [];
     item.pictureUrl = this.itemEditForm.controls['itemPictureUrl'].value || '';
+    item.additionalPics = this.itemEditForm.controls['additionalPics'].value || '';
 
     if (!this.ds.itemBeingEdited) {
       this.ds.addItem(item);
@@ -149,6 +160,10 @@ export class MatItemEditComponent {
     if (idx >= 0) {
       this.itemTags.splice(idx, 1);
     }
+  }
+
+  selectPic(picUrl: string) {
+    this.selectedPic = picUrl;
   }
 
   _filter(value: string): string[] {

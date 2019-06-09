@@ -68,7 +68,7 @@ import { MatTabsModule } from '@angular/material';
     AngularFireDatabaseModule,
     FontAwesomeModule, ItemCommentsModule,
     MessageCenterModule, MaterialModule,
-    MatTabsModule,
+    MatTabsModule, 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [AuthService, DataService, ItemService],

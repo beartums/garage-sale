@@ -9,6 +9,7 @@ export class Item {
     condition: string;
     dateAvailable: string;
     pictureUrl: string;
+    additionalPics: string[] = [];
     tags: Array<string>;
     commentCount: number = 0;
     lastUpdated: string;

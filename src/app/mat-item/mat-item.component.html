@@ -47,14 +47,16 @@
                 <span [innerHTML]="formatItemDetails(item)" class="item-details-header">
                 </span>
               </p>
-            </div>
-            
+            </div>            
           </div>
-        <!-- </ng-container>
-        <ng-container *ngIf="isShowingComments(item)">
-          <gs-item-comments [item]="item"></gs-item-comments>
-        </ng-container> -->
     </mat-card-content>
+    <ng-container *ngIf="showAllPics===true">
+        <div class="images-container" fxLayout="row wrap">
+          <div fxFlex="120px" *ngFor="let pic of allPics">
+            <img class="additional-pics" [src]="'assets/items/' + pic">
+          </div>
+        </div>
+      </ng-container>
 
   </mat-card>
 </ng-container>
