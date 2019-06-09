@@ -38,6 +38,12 @@ export class ItemService {
     if (!item.favoritedBy) { return false; }
     return item.favoritedBy.indexOf(userId) > -1;
   }
+  
+  isAvailable(item: Item): boolean {
+    const itemDate = new Date(item.dateAvailable);
+    const today = new Date();
+    return today >= itemDate;
+  }
 
   toggleFavorite(item: Item, userId: string) {
     if (!item.favoritedBy) { item.favoritedBy = []; }

@@ -1,8 +1,12 @@
   <mat-toolbar color="primary">
     <span>Filters</span>
     <span fxFlex="1 1 auto" class="fill-toolbar"></span>
+    <span>
+        <button mat-raised-button (click)="close()">Done</button>
+      </span>
   </mat-toolbar>
-  
+  <mat-tab-group style="height:100%">
+    <mat-tab label="Conditions">
   <div fxLayout.lt-md="column" fxLayout="row">
     <mat-card fxFlex="1fr">
     <mat-form-field [hintLabel]="getHintLabel('sold',soldItemFilter)">
@@ -34,8 +38,19 @@
         </mat-select>
       </mat-form-field>
   </mat-card>
+  <mat-card fxFlex="1fr">
+      <mat-form-field [hintLabel]="getHintLabel('available',availableItemFilter)">
+          <mat-label>Available Items</mat-label>
+        <mat-select [(value)]="availableItemFilter" [matTooltip]="filterOptions[availableItemFilter].tooltip">
+          <mat-option *ngFor="let filterOption of filterOptions" [value]="filterOption.value">
+            {{filterOption.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  </mat-card>
   </div>
-
+</mat-tab>
+<mat-tab label="Categories">
   <mat-card>
     <h4>Categories</h4>
     <p>Click/tap on a grey category to add it to the filters.  Once added, you will ONLY see items that belongs to that 
@@ -65,5 +80,9 @@
       </mat-chip-list>
     </div>
   </mat-card>
+  </mat-tab>
+  </mat-tab-group>
+
+
 
 

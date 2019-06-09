@@ -25,8 +25,9 @@ export class User {
                 excluded: [],
             },
             soldItemFilter: FilterOptions.exclude,
-            featuredItemFilter: null,
-            favoritedItemFilter: null
+            featuredItemFilter: FilterOptions.ignore,
+            favoritedItemFilter: FilterOptions.ignore,
+            availableItemsFilter: FilterOptions.ignore
         }
     };
 

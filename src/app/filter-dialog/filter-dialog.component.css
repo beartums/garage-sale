@@ -30,3 +30,14 @@
   .mat-form-field-flex div .mat-form-field-infix {
       width: 100px!important;
   }
+  .bottom-buttons {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      text-align: right;
+      vertical-align: bottom;
+      padding: 10px;
+      position: relative;
+      bottom: 0px;
+      right: 0px;
+  }

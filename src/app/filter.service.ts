@@ -17,9 +17,10 @@ export class FilterService {
   chosenTags: string[] = [];   // tags that are filtereid in the positive (only items that DO have this tag)
   negativeTags: string[] = []; // tags that are filtered in the negative (only items that DON'T have this tag)
 
-  soldItems: FilterOptions;
-  featuredItems: FilterOptions;
-  favoritedItems: FilterOptions;
+  soldItems: FilterOptions = FilterOptions.exclude;
+  featuredItems: FilterOptions = FilterOptions.ignore;
+  favoritedItems: FilterOptions = FilterOptions.ignore;
+  availableItems: FilterOptions = FilterOptions.ignore;
 
   isPaused = false;
 
@@ -30,6 +31,7 @@ export class FilterService {
     if (this.soldItems !== FilterOptions.ignore) { return true; }
     if (this.featuredItems !== FilterOptions.ignore) { return true; }
     if (this.favoritedItems !== FilterOptions.ignore) { return true; }
+    if (this.availableItems !== FilterOptions.ignore) { return true; }
   }
 
 
@@ -79,13 +81,30 @@ export class FilterService {
     chosen = chosen || this.chosenTags;
     negative = negative || this.negativeTags;
 
-    if (user && this.is.isFavoritedBy(item, user.uid) && this.favoritedItems === FilterOptions.exclude) { return true; }
-    if (this.is.isSold(item) && this.soldItems === FilterOptions.exclude) { return true; }
-    if (this.is.isFeatured(item) && this.featuredItems === FilterOptions.exclude) { return true; }
-    if (user && !this.is.isFavoritedBy(item, user.uid) && this.favoritedItems === FilterOptions.include) { return true; }
-    if (!this.is.isSold(item) && this.soldItems === FilterOptions.include) { return true; }
-    if (!this.is.isFeatured(item) && this.featuredItems === FilterOptions.include) { return true; }
-    
+    if (this.favoritedItems === FilterOptions.include || this.favoritedItems === FilterOptions.exclude) {
+      const isFavorited = this.is.isFavoritedBy(item, user.uid);
+      if (user && isFavorited && this.favoritedItems === FilterOptions.exclude) { return true; }
+      if (user && !isFavorited && this.favoritedItems === FilterOptions.include) { return true; }
+    }
+
+    if (this.soldItems === FilterOptions.include || this.soldItems === FilterOptions.exclude) {
+      const isSold = this.is.isSold(item);
+      if (isSold && this.soldItems === FilterOptions.exclude) { return true; }
+      if (!isSold && this.soldItems === FilterOptions.include) { return true; }
+    }
+
+    if (this.featuredItems === FilterOptions.exclude || this.featuredItems === FilterOptions.include) {
+      const isFeatured = this.is.isFeatured(item);
+      if (isFeatured && this.featuredItems === FilterOptions.exclude) { return true; }
+      if (!isFeatured && this.featuredItems === FilterOptions.include) { return true; }
+    }
+
+    if (this.availableItems === FilterOptions.exclude || this.availableItems === FilterOptions.include) {
+      const isAvailable = this.is.isAvailable(item);
+      if (isAvailable && this.availableItems === FilterOptions.exclude) { return true; }
+      if (!isAvailable && this.availableItems === FilterOptions.include) { return true; }
+    }
+
     // if no filterTags are chosen, then this item is not filtered
     if (chosen.length === 0) { return false; }
     const positive = _.difference(chosen, this.negativeTags);

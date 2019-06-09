@@ -24,7 +24,9 @@ p {
 .email-div {
     height: 24px;
     font-size: 14px;
-    text-align: center;
+    font-weight: bold;
+    text-align: right;
+    padding-right: 10px;
     background-color: lightgray;
     vertical-align: center;
 }

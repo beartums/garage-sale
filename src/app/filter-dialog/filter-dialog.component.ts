@@ -24,7 +24,7 @@ export class FilterDialogComponent implements OnInit {
   ]
 
   get soldItemFilter() {
-    return !FilterOptions[this.fs.soldItems] ? FilterOptions.ignore : this.fs.soldItems;
+    return !FilterOptions[this.fs.soldItems] ? FilterOptions.exclude : this.fs.soldItems;
   }
   set soldItemFilter(value: FilterOptions) {
     value = FilterOptions[value] ? value : 0;
@@ -47,6 +47,14 @@ export class FilterDialogComponent implements OnInit {
     this.fs.favoritedItems = value;
   }
 
+  get availableItemFilter() {
+    return !FilterOptions[this.fs.availableItems] ? FilterOptions.ignore : this.fs.availableItems;
+  }
+  set availableItemFilter(value: FilterOptions) {
+    value = FilterOptions[value] ? value : 0;
+    this.fs.availableItems = value;
+  }
+
   constructor(@Inject(MAT_DIALOG_DATA) public data, private ds: DataService,
           private ts: TagService, private fs: FilterService,
           private dialogRef: MatDialogRef<FilterDialogComponent>,
@@ -65,11 +73,14 @@ export class FilterDialogComponent implements OnInit {
           },
           soldItemFilter: this.soldItemFilter,
           featuredItemFilter: this.featuredItemFilter,
-          favoritedItemFilter: this.favoritedItemFilter
+          favoritedItemFilter: this.favoritedItemFilter,
+          availableItemFilter: this.availableItemFilter
         }
       }
     }
-    this.ds.updateUser(this.as.user.uid, filters)
+    if (this.as.isLoggedIn) {
+      this.ds.updateUser(this.as.user.uid, filters);
+    }
   }
 
   close() {
