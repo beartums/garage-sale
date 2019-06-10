@@ -108,7 +108,7 @@ export class MatItemListComponent implements AfterViewInit {
   }
 
   formatPrice(price: number = 0): string {
-    return this.is.formatPrice(price);
+    return this.is.formatPrice(price.toString());
   }
   
   getEmailForItem(item: Item): string {

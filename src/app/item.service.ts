@@ -18,8 +18,10 @@ export class ItemService {
     return item.favoritedBy.length;
   }
 
-  formatPrice(price: number): string {
+  formatPrice(sPrice: string): string {
     let priceString = '';
+    sPrice = ('' + sPrice).replace(/[^0-9]/gi, '');
+    const price = +sPrice;
     
     if (price !== 0 && !price) return priceString;
     if (price < 10000) {

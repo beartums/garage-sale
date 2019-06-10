@@ -24,6 +24,7 @@ export const ITEM_PICS=[
 	'ice-cream-maker.png',
 	'imersion-blender_.jpg',
 	'iron.jpg',
+	'IronWoodCoffeeTableLighter.JPG',
 	'Kelty-double-bag.jpg',
 	'Keyboard-table-stool.jpg',
 	'large-grill.jpg',

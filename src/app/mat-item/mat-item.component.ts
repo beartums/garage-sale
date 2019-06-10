@@ -121,7 +121,7 @@ export class MatItemComponent implements OnInit {
   }
 
   formatPrice(price: number = 0): string {
-    return this.is.formatPrice(price);
+    return this.is.formatPrice(price.toString());
   }
 
   formatDateAvailable(date: string): string {
