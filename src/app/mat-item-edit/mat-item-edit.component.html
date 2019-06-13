@@ -142,7 +142,7 @@
                   <mat-select [(value)]="primaryPic" formControlName="itemPrimaryAsset" 
                     (selectionChange)="selectPic(primaryPic)" [compareWith]="isMatchingAsset">
                     <mat-option>None</mat-option>
-                    <mat-option *ngFor="let asset of (assets$ | async)" [value]="asset" [ngClass]="{used: isPhotoUsed(asset)}">
+                    <mat-option *ngFor="let asset of (assets$ | async)" [value]="asset" [ngClass]="{used: isAssetUsed(asset)}">
                       {{asset.reference}}
                     </mat-option>
                   </mat-select>

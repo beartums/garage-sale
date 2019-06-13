@@ -21,7 +21,8 @@ export class DataService {
   
   // Object keeping track of used images for the item-editing page just to simplify data entry.
   photoURLsUsed = {};
-  
+  photoAssetsUsed = {};
+
   readonly ITEM_ROOT: string = 'Items';
   readonly TAG_ROOT: string = 'Tags';
   readonly USER_ROOT: string = 'Users';
@@ -94,6 +95,10 @@ export class DataService {
         this.photoURLsUsed = <Item[]>items.reduce((URLObj, item) => {
           if (item.pictureUrl && item.pictureUrl > '') { URLObj[item.pictureUrl] = true; }
           return URLObj;
+        }, {});
+        this.photoAssetsUsed =<Item[]>items.reduce((assetObj, item) => {
+          if (item.primaryAsset) { assetObj[item.primaryAsset.key] = true; }
+          return assetObj;
         }, {});
         return <Item[]>items;
       })

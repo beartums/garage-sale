@@ -180,6 +180,10 @@ export class MatItemEditComponent {
   isPhotoUsed(asset: Asset): boolean {
     return this.ds.photoURLsUsed[asset.url] === true;
   }
+  isAssetused(asset: Asset): boolean {
+    return this.ds.photoAssetsUsed[asset.key] === true;
+
+  }
   isMatchingAsset(a1: Asset, a2: Asset): boolean {
     return a1.key === a2.key;
   }
