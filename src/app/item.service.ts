@@ -70,10 +70,14 @@ export class ItemService {
   }
 
   isSold(item: Item): boolean {
+    if (item.isSold === false) { return false };
+    if (item.isSold === true) { return true; }
     if (!item.tags) return false;
     return item.tags.indexOf("sold") > -1;
   }
   isFeatured(item: Item): boolean {
+    if (item.isFeatured === false) { return false };
+    if (item.isFeatured === true) { return true; }
     if (!item.tags) return false;
     return item.tags.indexOf("featured") > -1;
   }

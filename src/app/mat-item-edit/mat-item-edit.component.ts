@@ -180,7 +180,7 @@ export class MatItemEditComponent {
   isPhotoUsed(asset: Asset): boolean {
     return this.ds.photoURLsUsed[asset.url] === true;
   }
-  isAssetused(asset: Asset): boolean {
+  isAssetUsed(asset: Asset): boolean {
     return this.ds.photoAssetsUsed[asset.key] === true;
 
   }
@@ -196,8 +196,8 @@ export class MatItemEditComponent {
   }
   photoUrlsSort(assets: Asset[] = []): Asset[] {
     return assets.sort((a, b) => {
-      if (this.isPhotoUsed(a) && !this.isPhotoUsed(b)) { return 1; }
-      if (!this.isPhotoUsed(a) && this.isPhotoUsed(b)) { return -1; }
+      if (this.isAssetUsed(a) && !this.isAssetUsed(b)) { return 1; }
+      if (!this.isAssetUsed(a) && this.isAssetUsed(b)) { return -1; }
       if (a.reference < b.reference) { return -1; }
       if (a.reference > b.reference) { return 1; }
       return 0;

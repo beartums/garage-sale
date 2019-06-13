@@ -4,11 +4,12 @@ import { map } from 'rxjs/operators';
 
 import { Item } from './item';
 import { TagService } from './tag.service';
-import { Observable, Subscribable, of } from 'rxjs';
+import { Observable, Subscribable, of, combineLatest, forkJoin } from 'rxjs';
 import { User } from './user';
 import { Comment } from './comment';
 import { FilterService } from './filter.service';
 import { Message } from './message';
+import { OnlineStorageService } from './online-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,28 @@ export class DataService {
   readonly COMMENT_ROOT: string = 'Comments';
   readonly MESSAGE_ROOT: string = 'Messages';
 
-  constructor(private db: AngularFireDatabase, private ts: TagService) { 
+  constructor(private db: AngularFireDatabase, private ts: TagService,
+            private oss: OnlineStorageService) { 
     //this.itemsRef = this.getItemsRef();
+    // ONE TIME THING TO UPDATE THE ASSETS
+    // let items$ = this.getItemsRef().snapshotChanges().pipe(
+    //   map(items=><Item[]>items.map(c=> (<unknown>{key:c.payload.key, ...c.payload.val()}) ))
+    // );
+    // let assets$ = this.oss.assets$;
+    // combineLatest(items$, assets$).subscribe((results) => {
+    //   const items = results[0], assets=results[1];
+    //   items.forEach( item => {
+    //     if (item.pictureUrl && item.pictureUrl > '') {
+    //       for (let i = 0; i < assets.length; i++) {
+    //         if (assets[i].reference == item.pictureUrl) {
+    //           item.primaryAsset = assets[i];
+    //           this.updateItem(item.key, { primaryAsset: assets[i], dateAvailable: item.dateAvailable });
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   })
+    // });
   }
 
   addComment(comment: Comment, item: Item, user?: User) {
@@ -88,8 +109,8 @@ export class DataService {
   getItemList$(): Observable<Item[]> {
     const items$: Observable<Item[]> = this.getItemsRef().snapshotChanges().pipe(
       map( changes => {
-        let items  = changes.map(
-          c => ( <Item>{ key: c.payload.key, ...c.payload.val() } )
+        let items  = <Item[]>changes.map(
+          c => ( <unknown>{ key: c.payload.key, ...c.payload.val() } )
         );
         this.ts.indexAllItems(<Item[]>items);
         this.photoURLsUsed = <Item[]>items.reduce((URLObj, item) => {
@@ -137,13 +158,14 @@ export class DataService {
     return this.db.object(this.USER_ROOT + '/' + id);
   }
 
-  updateItem(id: string, item: Item, oldItem?: Item) {
-    item.dateAvailable = item.dateAvailable || item.lastUpdated;
+  updateItem(id: string, item: Partial<Item>, oldItem?: Item) {
+    item.dateAvailable = item.dateAvailable || item.lastUpdated || new Date().toISOString();
     item.lastUpdated = new Date().toISOString();
     this.getItemRef(id).update(item);
+    if (!oldItem) return;
     const tagChanges = this.ts.getTagChanges(item.tags, oldItem.tags);
     if (tagChanges === 'both' || tagChanges === 'remove') {this.ts.removeItemTags(oldItem)}
-    if (tagChanges === 'both' || tagChanges === 'add') {this.ts.addItemTags(item)}
+    if (tagChanges === 'both' || tagChanges === 'add') {this.ts.addItemTags(<Item>item)}
   }
 
   updateUser(id: string, user: any) {

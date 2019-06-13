@@ -2,7 +2,7 @@ import { Asset } from './asset';
 
 export class Item {
     key?: string;
-    saleKey: string;
+    // saleKey: string;
     name: string;
     description: string;
     price: number;
