@@ -11,6 +11,9 @@ import { DataService } from '../data.service';
 import { FilterService } from '../filter.service';
 import { Item } from '../item';
 import { ITEM_PICS } from '../itemPics';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { OnlineStorageService } from '../online-storage.service';
+import { Asset } from '../asset';
 
 
 @Component({
@@ -25,8 +28,16 @@ export class MatItemEditComponent {
     itemPrice: [null, Validators.required],
     itemCondition: [null, Validators.required],
     itemDateAvailable: [null, Validators.required],
-    itemPictureUrl: [null],
-    additionalPics: [null],
+    itemPrimaryAsset: [null],
+    itemSoldTo: [null],
+    itemSoldToEmail: [null],
+    itemSoldPriceUgx: [null],
+    itemSoldDate: [null],
+    itemIsSold: [null],
+    itemIsHidden: [null],
+    itemIsFeatured: [null],
+    itemPriority: [null],
+    itemAdditionalAssets: [null],
   });
 
   itemTags: string[] = [];
@@ -36,11 +47,16 @@ export class MatItemEditComponent {
   selectable = true;
   addOnBlur = true;
   removable = true;
-  selectedPic: string = "";
-  primaryPic: string;
-  additionalPics: string[] = [];
+
+  assets$: Observable<Asset[]>
+
+  priority: number;
+  selectedAsset: Asset;
+  primaryPic: Asset;
+  additionalPics: Asset[] = [];
+
   readonly separatorKeyCodes: number[] = [ENTER, COMMA, SPACE];
-  readonly itemPics = ITEM_PICS;
+//  readonly itemPics = ITEM_PICS;
   chipControl = new FormControl();
   filteredTags: Observable<string[]>;
 
@@ -48,7 +64,7 @@ export class MatItemEditComponent {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
-  get allPics() {
+  get allAssets() {
     if (!this.primaryPic) { return this.additionalPics || []; };
     return [ this.primaryPic ].concat(this.additionalPics || []);
   }
@@ -56,9 +72,13 @@ export class MatItemEditComponent {
   constructor(private fb: FormBuilder, private ds: DataService,
     private router: Router,  private route: ActivatedRoute,
     private _location: Location, private fs: FilterService,
-    private _ngZone: NgZone) {
+    private _ngZone: NgZone, private oss: OnlineStorageService) {
 
       this._ngZone.onStable.pipe( take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
+
+      this.assets$ = oss.assets$.pipe(
+        map( assets => this.photoUrlsSort(assets))
+      );
 
       this.filteredTags = this.chipControl.valueChanges.pipe(
         startWith(null),
@@ -78,12 +98,20 @@ export class MatItemEditComponent {
     this.itemEditForm.controls['itemCondition'].setValue(item.condition || '');
     this.itemEditForm.controls['itemDescription'].setValue(item.description || '');
     this.itemEditForm.controls['itemDateAvailable'].setValue(item.dateAvailable || new Date().toISOString().split('T')[0]);
+    this.itemEditForm.controls['itemIsHidden'].setValue(item.isHidden || '');
+    this.itemEditForm.controls['itemIsFeatured'].setValue(item.isFeatured || '');
+    this.itemEditForm.controls['itemIsSold'].setValue(item.isSold || '');
+    this.itemEditForm.controls['itemSoldDate'].setValue(item.soldDate || '');
+    this.itemEditForm.controls['itemSoldPriceUgx'].setValue(item.soldPriceUgx || '');
+    this.itemEditForm.controls['itemSoldToEmail'].setValue(item.soldToEmail || '');
+    this.itemEditForm.controls['itemSoldTo'].setValue(item.soldTo || '');
+    this.itemEditForm.controls['itemPriority'].setValue(item.priority || 0);
     this.itemTags = item.tags || [];
-    this.itemEditForm.controls['itemPictureUrl'].setValue(item.pictureUrl || '');
-    this.primaryPic = item.pictureUrl || '';
-    this.itemEditForm.controls['additionalPics'].setValue(item.additionalPics || []);
-    this.additionalPics = item.additionalPics || [];
-    this.selectedPic = this.primaryPic;
+    this.itemEditForm.controls['itemPrimaryAsset'].setValue(item.primaryAsset);
+    this.primaryPic = item.primaryAsset;
+    this.itemEditForm.controls['itemAdditionalAssets'].setValue(item.additionalAssets || []);
+    this.additionalPics = item.additionalAssets || [];
+    this.selectedAsset = this.primaryPic;
   }
 
   ngOnDestroy() {
@@ -97,9 +125,16 @@ export class MatItemEditComponent {
     item.description = this.itemEditForm.controls['itemDescription'].value || '';
     item.condition = this.itemEditForm.controls['itemCondition'].value || '';
     item.dateAvailable = this.itemEditForm.controls['itemDateAvailable'].value || new Date().toISOString();
-    item.tags = this.itemTags || [];
-    item.pictureUrl = this.itemEditForm.controls['itemPictureUrl'].value || '';
-    item.additionalPics = this.itemEditForm.controls['additionalPics'].value || '';
+    item.isHidden = this.itemEditForm.controls['itemIsHidden'].value || false
+    item.isFeatured = this.itemEditForm.controls['itemIsFeatured'].value || false;
+    item.isSold = this.itemEditForm.controls['itemIsSold'].value || false;
+    item.soldDate = this.itemEditForm.controls['itemSoldDate'].value || '';
+    item.soldPriceUgx = this.itemEditForm.controls['itemSoldPriceUgx'].value || '';
+    item.soldToEmail= this.itemEditForm.controls['itemSoldToEmail'].value || '';
+    item.soldTo = this.itemEditForm.controls['itemSoldTo'].value || '';
+    item.priority = this.itemEditForm.controls['itemPriority'].value || 0;
+    item.primaryAsset = this.itemEditForm.controls['itemPrimaryAsset'].value;
+    item.additionalAssets = this.itemEditForm.controls['itemAdditionalAssets'].value;
 
     if (!this.ds.itemBeingEdited) {
       this.ds.addItem(item);
@@ -142,15 +177,25 @@ export class MatItemEditComponent {
     this.chipControl.setValue(null);
   }
 
-  isPhotoUsed(url: string): boolean {
-    return this.ds.photoURLsUsed[url] === true;
+  isPhotoUsed(asset: Asset): boolean {
+    return this.ds.photoURLsUsed[asset.url] === true;
   }
-  photoUrlsSort(urls: string[] = []): string[] {
-    return urls.sort((a, b) => {
+  isMatchingAsset(a1: Asset, a2: Asset): boolean {
+    return a1.key === a2.key;
+  }
+
+  onFileSelected(event) {
+    const files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      this.oss.uploadFile(files[i]);
+    }
+  }
+  photoUrlsSort(assets: Asset[] = []): Asset[] {
+    return assets.sort((a, b) => {
       if (this.isPhotoUsed(a) && !this.isPhotoUsed(b)) { return 1; }
       if (!this.isPhotoUsed(a) && this.isPhotoUsed(b)) { return -1; }
-      if (a < b) { return -1; }
-      if (a > b) { return 1; }
+      if (a.reference < b.reference) { return -1; }
+      if (a.reference > b.reference) { return 1; }
       return 0;
     })
   }
@@ -162,9 +207,10 @@ export class MatItemEditComponent {
     }
   }
 
-  selectPic(picUrl: string) {
-    this.selectedPic = picUrl;
+  selectPic(asset: Asset) {
+    this.selectedAsset = asset;
   }
+
 
   _filter(value: string): string[] {
     const filterValue = value.toLowerCase();

@@ -28,10 +28,10 @@
           <div class="content-grid" fxLayout.xs="column" fxLayout="row"
             fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
             fxLayoutGap="15px" >
-            <div class="flex-image" fxFlex="40%" *ngIf="item.pictureUrl && item.pictureUrl>''" 
-                  matTooltip="These photos are NOT (repeat, NOT) necessarily photos of the actual objects. Taking all those pictures is really hard.  So the internet provides"
-                  (click)="showAllPics(item)">
-                <img [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
+            <div class="flex-image" fxFlex="40%" *ngIf="(item.pictureUrl && item.pictureUrl>'') || item.primaryAsset" 
+                  matTooltip="These photos are NOT (repeat, NOT) necessarily photos of the actual objects. Taking all those pictures is really hard.  So the internet provides">
+              <img *ngIf="item.pictureUrl && item.pictureUrl > '' && ! item.primaryAsset" [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
+              <img *ngIf="item.primaryAsset" [src]="item.primaryAsset.url"  class="img-wrap" >
             </div>
             <!-- second column of above flexbox, -->
             <div fxFlex="60%" class="text-flexbox">

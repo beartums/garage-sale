@@ -4,9 +4,12 @@
     <ng-container  *ngFor="let item of sortItems(itemList$ | async)">
       <tr *ngIf="!isFiltered(item)" class="full-width">
           <td class="material-cell" matTooltip="Don't trust these photos!" (click)="showItem(item)">
-              <span class="table-img" *ngIf="item.pictureUrl && item.pictureUrl > ''">
-                <img class="table-img" object-fit="contain" [src]="'assets/items/' + item.pictureUrl">
-              </span>
+            <span class="table-img" *ngIf="item.primaryAsset">
+              <img class="table-img" object-fit="contain" [src]="item.primaryAsset.url">
+            </span>
+            <span class="table-img" *ngIf="item.pictureUrl && item.pictureUrl > '' && !item.primaryAsset">
+              <img class="table-img" object-fit="contain" [src]="'assets/items/' + item.pictureUrl">
+            </span>
           </td>
           <td class="material-cell" (click)="showItem(item)">{{item.name}}</td>
           <td class="material-cell" (click)="showItem(item)">{{formatPrice(item.price)}}</td>
@@ -18,7 +21,8 @@
               </span>
               <span class="tags" *ngIf="bpEq(['sm','xs'])">
                 <mat-chip-list>
-                  <mat-chip class="small-chip" [matMenuTriggerFor]="hiddenCats">categories 
+                  <mat-chip class="small-chip" [matMenuTriggerFor]="hiddenCats" *ngIf="item.tags">
+                    categories 
                     <span class="chip-badge-internal">{{item.tags.length}}</span>
                   </mat-chip>
                 </mat-chip-list>

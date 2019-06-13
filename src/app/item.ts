@@ -1,3 +1,5 @@
+import { Asset } from './asset';
+
 export class Item {
     key?: string;
     saleKey: string;
@@ -10,11 +12,21 @@ export class Item {
     dateAvailable: string;
     pictureUrl: string;
     additionalPics: string[] = [];
+    primaryAsset: Asset;
+    additionalAssets: Asset[];
     tags: Array<string>;
     commentCount: number = 0;
     lastUpdated: string;
     datePosted: string;
     isHidden: boolean = false;
+    isSold: boolean;
+    isFeatured: boolean;
+    priority: number; // higher means more important, heigher up in the list
+    soldTo: string; // name
+    soldToEmail: string; //
+    soldToId: string // userId (if any);
+    soldDate: string;
+    soldPriceUgx: string;
     favoritedBy: Array<string>; // user ids of users who have favorited this item
     oldVersions: Array<any>;
 }

@@ -20,6 +20,11 @@
 .col {
   flex: 1;
   margin-right: 20px;
+  text-align: center;
+  vertical-align: middle;
+}
+mat-slide-toggle {
+  height: 100%;
 }
 
 .col:last-child {

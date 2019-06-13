@@ -46,3 +46,4 @@ environment.ts
 # System Files
 .DS_Store
 Thumbs.db
+.firebase/hosting.ZGlzdA.cache

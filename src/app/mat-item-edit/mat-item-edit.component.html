@@ -4,26 +4,13 @@
       <mat-card-title>Edit Item</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="row">
+      <!-- Name, price, condition, date availavle -->
+      <div class="row" id="NameAndDetails">
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder="Name" formControlName="itemName">
           </mat-form-field>
         </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <textarea matInput placeholder="Description" formControlName="itemDescription"
-            cdkTextareaAutosize #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="3"></textarea>
-            <mat-error *ngIf="itemEditForm.controls['itemDescription'].hasError('required')">
-              Description is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder="Price" formControlName="itemPrice">
@@ -47,25 +34,81 @@
               Date Available is <strong>required</strong>
             </mat-error>
           </mat-form-field>
+        </div>  
+      </div>
+      <!-- Description -->
+      <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <textarea matInput placeholder="Description" formControlName="itemDescription"
+              cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="3"></textarea>
+              <mat-error *ngIf="itemEditForm.controls['itemDescription'].hasError('required')">
+                Description is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+      </div>
+      <!-- Status Row -->
+      <div class="row">
+        <!-- Is Featured -->
+        <div class="col">
+            <mat-slide-toggle matInput formControlName="itemIsFeatured">Featured Item?</mat-slide-toggle>
+        </div>
+        <!-- Is Hidden -->
+        <div class="col">
+            <mat-slide-toggle matInput formControlName="itemIsHidden">Hide Item?</mat-slide-toggle>
+        </div>
+        <!-- Is Sold -->
+        <div class="col">
+            <mat-slide-toggle matInput formControlName="itemIsSold" [(ngModel)]="isSold">Sold?</mat-slide-toggle>
+        </div>
+        <!-- Priority -->
+        <div class="col">
+          <mat-form-field>
+            <mat-label>specify a priority</mat-label>
+            <mat-select [(value)]="priority" formControlName="itemPriority">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]" [value]="i">
+                {{i}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
-      <div class="row">
+      <!-- Sold Info Row -->
+      <div class="row" *ngIf="isSold">
+        <!-- Sold To -->
         <div class="col">
-          <div class="row">
-            <div class="col">
-              <mat-form-field class="full-width">
-                  <mat-label>Select a primary photo</mat-label>
-                  <mat-select [(value)]="primaryPic" formControlName="itemPictureUrl" 
-                    (selectionChange)="selectPic(primaryPic)">
-                    <mat-option>None</mat-option>
-                    <mat-option *ngFor="let itemPic of photoUrlsSort(itemPics)" [value]="itemPic" [ngClass]="{used: isPhotoUsed(itemPic)}">
-                      {{itemPic}}
-                    </mat-option>
-                  </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Sold to (name)" formControlName="itemSoldTo">
+          </mat-form-field>
+        </div>
+        <!-- For price -->
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Sold at Price" formControlName="itemSoldPriceUgx">
+          </mat-form-field>
+        </div>
+        <!-- sold-to email -->
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Sold to (email)" formControlName="itemSoldToEmail">
+          </mat-form-field>
+        </div>
+        <!-- Date sold -->
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput type="date" placeholder="Date Sold" formControlName="itemSoldDate">
+          </mat-form-field>
+        </div>  
+      </div>
+      <!-- Begin 2-column -->
+      <div class="row">
+        <!-- Left Column -->
+        <div class="col">
+          <!-- Tags -->
+          <div class="row" id="tags">
             <div class="col">
               <mat-form-field class="full-width">
                 <mat-chip-list #chipList>
@@ -90,34 +133,70 @@
               </mat-form-field>
             </div>
           </div>
+          <!-- Primary Pic selection -->
           <div class="row">
-              <div class="col">
+            <div class="col">
+              <div fxFlex="auto">
                 <mat-form-field class="full-width">
-                    <mat-label>Select a (optional) additonal photos</mat-label>
-                    <mat-select [(value)]="additionalPics" formControlName="additionalPics" multiple="true">
-                      <mat-option>None</mat-option>
-                      <mat-option *ngFor="let itemPic of photoUrlsSort(itemPics)" [value]="itemPic" 
-                      [ngClass]="{used: isPhotoUsed(itemPic)}">
-                        {{itemPic}}
-                      </mat-option>
-                    </mat-select>
-  
+                  <mat-label>Select a primary photo</mat-label>
+                  <mat-select [(value)]="primaryPic" formControlName="itemPrimaryAsset" 
+                    (selectionChange)="selectPic(primaryPic)" [compareWith]="isMatchingAsset">
+                    <mat-option>None</mat-option>
+                    <mat-option *ngFor="let asset of (assets$ | async)" [value]="asset" [ngClass]="{used: isPhotoUsed(asset)}">
+                      {{asset.reference}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
-            </div>
-              
-        
-        <div class="row">
-            <div class="col">
-              <span class="additional-pics" *ngFor="let picUrl of allPics">
-                <img [src]="'assets/items/' + picUrl" (click)="selectPic(picUrl)">
-              </span>
+              <div fxFlex="25px">
+                <button mat-icon-button mat-tooltip="upload picture" (click)="uploadPhotos.click()">
+                    <mat-icon>cloud_upload</mat-icon>
+                </button>
+              </div>
             </div>
           </div>
-            
+          <!-- Additional Pic selection -->
+          <div class="row">
+            <div class="col">
+              <div fxFlex="auto">
+                <mat-form-field class="full-width">
+                    <mat-label>Select (optional) additonal photos</mat-label>
+                    <mat-select [(value)]="additionalPics" formControlName="itemAdditionalAssets" 
+                        multiple="true" [compareWith]="isMatchingAsset">
+                      <mat-option>None</mat-option>
+                      <mat-option *ngFor="let asset of (assets$ | async)" [value]="asset" 
+                      [ngClass]="{used: isPhotoUsed(asset)}">
+                        {{asset.reference}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex="25px">
+                  <button mat-icon-button mat-tooltip="upload pictures" (click)="uploadPhotos.click()">
+                      <mat-icon>cloud_upload</mat-icon>
+                  </button>
+                  <input hidden (change)="onFileSelected($event)" multiple="true" #uploadPhotos type="file" id="singleFile">
+                </div>
+              </div>
+          </div>
+        </div>
+        <!-- Right Column -->
+        <div class="col" width="50%" *ngIf="selectedAsset">
+          <!-- PIC display -->
+          <div class="row">
+            <div class="col">
+              <img [src]="selectedAsset.url" style="max-height: 350px; max-width:75%">
+            </div>
+          </div>
+          <br />
+        </div>
       </div>
-      <div class="col" width="50%" *ngIf="selectedPic>''">
-          <img [src]="'assets/items/' + selectedPic" style="max-height: 350px; max-width:75%">
+      <!-- Additional Pic Display -->
+      <div class="row">
+        <div class="col">
+          <span class="additional-pics" *ngFor="let asset of allAssets">
+            <img [src]="asset.url" (click)="selectPic(asset)">
+          </span>
         </div>
       </div>
     </mat-card-content>

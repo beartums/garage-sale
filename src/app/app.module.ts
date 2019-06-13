@@ -37,7 +37,7 @@ import { MaterialModule } from './material/material.module';
 import { ItemCommentsComponent } from './item-comments/item-comments/item-comments.component';
 import { InfoPageComponent } from './info-page/info-page.component';
 import { UncleanHtmlPipe } from './unclean-html.pipe';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule, MatSliderModule } from '@angular/material';
 import { ItemPicsComponent } from './item-pics/item-pics.component';
 
 @NgModule({
@@ -71,7 +71,7 @@ import { ItemPicsComponent } from './item-pics/item-pics.component';
     AngularFireDatabaseModule,
     FontAwesomeModule, ItemCommentsModule,
     MessageCenterModule, MaterialModule,
-    MatTabsModule, 
+    MatTabsModule, MatSliderModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [AuthService, DataService, ItemService],

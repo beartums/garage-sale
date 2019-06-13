@@ -78,6 +78,8 @@ export class FilterService {
     // if the item is null, go ahead and filter it
     if (!item) { return true; }
 
+    if (item.isHidden) { return true; }
+
     chosen = chosen || this.chosenTags;
     negative = negative || this.negativeTags;
 
