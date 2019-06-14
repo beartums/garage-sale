@@ -1,0 +1,39 @@
+<div mat-dialog-header>
+  Send us an email
+</div>
+<mat-dialog-content width="100%">
+  <table width="100%">
+      <tr width="100%">
+          <td>To:</td>
+          <td width="100%">{{toEmail}}</td>
+        </tr>
+        <tr  width="100%">
+            <td>From:</td>
+            <td  width="100%"><mat-form-field [class]="full-width">
+                <input matInput [(ngModel)]="fromEmail">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr  width="100%">
+              <td>Subject:</td>
+              <td  width="100%"><mat-form-field [class]="full-width">
+                <input matInput  [(ngModel)]="subject">
+              </mat-form-field>
+            </td>
+            </tr>
+            <tr width="100%">
+                <td style="vertical-align: top">Message:</td>
+                <td width="100%">
+                  <mat-form-field class="full-width">
+                    <textarea cdkAutosizeMinRows="20" style="width: 100%;" matInput [(ngModel)]="message">
+                    </textarea>
+                  </mat-form-field>
+                </td>
+              </tr>
+                                
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
+    <button mat-raised-button (click)="send()">Send</button>
+</mat-dialog-actions>
