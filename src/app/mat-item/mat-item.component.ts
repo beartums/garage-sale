@@ -13,6 +13,7 @@ import { ContactUsComponent } from '../contact-us/contact-us.component';
 import { PATHS, DEFAULT_PIC_TOOLTIP } from '../constants';
 import { ItemPicsComponent } from '../item-pics/item-pics.component';
 import { catchError } from 'rxjs/operators';
+import { EmailComponent } from '../email/email.component';
 
 
 @Component({
@@ -154,7 +155,18 @@ export class MatItemComponent implements OnInit {
     if (now > da) { return 'Now'; }
     else { return da.getDate() + ' ' + months[da.getMonth()]; }
   }
-
+  mail(item: Item) {
+    this.dialog.open(EmailComponent, {
+      height: '90%',
+      width: '90%',
+      data: {
+        toEmail: 'garage-sale@griffithnet.com',
+        fromEmail: this.isLoggedIn() ? this.as.user.email : '',
+        subject: 'RE: ' + item.name,
+        message: ''
+      }
+    })
+  }
   truncateItemDescription(desc: string): string {
     if (this.isTruncated === true) {
       const spaceLoc = desc.indexOf(' ', this.MAX_CHAR);

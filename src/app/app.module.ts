@@ -39,6 +39,8 @@ import { InfoPageComponent } from './info-page/info-page.component';
 import { UncleanHtmlPipe } from './unclean-html.pipe';
 import { MatTabsModule, MatSliderModule } from '@angular/material';
 import { ItemPicsComponent } from './item-pics/item-pics.component';
+import { EmailComponent } from './email/email.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -55,10 +57,11 @@ import { ItemPicsComponent } from './item-pics/item-pics.component';
     InfoPageComponent,
     UncleanHtmlPipe,
     ItemPicsComponent,
+    EmailComponent,
   ],
   entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, 
                     ContactUsComponent,  MessageNavDialogComponent, InfoPageComponent,
-                  ItemPicsComponent ],
+                  ItemPicsComponent, EmailComponent ],
   imports: [
     BrowserModule,
     FormsModule, ReactiveFormsModule,
@@ -68,8 +71,8 @@ import { ItemPicsComponent } from './item-pics/item-pics.component';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    AngularFireDatabaseModule,
-    FontAwesomeModule, ItemCommentsModule,
+    AngularFireDatabaseModule, 
+    FontAwesomeModule, ItemCommentsModule, HttpClientModule,
     MessageCenterModule, MaterialModule,
     MatTabsModule, MatSliderModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),

@@ -5,6 +5,9 @@ import * as admin from 'firebase-admin';
 
 import * as nodemailer from 'nodemailer';
 
+import * as cors from 'cors';
+const corsHandler = cors({origin:true});
+
 const mailTransport = nodemailer.createTransport(
     'smtps://eric@griffithnet.com:roflaeijbpemxdvf@smtp.gmail.com'
 );
@@ -45,9 +48,17 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
     });
 
 exports.sendMail = functions.https.onRequest(async (req, res) => {
-    return sendEmail('eric@griffithnet.com').then( () => {
-        res.status(200).send(true);
-    })
+    corsHandler(req, res, () => {
+        const to = req.body.to || 'garage-sale@griffithnet.com';
+        const from = req.body.from || 'noemailincluded';
+        const subject = req.body.subject || 'no subject';
+        const message = req.body.message || 'no message';
+        return sendEmail(to,from,subject,message).then( () => {
+            res.status(200).send(req.query);
+        }, (err) => { 
+            res.status(300).send(err);
+        })
+    });
 });
 
 // pass an itemId to look up and increase the comment count
@@ -69,12 +80,12 @@ exports.updateCommentCount = functions.database.ref("/Comments/{commentId}/itemI
 
 
 
-function sendEmail(address: any) {
+function sendEmail(to: string, from: string, subject: string, message: string) {
     const mailOptions = {
-        from: 'garage-sale@griffithnet.com',
-        to: address,
-        subject: 'email subject line',
-        html: '<h1>Big Fucking title</h1>'
+        from: from,
+        to: to,
+        subject: subject,
+        html: message
     }
     return mailTransport.sendMail(mailOptions);
 }

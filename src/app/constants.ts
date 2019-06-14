@@ -11,6 +11,8 @@ export const DEFAULT_PIC_TOOLTIP = `These photos are NOT (repeat, NOT) necessari
                 of the actual objects. Taking all those pictures is really hard.  
                 So the internet provides`;
 
+export const SEND_EMAIL_URL = 'https://us-central1-garage-sale-78809.cloudfunctions.net/sendMail';
+
 export const FAQS = [
     {
         category: 'Website',
