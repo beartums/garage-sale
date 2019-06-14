@@ -10,7 +10,7 @@ import { ItemCommentsComponent } from '../item-comments/item-comments/item-comme
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { User } from '../user';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
-import { PATHS } from '../constants';
+import { PATHS, DEFAULT_PIC_TOOLTIP } from '../constants';
 import { ItemPicsComponent } from '../item-pics/item-pics.component';
 import { catchError } from 'rxjs/operators';
 
@@ -63,6 +63,11 @@ export class MatItemComponent implements OnInit {
   }
   login() {
     this.as.loginWithGoogle();
+  }
+
+  getPhotoTooltip(item: Item): string {
+    if (item.useDefaultTooltip !== false) { return DEFAULT_PIC_TOOLTIP; }
+    return "";
   }
 
   isSold(item: Item): boolean {

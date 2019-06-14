@@ -29,7 +29,7 @@
             fxLayoutAlign.xs="center center" fxLayoutAlign="center center"
             fxLayoutGap="15px" >
             <div class="flex-image" fxFlex="40%" *ngIf="(item.pictureUrl && item.pictureUrl>'') || item.primaryAsset" 
-                  matTooltip="These photos are NOT (repeat, NOT) necessarily photos of the actual objects. Taking all those pictures is really hard.  So the internet provides">
+                  [matTooltip]="getPhotoTooltip(item)">
               <img *ngIf="item.pictureUrl && item.pictureUrl > '' && ! item.primaryAsset" [src]="'assets/items/' + item.pictureUrl"  class="img-wrap" >
               <img *ngIf="item.primaryAsset" [src]="item.primaryAsset.url"  class="img-wrap" >
             </div>

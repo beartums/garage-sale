@@ -28,6 +28,7 @@ export class Item {
     soldToId: string // userId (if any);
     soldDate: string;
     soldPriceUgx: string;
+    useDefaultTooltip: boolean;
     favoritedBy: Array<string>; // user ids of users who have favorited this item
     favoritedByUsers?: Array<User> // Reference Array of users who have favorited.  Created at read-time
     oldVersions: Array<any>;

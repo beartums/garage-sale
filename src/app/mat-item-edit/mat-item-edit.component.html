@@ -65,7 +65,8 @@
         </div>
         <!-- Priority -->
         <div class="col">
-          <mat-form-field>
+          <mat-slide-toggle matInput formControlName="itemUseDefaultTooltip">Default Picture Tooltip?</mat-slide-toggle>
+          <!-- <mat-form-field>
             <mat-label>specify a priority</mat-label>
             <mat-select [(value)]="priority" formControlName="itemPriority">
               <mat-option>None</mat-option>
@@ -73,7 +74,7 @@
                 {{i}}
               </mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
       </div>
       <!-- Sold Info Row -->

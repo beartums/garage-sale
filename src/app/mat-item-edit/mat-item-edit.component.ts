@@ -34,7 +34,8 @@ export class MatItemEditComponent implements OnInit{
     itemIsSold: [null],
     itemIsHidden: [null],
     itemIsFeatured: [null],
-    itemPriority: [null],
+    //itemPriority: [null],
+    itemUseDefaultTooltip: [null],
     itemAdditionalAssets: [null],
   });
 
@@ -103,7 +104,8 @@ export class MatItemEditComponent implements OnInit{
     this.itemEditForm.controls['itemSoldPriceUgx'].setValue(item.soldPriceUgx || '');
     this.itemEditForm.controls['itemSoldToEmail'].setValue(item.soldToEmail || '');
     this.itemEditForm.controls['itemSoldTo'].setValue(item.soldTo || '');
-    this.itemEditForm.controls['itemPriority'].setValue(item.priority || 0);
+    //this.itemEditForm.controls['itemPriority'].setValue(item.priority || 0);
+    this.itemEditForm.controls['itemUseDefaultTooltip'].setValue(item.priority || true);
     this.itemTags = item.tags || [];
     this.itemEditForm.controls['itemPrimaryAsset'].setValue(item.primaryAsset);
     this.primaryPic = item.primaryAsset;
@@ -130,7 +132,8 @@ export class MatItemEditComponent implements OnInit{
     item.soldPriceUgx = this.itemEditForm.controls['itemSoldPriceUgx'].value || '';
     item.soldToEmail= this.itemEditForm.controls['itemSoldToEmail'].value || '';
     item.soldTo = this.itemEditForm.controls['itemSoldTo'].value || '';
-    item.priority = this.itemEditForm.controls['itemPriority'].value || 0;
+    //item.priority = this.itemEditForm.controls['itemPriority'].value || 0;
+    item.useDefaultTooltip = this.itemEditForm.controls['itemUseDefaultTooltip'].value || false;
     item.primaryAsset = this.itemEditForm.controls['itemPrimaryAsset'].value;
     item.additionalAssets = this.itemEditForm.controls['itemAdditionalAssets'].value;
     item.tags = this.itemTags || [];

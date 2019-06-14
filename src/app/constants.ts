@@ -7,6 +7,10 @@ export const PATHS = {
     itemUrl: 'show-item',
 }
 
+export const DEFAULT_PIC_TOOLTIP = `These photos are NOT (repeat, NOT) necessarily photos 
+                of the actual objects. Taking all those pictures is really hard.  
+                So the internet provides`;
+
 export const FAQS = [
     {
         category: 'Website',

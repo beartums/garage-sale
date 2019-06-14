@@ -22,6 +22,7 @@ export class ItemService {
     this.items$ = this.ds.getItemList$();
     combineLatest(this.items$, this.ds.getUsers$()).pipe(
       map(results => {
+      this.favoritedByUsers = {};
       const items = results[0], users = results[1];
       items.forEach( item => {
         if (item.favoritedBy) {
