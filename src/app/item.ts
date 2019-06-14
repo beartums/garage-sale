@@ -1,4 +1,5 @@
 import { Asset } from './asset';
+import { User } from './user';
 
 export class Item {
     key?: string;
@@ -28,5 +29,6 @@ export class Item {
     soldDate: string;
     soldPriceUgx: string;
     favoritedBy: Array<string>; // user ids of users who have favorited this item
+    favoritedByUsers?: Array<User> // Reference Array of users who have favorited.  Created at read-time
     oldVersions: Array<any>;
 }

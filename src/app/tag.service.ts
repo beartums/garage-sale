@@ -73,16 +73,15 @@ export class TagService {
     const nTags = tags.map( tag => this.formatTag(tag));
     const xTags = _.difference(oTags, nTags);
     if (xTags.length == 0) { return null; } // no difference in tags
-    const isAdded = xTags.some( tag => oTags.indexOf(tag) == -1);
-    const isRemoved = xTags.some( tag => nTags.indexOf(tag) == -1);
+    const isAdded = xTags.some( tag => oTags.indexOf(tag) === -1);
+    const isRemoved = xTags.some( tag => nTags.indexOf(tag) === -1);
     if (isAdded && isRemoved) { return 'both'; };
     if (isAdded) { return 'add'; };
     if (isRemoved) { return 'remove'; };
     return null;
   }
 
-  removeSpecialTags(tags: string[]): string[] {
+  removeSpecialTags(tags: string[] = []): string[] {
     return _.without(tags, ...this.SPECIAL_TAGS);
   }
-  
 }

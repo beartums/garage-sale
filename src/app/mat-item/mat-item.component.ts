@@ -12,6 +12,7 @@ import { User } from '../user';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
 import { PATHS } from '../constants';
 import { ItemPicsComponent } from '../item-pics/item-pics.component';
+import { catchError } from 'rxjs/operators';
 
 
 @Component({
@@ -31,13 +32,27 @@ export class MatItemComponent implements OnInit {
   constructor(private ts: TagService, private fs: FilterService,
             private as: AuthService, private is: ItemService,
             private ds: DataService, private router: Router,
-            public dialog: MatDialog) { }
+            public dialog: MatDialog) {
+
+  }
 
   ngOnInit() {
-  }
+    if (this.item.description.length>this.MAX_CHAR) this.isTruncated = true;  }
 
   countFaves(item: Item) {
     return this.is.getFavoriteCount(item);
+  }
+
+  favoritedBy(item: Item): string {
+    try {
+      const users = this.is.favoritedByUsers[item.key];
+      let text = users.reduce( (str, user: User) => {
+        return str ? str + '; ' + user.displayName : user.displayName;
+      }, null);
+      return text;
+    } catch(e) {
+      return 'Click/tap to add to favorites';
+    }
   }
 
   isAdmin(): boolean {
@@ -136,11 +151,10 @@ export class MatItemComponent implements OnInit {
   }
 
   truncateItemDescription(desc: string): string {
-    if (this.isTruncated === true || (desc.length > this.MAX_CHAR && this.isTruncated !== false)) {
+    if (this.isTruncated === true) {
       const spaceLoc = desc.indexOf(' ', this.MAX_CHAR);
       let text = desc.slice(0, spaceLoc);
       text += '...';
-      this.isTruncated = true;
       return text;
     } else {
       return desc;

@@ -69,12 +69,12 @@
       </i>
       <span>
         <i class="material-icons-outlined icon-button icon-button-badge-above" *ngIf="!isFavorited(item)" (click)="toggleFavorite(item)"
-        [matTooltip]="favoriteTooltip('add',isLoggedIn())"
+        [matTooltip]="favoritedBy(item)"
         [matBadge]="countFaves(item)" matBadgeSize="medium" [matBadgeHidden]="!countFaves(item)">
           favorite_border
         </i>
         <i class="material-icons favorited icon-button icon-button-badge-above" *ngIf="isFavorited(item)" (click)="toggleFavorite(item)"
-          [matTooltip]="favoriteTooltip('remove',isLoggedIn())"
+          [matTooltip]="favoritedBy(item)"
           [matBadge]="countFaves(item)" matBadgeSize="medium" [matBadgeHidden]="!countFaves(item)">
           favorite
         </i>

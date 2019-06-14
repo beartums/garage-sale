@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Item } from './item';
 import { DataService } from './data.service';
+import { Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,29 @@ export class ItemService {
   // when the item commentsCount is updated on the server
   itemsShowingComments: string[] = []
 
-  constructor(private ds: DataService) { }
+  items$: Observable<Item[]>;
+  favoritedByUsers = {};
+
+  constructor(private ds: DataService) { 
+    // we have the ids of users favriting items, but this populates a reference
+    // object with the current users favoriting
+    this.items$ = this.ds.getItemList$();
+    combineLatest(this.items$, this.ds.getUsers$()).pipe(
+      map(results => {
+      const items = results[0], users = results[1];
+      items.forEach( item => {
+        if (item.favoritedBy) {
+          item.favoritedBy.forEach( userId => {
+            if (!this.favoritedByUsers[item.key]) { this.favoritedByUsers[item.key] = []; }
+            const fbUser = users.find( user => user.key === userId );
+            if (fbUser) { this.favoritedByUsers[item.key].push(fbUser); }
+          })
+        }
+      })
+    })
+    ).subscribe() // subscribe to start the flow
+    
+  }
 
   getFavoriteCount(item: Item): number {
     if (!item.favoritedBy) item.favoritedBy = [];

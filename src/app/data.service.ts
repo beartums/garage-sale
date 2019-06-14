@@ -157,6 +157,15 @@ export class DataService {
   getUserRef(id: string): AngularFireObject<User> {
     return this.db.object(this.USER_ROOT + '/' + id);
   }
+  getUsers$(): Observable<User[]> {
+    return this.getUsersRef().snapshotChanges().pipe(
+      map( users => <User[]>users.map( c => (<unknown>{ key: c.payload.key, ...c.payload.val()})))
+    )
+  }
+  getUsersRef(): AngularFireList<User[]> {
+    return this.db.list(this.USER_ROOT);
+  }
+  
 
   updateItem(id: string, item: Partial<Item>, oldItem?: Item) {
     item.dateAvailable = item.dateAvailable || item.lastUpdated || new Date().toISOString();
