@@ -43,6 +43,7 @@ export class MatItemEditComponent {
   itemTags: string[] = [];
   itemKey = '';
   tagsBeingEdited = false;
+  isSold: boolean;
 
   selectable = true;
   addOnBlur = true;
