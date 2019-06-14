@@ -133,6 +133,7 @@ export class MatItemEditComponent implements OnInit{
     item.priority = this.itemEditForm.controls['itemPriority'].value || 0;
     item.primaryAsset = this.itemEditForm.controls['itemPrimaryAsset'].value;
     item.additionalAssets = this.itemEditForm.controls['itemAdditionalAssets'].value;
+    item.tags = this.itemTags;
 
     if (!this.ds.itemBeingEdited) {
       this.ds.addItem(item);
