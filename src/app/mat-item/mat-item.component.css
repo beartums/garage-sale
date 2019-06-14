@@ -178,3 +178,13 @@
   max-width: 100px;
   padding: 10px;
 }
+
+.expand-me {
+  font-size: smaller;
+  color: blue;
+}
+
+.expand-me:hover {
+  text-decoration-line: underline;
+  cursor: pointer;
+}

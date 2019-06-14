@@ -36,8 +36,11 @@
             <!-- second column of above flexbox, -->
             <div fxFlex="60%" class="text-flexbox">
               <!-- new Flexbox (vertical) for text information of item -->
-              <p class="item-description" [innerHTML]="item.description"> 
-              </p>
+              <p class="item-description">
+                <span [innerHTML]="truncateItemDescription(item.description)"></span> 
+                  <span *ngIf="isTruncated" class="expand-me" (click)="toggleTruncate()">(more)</span>
+                  <span *ngIf="isTruncated===false" class="expand-me" (click)="toggleTruncate()">(less)</span>
+                </p>
               <br />
               <p class="item-details">
                 <span [innerHTML]="formatItemDetails(item, true)" class="item-details-header">

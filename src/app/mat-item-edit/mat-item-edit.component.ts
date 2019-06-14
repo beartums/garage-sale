@@ -1,7 +1,7 @@
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Location } from '@angular/common';
-import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,8 +10,6 @@ import { map, startWith, take } from 'rxjs/operators';
 import { DataService } from '../data.service';
 import { FilterService } from '../filter.service';
 import { Item } from '../item';
-import { ITEM_PICS } from '../itemPics';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { OnlineStorageService } from '../online-storage.service';
 import { Asset } from '../asset';
 
@@ -21,7 +19,7 @@ import { Asset } from '../asset';
   templateUrl: './mat-item-edit.component.html',
   styleUrls: ['./mat-item-edit.component.css']
 })
-export class MatItemEditComponent {
+export class MatItemEditComponent implements OnInit{
   itemEditForm = this.fb.group({
     itemName: null,
     itemDescription: [null, Validators.required],
@@ -87,7 +85,6 @@ export class MatItemEditComponent {
    }
 
   ngOnInit() {
-
     this.route.paramMap.subscribe( params => {
       this.itemKey = params.get('key');
     });

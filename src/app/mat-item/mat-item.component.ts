@@ -24,6 +24,9 @@ export class MatItemComponent implements OnInit {
   @Input() item: Item = new Item();
 
   showComments = false;
+  isTruncated: boolean;
+
+  readonly MAX_CHAR = 250;
 
   constructor(private ts: TagService, private fs: FilterService,
             private as: AuthService, private is: ItemService,
@@ -128,8 +131,24 @@ export class MatItemComponent implements OnInit {
     const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
     let da = new Date(date);
     let now = new Date();
-    if (now > da) { return "Now" }
-    else { return da.getDate() + ' ' + months[da.getMonth()]  }
+    if (now > da) { return 'Now'; }
+    else { return da.getDate() + ' ' + months[da.getMonth()]; }
+  }
+
+  truncateItemDescription(desc: string): string {
+    if (this.isTruncated === true || (desc.length > this.MAX_CHAR && this.isTruncated !== false)) {
+      const spaceLoc = desc.indexOf(' ', this.MAX_CHAR);
+      let text = desc.slice(0, spaceLoc);
+      text += '...';
+      this.isTruncated = true;
+      return text;
+    } else {
+      return desc;
+    }
+  }
+
+  toggleTruncate() {
+    this.isTruncated = !this.isTruncated;
   }
 
   formatItemDetails(item: Item, headers: boolean): string {
