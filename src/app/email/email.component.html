@@ -27,7 +27,7 @@
             <td  class="full-width">
               <mat-form-field class="full-width" >
                 <input type="email" matInput [(ngModel)]="fromEmail" 
-                  placeholder="From" tabindex="-1" [errorStateMatcher]="matcher">
+                  placeholder="From" tabindex="-1">
                   <mat-hint *ngIf="!fromEmailValid && fromEmail" class="warning">Email <em>appears</em> to be invalid</mat-hint>
                   <mat-hint *ngIf="!fromEmail" class="warning">You <em>must</em> enter a from email</mat-hint>
               </mat-form-field>
