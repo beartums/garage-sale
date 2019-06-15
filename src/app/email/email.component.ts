@@ -47,7 +47,7 @@ export class EmailComponent implements OnInit {
   }
 
   send() {
-    const params = {
+    let params = {
       to: this.toEmail,
       from: this.fromEmail,
       subject: this.subject,
@@ -63,7 +63,7 @@ export class EmailComponent implements OnInit {
     this.http.post(SEND_EMAIL_URL, params, headers).subscribe(
       result => console.log(result),
       error => console.log(error));
-    this.dialogRef.close()
+    this.dialogRef.close(params)
   }
 
 }

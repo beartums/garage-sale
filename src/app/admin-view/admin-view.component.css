@@ -1,0 +1,32 @@
+.my-container {
+    width: 100%;
+    margin: 20px 10px;
+    padding: 10px;
+}
+table {
+    width: 100%;
+}
+tr {
+    width: 100%;
+}
+td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.edit-box {
+    flex-wrap: wrap;
+    padding:5px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+.success {
+    color: green;
+}
+.failure {
+    color: red;
+}
+.icon-align {
+    vertical-align: center;
+    text-align: center;
+}

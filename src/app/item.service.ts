@@ -3,6 +3,8 @@ import { Item } from './item';
 import { DataService } from './data.service';
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { PATHS } from './constants';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class ItemService {
   items$: Observable<Item[]>;
   favoritedByUsers = {};
 
-  constructor(private ds: DataService) { 
+  constructor(private ds: DataService,
+    private router: Router) { 
     // we have the ids of users favriting items, but this populates a reference
     // object with the current users favoriting
     this.items$ = this.ds.getItemList$();
@@ -36,6 +39,11 @@ export class ItemService {
     })
     ).subscribe() // subscribe to start the flow
     
+  }
+  
+  editItem(item: Item) {
+    this.ds.itemBeingEdited = item;
+    this.router.navigate([PATHS.editUrl, item.key]);
   }
 
   getFavoriteCount(item: Item): number {
@@ -95,7 +103,7 @@ export class ItemService {
   }
 
   isSold(item: Item): boolean {
-    if (item.isSold === false) { return false };
+    if (item.isSold === false) { return false; };
     if (item.isSold === true) { return true; }
     if (!item.tags) return false;
     return item.tags.indexOf("sold") > -1;

@@ -1,4 +1,7 @@
 <button mat-raised-button color="" type="button" *ngIf="isAdmin()" (click)="addItem()">+</button>
+<button mat-icon-button (click)="gotoAdminView()" *ngIf="isAdmin()">
+  <mat-icon>monetization_on</mat-icon>
+</button>
 <div class="mat-elevation-z8" width="100%">
   <table class="material-table full-width" >
     <ng-container  *ngFor="let item of sortItems(itemList$ | async)">

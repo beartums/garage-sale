@@ -98,7 +98,7 @@ export class MatItemListComponent implements AfterViewInit {
   }
 
   showItem(item) {
-    this.router.navigate([PATHS.itemUrl,item.key])
+    this.router.navigate([PATHS.itemUrl, item.key]);
   }
 
   sortTags(tags: string[] = []): string[] {
@@ -146,6 +146,9 @@ export class MatItemListComponent implements AfterViewInit {
     return this.fs.isFiltered(item, user);
   }
 
+  gotoAdminView() {
+    this.router.navigate([PATHS.adminUrl])
+  }
   
   toggleComments(item: Item) {
     let dialogRef: MatDialogRef<ItemCommentsComponent> = this.dialog.open(ItemCommentsComponent, {

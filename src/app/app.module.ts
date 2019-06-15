@@ -41,6 +41,8 @@ import { MatTabsModule, MatSliderModule } from '@angular/material';
 import { ItemPicsComponent } from './item-pics/item-pics.component';
 import { EmailComponent } from './email/email.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AdminViewComponent } from './admin-view/admin-view.component';
+import { EgFocusDirective } from './eg-focus.directive';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { HttpClientModule } from '@angular/common/http';
     UncleanHtmlPipe,
     ItemPicsComponent,
     EmailComponent,
+    AdminViewComponent,
+    EgFocusDirective,
   ],
   entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, 
                     ContactUsComponent,  MessageNavDialogComponent, InfoPageComponent,

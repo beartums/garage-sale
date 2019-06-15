@@ -5,6 +5,7 @@ export const PATHS = {
     listUrl: 'table-list',
     editUrl: 'edit-item',
     itemUrl: 'show-item',
+    adminUrl: 'admin-view',
 }
 
 export const DEFAULT_PIC_TOOLTIP = `These photos are NOT (repeat, NOT) necessarily photos 

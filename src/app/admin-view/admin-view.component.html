@@ -1,0 +1,104 @@
+<div class="my-container full-width">
+  <table *ngIf="items$ | async as items">
+    <tr>
+      <th (click)="updateSort('name')">Name</th>
+      <th (click)="updateSort('isSold')">sold?</th>
+      <th (click)="updateSort('soldTo')">Sold To</th>
+      <th (click)="updateSort('soldToEmail')">Sold Email</th>
+      <th (click)="updateSort('soldPriceUgx')">Sold amt</th>
+      <th (click)="updateSort('price')">Price</th>
+      <th (click)="updateSort('soldDate')">sold</th>
+      <th (click)="updateSort('dateAvailable')">Available</th>
+    </tr>
+    <tr *ngFor="let item of sortAndFilter(items)">
+      <ng-container *ngIf="!isBeingEdited(item)">
+        <td>{{item.name}}</td>
+        <td  (click)="editInPlace(item)">
+          <mat-icon *ngIf="item.isSold" class="success">check_circle</mat-icon>
+          <mat-icon *ngIf="!item.isSold" class="failure">cancel</mat-icon>
+        </td>
+        <td (click)="editInPlace(item)">{{item.soldTo}}</td>
+        <td (click)="editInPlace(item)">{{item.soldToEmail}}</td>
+        <td (click)="editInPlace(item)">{{formatPrice(item.soldPriceUgx)}}</td>
+        <td (click)="editInPlace(item)">{{formatPrice(item.price)}}</td>
+        <td (click)="editInPlace(item)">{{item.soldDate | date:'MMM dd'}}</td>
+        <td (click)="editInPlace(item)">{{item.dateAvailable | date:'MMM dd'}}</td>
+        <td>    
+          <i mat-icon-button class="icon-button material-icons" (click)="gotoEditPage(item)">
+            edit
+          </i>
+        </td>
+      </ng-container>
+      <ng-container *ngIf="isBeingEdited(item)">
+        <td>{{item.name}}</td>
+        <td colspan="7">
+        <div flexLayout="row wrap" class="edit-box" fxLayoutAlign="center center">
+        <div fxFlex="0 0 40px">
+            <div  (click)="toggleIsSold(editItem)">
+                <mat-icon *ngIf="editItem.isSold" class="success">check_circle</mat-icon>
+                <mat-icon *ngIf="!editItem.isSold" class="failure">cancel</mat-icon>
+            </div>
+          </div>
+        <div fxFlex="0 0 200px">
+          <mat-form-field class="full-width" >
+            <input type="" matInput [(ngModel)]="editItem.soldTo"
+             (keyup.enter)="saveChanges(item)" (keyup.escape)="cancelChanges(item)"
+              placeholder="sold-to Name">
+              <!-- <mat-hint *ngIf="!fromEmailValid && fromEmail" class="warning">Email <em>appears</em> to be invalid</mat-hint> -->
+          </mat-form-field>
+        </div>
+        <div fxFlex="0 0 200px">
+          <mat-form-field class="full-width" >
+            <input type="email" matInput [(ngModel)]="editItem.soldToEmail" 
+            (keyup.enter)="saveChanges(item)" (keyup.escape)="cancelChanges(item)"
+              placeholder="sold-to Email">
+              <!-- <mat-hint *ngIf="!fromEmailValid && fromEmail" class="warning">Email <em>appears</em> to be invalid</mat-hint> -->
+          </mat-form-field>
+        </div>
+        <div fxFlex="0 0 200px">
+          <mat-form-field class="full-width" >
+            <input type="" matInput [(ngModel)]="editItem.soldPriceUgx" 
+            (keyup.enter)="saveChanges(item)" (keyup.escape)="cancelChanges(item)"
+              placeholder="Sold at (ugx)">
+              <!-- <mat-hint *ngIf="!fromEmailValid && fromEmail" class="warning">Email <em>appears</em> to be invalid</mat-hint> -->
+          </mat-form-field>
+        </div>
+        <div fxFlex="200px">
+          <mat-form-field class="full-width" >
+            <input type="" matInput [(ngModel)]="editItem.price" 
+            (keyup.enter)="saveChanges(item)" (keyup.escape)="cancelChanges(item)"
+              placeholder="Asking Price">
+              <!-- <mat-hint *ngIf="!fromEmailValid && fromEmail" class="warning">Email <em>appears</em> to be invalid</mat-hint> -->
+          </mat-form-field>
+        </div>
+        <div fxFlex="200px">
+          <mat-form-field class="full-width" >
+            <input type="date" matInput [(ngModel)]="editItem.soldDate" 
+            (keyup.enter)="saveChanges(item)" (keyup.escape)="cancelChanges(item)"
+              placeholder="Date sold">
+              <!-- <mat-hint *ngIf="!fromEmailValid && fromEmail" class="warning">Email <em>appears</em> to be invalid</mat-hint> -->
+          </mat-form-field>
+        </div>
+        <div fxFlex="200px">          
+          <mat-form-field class="full-width" >
+            <input type="date" matInput [(ngModel)]="editItem.dateAvailable" 
+            (keyup.enter)="saveChanges(item)" (keyup.escape)="cancelChanges(item)"
+              placeholder="Date available">
+              <!-- <mat-hint *ngIf="!fromEmailValid && fromEmail" class="warning">Email <em>appears</em> to be invalid</mat-hint> -->
+          </mat-form-field>
+        </div>
+      </div>
+      </td>
+      <td>    
+          <i mat-icon-button class="icon-button material-icons success" (click)="saveChanges(item)">
+            save_alt
+          </i>
+          <i mat-icon-button class="icon-button material-icons failure" (click)="cancelChanges()">
+            cancel
+          </i>
+        </td>
+
+      </ng-container>
+    </tr>
+  </table>
+</div>
