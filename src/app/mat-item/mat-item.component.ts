@@ -14,6 +14,7 @@ import { PATHS, DEFAULT_PIC_TOOLTIP } from '../constants';
 import { ItemPicsComponent } from '../item-pics/item-pics.component';
 import { catchError } from 'rxjs/operators';
 import { EmailComponent } from '../email/email.component';
+import { EmailService } from '../email.service';
 
 
 @Component({
@@ -33,7 +34,8 @@ export class MatItemComponent implements OnInit {
   constructor(private ts: TagService, private fs: FilterService,
             private as: AuthService, private is: ItemService,
             private ds: DataService, private router: Router,
-            public dialog: MatDialog) {
+            public dialog: MatDialog,
+            public es: EmailService) {
 
   }
 
@@ -156,16 +158,17 @@ export class MatItemComponent implements OnInit {
     else { return da.getDate() + ' ' + months[da.getMonth()]; }
   }
   mail(item: Item) {
-    this.dialog.open(EmailComponent, {
-      height: '90%',
-      width: '90%',
-      data: {
-        toEmail: 'garage-sale@griffithnet.com',
-        fromEmail: this.isLoggedIn() ? this.as.user.email : '',
-        subject: 'RE: ' + item.name,
-        message: ''
-      }
-    })
+    this.es.mail(item);
+    // this.dialog.open(EmailComponent, {
+    //   height: '90%',
+    //   width: '90%',
+    //   data: {
+    //     toEmail: 'garage-sale@griffithnet.com',
+    //     fromEmail: this.isLoggedIn() ? this.as.user.email : '',
+    //     subject: 'RE: ' + item.name,
+    //     message: ''
+    //   }
+    // })
   }
   truncateItemDescription(desc: string): string {
     if (this.isTruncated === true) {

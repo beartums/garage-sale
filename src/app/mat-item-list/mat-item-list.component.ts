@@ -12,6 +12,7 @@ import { FilterService } from '../filter.service';
 import { User } from '../user';
 import { Observable } from 'rxjs';
 import {breakpointsProvider, BreakpointsService, BreakpointConfig, BreakpointEvent} from '../breakpoint.service';
+import { EmailService } from '../email.service';
 
 const breakpointConfig: BreakpointConfig = {
   xxs: { max: 475 },
@@ -40,7 +41,8 @@ export class MatItemListComponent implements AfterViewInit {
   constructor(private ds: DataService, private router: Router,
               private is: ItemService, private as: AuthService,
               private dialog: MatDialog, private fs: FilterService,
-              private breakpointsService: BreakpointsService) {
+              private breakpointsService: BreakpointsService,
+              private es: EmailService) {
     this.itemList$ = this.ds.getItemList$();
 
     this.bpSub = this.breakpointsService.changes.subscribe((event: BreakpointEvent) => {
@@ -111,28 +113,32 @@ export class MatItemListComponent implements AfterViewInit {
     return this.is.formatPrice(price.toString());
   }
   
-  getEmailForItem(item: Item): string {
-    if (!item) { return '' };
-    let email = '';
-    email += 'MailTo: someone@somewhere.com';
-    email += '?subject=Check it out: ' + item.name;
-    email += '&body=Thought you might be interested in this:%0D%0A%0D%0A';
-    email += item.name + ' -- ';
-    email += item.description;
-    email += '%0D%0A%0D%0Ahttps://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
+  // getEmailForItem(item: Item): string {
+  //   if (!item) { return '' };
+  //   let email = '';
+  //   email += 'MailTo: someone@somewhere.com';
+  //   email += '?subject=Check it out: ' + item.name;
+  //   email += '&body=Thought you might be interested in this:%0D%0A%0D%0A';
+  //   email += item.name + ' -- ';
+  //   email += item.description;
+  //   email += '%0D%0A%0D%0Ahttps://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
     
-    return email;
-  }
+  //   return email;
+  // }
 
-  getAdminEmailForItem(item: Item): string {
-    if (!item) { return '' };
-    let email = '';
-    email += 'MailTo: garage-sale@griffithnet.com';
-    email += '?subject=RE: ' + ( item ? item.name : '???');
-    email += '&body=RE: ';
-    email += 'https://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
+  // getAdminEmailForItem(item: Item): string {
+  //   if (!item) { return '' };
+  //   let email = '';
+  //   email += 'MailTo: garage-sale@griffithnet.com';
+  //   email += '?subject=RE: ' + ( item ? item.name : '???');
+  //   email += '&body=RE: ';
+  //   email += 'https://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
     
-    return email;
+  //   return email;
+  // }
+
+  sendEmail(item: Item) {
+    this.es.mail(item);
   }
   
   isFiltered(item: Item, user: User = null): boolean {

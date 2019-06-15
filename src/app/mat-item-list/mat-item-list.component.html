@@ -72,7 +72,11 @@
           (click)="toggleComments(item)">
         chat
     </i>
-    <i mat-icon-button class="icon-button material-icons-outlined" [matMenuTriggerFor]="appMenu" 
+    <i mat-icon-button class="icon-button material-icons-outlined" (click)="sendEmail(item)" 
+          matTooltip="Ask questions, make an offer, otherwise communicate with us">
+      email
+    </i>
+    <!-- <i mat-icon-button class="icon-button material-icons-outlined" [matMenuTriggerFor]="appMenu" 
           matTooltip="Ask questions, make an offer, otherwise communicate with us">
       email
     </i>
@@ -85,5 +89,5 @@
         <mat-icon>contact_mail</mat-icon>
         <span>Share by email</span>
       </a>
-    </mat-menu>
+    </mat-menu> -->
   </ng-template>

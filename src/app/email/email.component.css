@@ -1,3 +1,43 @@
 mat-form-field {
     width: 100%;
 }
+.buttons {
+    position: relative;
+    top: -7px;
+    columns: grey;
+    text-align: right;
+    font-size: 24px;
+}
+
+.button {
+    color: gray;
+}
+.button:hover {
+    color: palevioletred;
+}
+
+
+.full-width {
+    width: 100%;
+}
+
+.footer {
+    text-align: right;
+}
+
+.dialog-container {
+    height: 95%
+}
+
+table {
+    height: 100%;
+}
+
+.full-height {
+    height: 100%!important;
+}
+
+.header {
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 8px;
+}

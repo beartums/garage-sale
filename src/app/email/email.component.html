@@ -1,39 +1,56 @@
-<div mat-dialog-header>
-  Send us an email
+<div fxLayout="column" class="dialog-container">
+<div mat-dialog-header class="header" fxFlex="40px" fxLayout="row">
+  <div fxFlex="50%"><h4>Send us an email</h4></div>
+  <div fxFlex="auto"></div>
+
+  <span class="buttons">
+      <button mat-icon-button (click)="send()" tabindex="-1" class="button">
+        <mat-icon inline="true">send</mat-icon>
+      </button>
+      <button mat-icon-button (click)="cancel()" tabindex="-1" class="button">
+        <mat-icon inline="true">cancel</mat-icon>
+      </button>
+    </span>
+
 </div>
-<mat-dialog-content width="100%">
-  <table width="100%">
-      <tr width="100%">
-          <td>To:</td>
-          <td width="100%">{{toEmail}}</td>
+<div class="content full-width" fxFlex="auto">
+  <table class="full-width">
+      <tr class="full-width">
+          <td class="full-width">
+              <mat-form-field class="full-width" >
+                  <input disabled matInput [(ngModel)]="toEmail" placeholder="To">
+                </mat-form-field>
+          </td>
         </tr>
-        <tr  width="100%">
-            <td>From:</td>
-            <td  width="100%"><mat-form-field class="full-width">
-                <input matInput [(ngModel)]="fromEmail">
+        <tr  class="full-width">
+            <td  class="full-width">
+              <mat-form-field class="full-width" >
+                <input matInput [(ngModel)]="fromEmail" placeholder="From" tabindex="-1">
               </mat-form-field>
             </td>
           </tr>
-          <tr  width="100%">
-              <td>Subject:</td>
-              <td  width="100%"><mat-form-field class="full-width">
-                <input matInput  [(ngModel)]="subject">
+          <tr  class="full-width">
+            <td  class="full-width">
+                <mat-form-field class="full-width">
+                <input matInput  [(ngModel)]="subject"  placeholder="Subject" tabindex="-1">
               </mat-form-field>
             </td>
             </tr>
-            <tr width="100%">
-                <td style="vertical-align: top">Message:</td>
-                <td width="100%">
-                  <mat-form-field class="full-width">
-                    <textarea cdkAutosizeMinRows="20" style="width: 100%;" matInput [(ngModel)]="message">
+            <tr class="full-width">
+                <td class="full-width full-height">
+                  <mat-form-field class="full-width full-height" appearance="outline">
+                    <textarea autofocus cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="5" class="full-width full-height" matInput 
+                    [(ngModel)]="message" placeholder="Message">
                     </textarea>
                   </mat-form-field>
                 </td>
               </tr>
                                 
   </table>
-</mat-dialog-content>
-<mat-dialog-actions>
+</div>
+<mat-dialog-actions class="footer" fxFlex="40px" fxFlexAlign="right center">
     <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
     <button mat-raised-button (click)="send()">Send</button>
 </mat-dialog-actions>
+</div>

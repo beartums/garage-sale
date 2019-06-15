@@ -11,7 +11,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 })
 export class EmailComponent implements OnInit {
 
-  toEmail: string = 'eric.griffith@oneacrefund.com';
+  toEmail: string;
   fromEmail: string;
   subject: string;
   message: string;
@@ -20,7 +20,7 @@ export class EmailComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<EmailComponent>,
     @Inject(MAT_DIALOG_DATA) data, private http: HttpClient) { 
 
-      //this.toEmail = data.toEmail;
+      this.toEmail = data.toEmail;
       this.fromEmail = data.fromEmail;
       this.subject = data.subject;
       this.message = data.message
@@ -34,14 +34,19 @@ export class EmailComponent implements OnInit {
   }
 
   send() {
-    const params: URLSearchParams = new URLSearchParams();
+    const params = {
+      to: this.toEmail,
+      from: this.fromEmail,
+      subject: this.subject,
+      message: this.message
+    };
     const headers = {
       headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) };
     
-    params.set('to', this.toEmail);
-    params.set('from', this.fromEmail);
-    params.set('subject', this.subject);
-    params.set('message', this.message);
+    // params.set('to', this.toEmail);
+    // params.set('from', this.fromEmail);
+    // params.set('subject', this.subject);
+    // params.set('message', this.message);
     this.http.post(SEND_EMAIL_URL, params, headers).subscribe(
       result => console.log(result),
       error => console.log(error));

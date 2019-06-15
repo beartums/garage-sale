@@ -49,15 +49,20 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
 
 exports.sendMail = functions.https.onRequest(async (req, res) => {
     corsHandler(req, res, () => {
-        console.log(req);
+        
         const to = req.body.to || 'garage-sale@griffithnet.com';
         const from = req.body.from || 'noemailincluded';
         const subject = req.body.subject || 'no subject';
         const message = req.body.message || 'no message';
+        // let toLog = (req.body.to || 'noBody' ) + '/' +
+        //             (req.query.to || 'noQuery' ) + '/' +
+        //             (req.params.to || 'noParams' ) + '/' +
+        //             (to || 'noto' ) + '/'
+        // console.log(toLog);
         return sendEmail(to,from,subject,message).then( () => {
-            res.status(200).send(req.body.to);
+            res.status(200).send(true);
         }, (err) => { 
-            res.status(300).send(err);
+            res.status(418).send(err);
         })
     });
 });
