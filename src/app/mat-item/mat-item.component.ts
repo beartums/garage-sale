@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Item } from '../item';
 import { FilterService } from '../filter.service';
 import { TagService } from '../tag.service';
@@ -40,7 +40,19 @@ export class MatItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.item.description.length>this.MAX_CHAR) this.isTruncated = true;  }
+    //if (this.item.description.length>this.MAX_CHAR) this.isTruncated = true;  
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.item) {
+      const current = changes.item.currentValue;
+      const previous = changes.item.previousValue;
+      if (!current) return;
+      if (!previous || current.key == previous.key) return;
+      if (current.description.length > this.MAX_CHAR) this.isTruncated = true;
+    }
+
+  }
 
   countFaves(item: Item) {
     return this.is.getFavoriteCount(item);

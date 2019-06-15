@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, ErrorStateMatcher } from '@angular/material';
 import { SEND_EMAIL_URL } from '../constants';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 
+/** Error when invalid control is dirty, touched, or submitted. */
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
@@ -15,6 +17,11 @@ export class EmailComponent implements OnInit {
   fromEmail: string;
   subject: string;
   message: string;
+  badEmail: boolean;
+
+  get fromEmailValid() {
+    return this.validateEmail(this.fromEmail);
+  }
 
 
   constructor(private dialogRef: MatDialogRef<EmailComponent>,
@@ -23,7 +30,7 @@ export class EmailComponent implements OnInit {
       this.toEmail = data.toEmail;
       this.fromEmail = data.fromEmail;
       this.subject = data.subject;
-      this.message = data.message
+      this.message = data.message;
     }
 
   ngOnInit() {
@@ -31,6 +38,12 @@ export class EmailComponent implements OnInit {
 
   cancel() {
     this.dialogRef.close();
+  }
+
+  validateEmail(email: string): boolean {
+    if (!email) return false;
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
   }
 
   send() {

@@ -41,3 +41,11 @@ table {
     border-bottom: 1px solid lightgray;
     margin-bottom: 8px;
 }
+
+.warning {
+    color: red;
+}
+
+/* input:invalid {
+    background-color: palevioletred;
+} */

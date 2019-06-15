@@ -4,7 +4,8 @@
   <div fxFlex="auto"></div>
 
   <span class="buttons">
-      <button mat-icon-button (click)="send()" tabindex="-1" class="button">
+      <button mat-icon-button (click)="send()" tabindex="-1" class="button"
+      [disabled]="!fromEmail || !message || !subject">
         <mat-icon inline="true">send</mat-icon>
       </button>
       <button mat-icon-button (click)="cancel()" tabindex="-1" class="button">
@@ -25,7 +26,10 @@
         <tr  class="full-width">
             <td  class="full-width">
               <mat-form-field class="full-width" >
-                <input matInput [(ngModel)]="fromEmail" placeholder="From" tabindex="-1">
+                <input type="email" matInput [(ngModel)]="fromEmail" 
+                  placeholder="From" tabindex="-1" [errorStateMatcher]="matcher">
+                  <mat-hint *ngIf="!fromEmailValid && fromEmail" class="warning">Email <em>appears</em> to be invalid</mat-hint>
+                  <mat-hint *ngIf="!fromEmail" class="warning">You <em>must</em> enter a from email</mat-hint>
               </mat-form-field>
             </td>
           </tr>
@@ -33,6 +37,7 @@
             <td  class="full-width">
                 <mat-form-field class="full-width">
                 <input matInput  [(ngModel)]="subject"  placeholder="Subject" tabindex="-1">
+                <mat-hint *ngIf="!subject" class="warning">You <em>must</em> enter a subject</mat-hint>
               </mat-form-field>
             </td>
             </tr>
@@ -43,6 +48,7 @@
                     cdkAutosizeMinRows="5" class="full-width full-height" matInput 
                     [(ngModel)]="message" placeholder="Message">
                     </textarea>
+                    <mat-hint *ngIf="!message" class="warning">You <em>must</em> enter a message</mat-hint>
                   </mat-form-field>
                 </td>
               </tr>
@@ -51,6 +57,6 @@
 </div>
 <mat-dialog-actions class="footer" fxFlex="40px" fxFlexAlign="right center">
     <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
-    <button mat-raised-button (click)="send()">Send</button>
+    <button mat-raised-button (click)="send()" [disabled]="!fromEmail || !message || !subject">Send</button>
 </mat-dialog-actions>
 </div>
