@@ -87,6 +87,31 @@ export class AdminViewComponent implements OnInit {
     return items;
   }
 
+  soldAndCollected(items: Item[]): number {
+    return items.reduce( (total, item) => {
+      const price = +this.cleanPrice(item.soldPriceUgx);
+      if (!item.isSold || +price === 0) { return total; }
+      return total + price;
+    }, 0);
+  }
+
+  soldAndUncollected(items: Item[]): number {
+    return items.reduce( (total, item) => {
+      const price = +this.cleanPrice(item.soldPriceUgx) || 0;
+      const expectedPrice = +this.cleanPrice('' + item.price);
+      if (!item.isSold || +price > 0) { return total; }
+      return total + expectedPrice;
+    }, 0);
+  }
+
+  unsold(items: Item[]): number {
+    return items.reduce( (total, item) => {
+      const expectedPrice = +this.cleanPrice('' + item.price);
+      if (item.isSold) { return total; }
+      return total + expectedPrice;
+    }, 0);
+  }
+
   updateSort(prop: string) {
     if (this.sortProp === prop) {
       this.sortOrder = this.sortOrder === Direction.ascending ? Direction.descending : Direction.ascending;

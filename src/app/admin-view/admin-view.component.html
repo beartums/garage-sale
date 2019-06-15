@@ -1,5 +1,28 @@
-<div class="my-container full-width">
-  <table *ngIf="items$ | async as items">
+<div class="my-container full-width" *ngIf="items$ | async as items">
+  <table>
+    <tr>
+      <td class="label">
+        Sold & Collected:
+      </td>
+      <td class="value"> 
+        {{formatPrice(soldAndCollected(items))}}
+      </td>
+      <td class="label">
+        Sold & Uncollected:
+      </td>
+      <td class="value"> 
+        {{formatPrice(soldAndUncollected(items))}}
+      </td>
+      <td class="label">
+        Unsold:
+      </td>
+      <td class="value">
+        {{formatPrice(unsold(items))}}
+      </td>
+    </tr>
+  </table>
+<br />
+  <table>
     <tr>
       <th (click)="updateSort('name')">Name</th>
       <th (click)="updateSort('isSold')">sold?</th>
