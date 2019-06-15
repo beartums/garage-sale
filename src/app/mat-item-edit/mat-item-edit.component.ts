@@ -97,9 +97,10 @@ export class MatItemEditComponent implements OnInit{
     this.itemEditForm.controls['itemCondition'].setValue(item.condition || '');
     this.itemEditForm.controls['itemDescription'].setValue(item.description || '');
     this.itemEditForm.controls['itemDateAvailable'].setValue(item.dateAvailable || new Date().toISOString().split('T')[0]);
-    this.itemEditForm.controls['itemIsHidden'].setValue(item.isHidden || '');
-    this.itemEditForm.controls['itemIsFeatured'].setValue(item.isFeatured || '');
-    this.itemEditForm.controls['itemIsSold'].setValue(item.isSold || '');
+    this.itemEditForm.controls['itemIsHidden'].setValue(item.isHidden || false);
+    this.itemEditForm.controls['itemIsFeatured'].setValue(item.isFeatured || false);
+    this.itemEditForm.controls['itemIsSold'].setValue(item.isSold || false);
+    this.isSold = item.isSold || false;
     this.itemEditForm.controls['itemSoldDate'].setValue(item.soldDate || '');
     this.itemEditForm.controls['itemSoldPriceUgx'].setValue(item.soldPriceUgx || '');
     this.itemEditForm.controls['itemSoldToEmail'].setValue(item.soldToEmail || '');

@@ -49,12 +49,13 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
 
 exports.sendMail = functions.https.onRequest(async (req, res) => {
     corsHandler(req, res, () => {
+        console.log(req);
         const to = req.body.to || 'garage-sale@griffithnet.com';
         const from = req.body.from || 'noemailincluded';
         const subject = req.body.subject || 'no subject';
         const message = req.body.message || 'no message';
         return sendEmail(to,from,subject,message).then( () => {
-            res.status(200).send(req.query);
+            res.status(200).send(req.body.to);
         }, (err) => { 
             res.status(300).send(err);
         })
