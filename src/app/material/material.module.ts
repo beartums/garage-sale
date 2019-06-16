@@ -10,7 +10,10 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
   MatBadgeModule, MatTooltipModule, MatDialogModule, MatSlideToggleModule,
   MatTreeModule,
   MatProgressSpinnerModule,
-  MatExpansionModule} from '@angular/material';
+  MatExpansionModule,
+  MatSliderModule,
+  MatTabsModule,
+  MatSnackBarModule} from '@angular/material';
 
 @NgModule({
   declarations: [],
@@ -21,7 +24,8 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
     MatSelectModule, MatRadioModule, MatCardModule, MatChipsModule,
     MatBadgeModule, MatGridListModule, MatMenuModule, MatTooltipModule,
     MatAutocompleteModule, MatDialogModule, MatSlideToggleModule, MatButtonModule,
-    MatTreeModule, MatProgressSpinnerModule, MatExpansionModule
+    MatTreeModule, MatProgressSpinnerModule, MatExpansionModule, 
+    MatTabsModule, MatSliderModule, MatSnackBarModule
   ],
   exports: [
     CommonModule, LayoutModule, FlexLayoutModule, MatToolbarModule,
@@ -30,7 +34,8 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule,
     MatSelectModule, MatRadioModule, MatCardModule, MatChipsModule,
     MatBadgeModule, MatGridListModule, MatMenuModule, MatTooltipModule,
     MatAutocompleteModule, MatDialogModule, MatSlideToggleModule, MatButtonModule,
-    MatTreeModule, MatProgressSpinnerModule, MatExpansionModule
+    MatTreeModule, MatProgressSpinnerModule, MatExpansionModule,
+    MatTabsModule, MatSliderModule, MatSnackBarModule
   ]
 })
 export class MaterialModule { }

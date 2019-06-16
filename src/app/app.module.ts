@@ -78,7 +78,6 @@ import { EgFocusDirective } from './eg-focus.directive';
     AngularFireDatabaseModule, 
     FontAwesomeModule, ItemCommentsModule, HttpClientModule,
     MessageCenterModule, MaterialModule,
-    MatTabsModule, MatSliderModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [AuthService, DataService, ItemService],
