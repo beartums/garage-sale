@@ -69,7 +69,7 @@ export class EmailService {
     const params = {
       to: toEmail,
       from: fromEmail,
-      subject: subject,
+      subject: subject + ` (FROM: ${fromEmail})`,
       message: message
     };
     const headers = {
