@@ -2,12 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ItemService } from '../item.service';
 import { Observable } from 'rxjs';
 import { Item } from '../item';
-import { Direct } from 'protractor/built/driverProviders';
-import { directiveDef } from '@angular/core/src/view';
-import { sortAscendingPriority } from '@angular/flex-layout';
 import * as _ from 'lodash';
 import { DataService } from '../data.service';
-import { Input } from '@angular/compiler/src/core';
 
 enum Direction {
   descending, ascending
@@ -48,7 +44,7 @@ export class AdminViewComponent implements OnInit {
 
   editInPlace(item: Item, deprecated: string) {
     //event.target.setFocus()
-    this.editItem = _.pick(item, ['soldPriceUgx', 'price', 'soldTo', 'soldToEmail', 'isSold', 'soldDate', 'key']);
+    this.editItem = _.pick(item, ['soldPriceUgx', 'price', 'soldTo', 'soldToEmail', 'isSold', 'soldDate', 'key', 'dateAvailable']);
   }
   cancelChanges() {
     this.editItem = null;

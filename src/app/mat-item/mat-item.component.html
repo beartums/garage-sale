@@ -38,8 +38,8 @@
               <!-- new Flexbox (vertical) for text information of item -->
               <p class="item-description">
                 <span [innerHTML]="truncateItemDescription(item.description)"></span> 
-                  <span *ngIf="isTruncated" class="expand-me" (click)="toggleTruncate()">(more)</span>
-                  <span *ngIf="isTruncated===false" class="expand-me" (click)="toggleTruncate()">(less)</span>
+                  <span *ngIf="isTruncated && showTruncateToggle(item)" class="expand-me" (click)="toggleTruncate()">(more)</span>
+                  <span *ngIf="!isTruncated && showTruncateToggle(item)" class="expand-me" (click)="toggleTruncate()">(less)</span>
                 </p>
               <br />
               <p class="item-details">

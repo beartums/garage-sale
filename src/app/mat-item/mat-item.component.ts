@@ -12,8 +12,6 @@ import { User } from '../user';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
 import { PATHS, DEFAULT_PIC_TOOLTIP } from '../constants';
 import { ItemPicsComponent } from '../item-pics/item-pics.component';
-import { catchError } from 'rxjs/operators';
-import { EmailComponent } from '../email/email.component';
 import { EmailService } from '../email.service';
 
 
@@ -27,7 +25,7 @@ export class MatItemComponent implements OnInit {
   @Input() item: Item = new Item();
 
   showComments = false;
-  isTruncated: boolean;
+  isTruncated: boolean = true;
 
   readonly MAX_CHAR = 250;
 
@@ -117,28 +115,6 @@ export class MatItemComponent implements OnInit {
     })
   }
 
-  getEmailForItem(item: Item): string {
-    let email = '';
-    email += 'MailTo: someone@somewhere.com';
-    email += '?subject=Check it out: ' + item.name;
-    email += '&body=Thought you might be interested in this:%0D%0A%0D%0A';
-    email += item.name + ' -- ';
-    email += item.description;
-    email += '%0D%0A%0D%0Ahttps://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
-    
-    return email;
-  }
-
-  getAdminEmailForItem(item: Item): string {
-    let email = '';
-    email += 'MailTo: garage-sale@griffithnet.com';
-    email += '?subject=RE: ' + item.name;
-    email += '&body=RE: ';
-    email += 'https://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
-    
-    return email;
-  }
-
   isShowingComments(item: Item): boolean {
     return this.is.isShowingComments(item);
   }
@@ -171,30 +147,34 @@ export class MatItemComponent implements OnInit {
   }
   mail(item: Item) {
     this.es.mail(item);
-    // this.dialog.open(EmailComponent, {
-    //   height: '90%',
-    //   width: '90%',
-    //   data: {
-    //     toEmail: 'garage-sale@griffithnet.com',
-    //     fromEmail: this.isLoggedIn() ? this.as.user.email : '',
-    //     subject: 'RE: ' + item.name,
-    //     message: ''
-    //   }
-    // })
   }
   truncateItemDescription(desc: string): string {
+    if (desc.length<=this.MAX_CHAR) { return desc };
     if (this.isTruncated === true) {
-      const spaceLoc = desc.indexOf(' ', this.MAX_CHAR);
-      let text = desc.slice(0, spaceLoc);
-      text += '...';
-      return text;
-    } else {
-      return desc;
+    const spaceLoc = this.getTruncateLocation(desc);
+    if (spaceLoc > this.MAX_CHAR) {
+        let text = desc.slice(0, spaceLoc);
+        text += '...';
+        return text;
+      } else {
+        return desc;
+      }
     }
+    
+    return desc;
+
   }
 
   toggleTruncate() {
     this.isTruncated = !this.isTruncated;
+  }
+
+  showTruncateToggle(item: Item): boolean {
+    return this.getTruncateLocation(item.description) > this.MAX_CHAR;
+  }
+  getTruncateLocation(desc: string): number {
+    const spaceLoc = desc.indexOf(' ', this.MAX_CHAR);
+    return spaceLoc;
   }
 
   formatItemDetails(item: Item, headers: boolean): string {
