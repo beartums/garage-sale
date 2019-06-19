@@ -24,28 +24,28 @@
 <br />
   <table>
     <tr>
-      <th (click)="updateSort('name')">Name</th>
-      <th (click)="updateSort('isSold')">sold?</th>
-      <th (click)="updateSort('soldTo')">Sold To</th>
-      <th (click)="updateSort('soldToEmail')">Sold Email</th>
-      <th (click)="updateSort('soldPriceUgx')">Sold amt</th>
-      <th (click)="updateSort('price')">Price</th>
-      <th (click)="updateSort('soldDate')">sold</th>
-      <th (click)="updateSort('dateAvailable')">Available</th>
+      <th (click)="updateSort('name')" class="table-head">Name</th>
+      <th (click)="updateSort('isSold')" class="text-center table-head">Sold?</th>
+      <th (click)="updateSort('soldTo')" class="table-head">Sold To</th>
+      <th (click)="updateSort('soldToEmail')" class="table-head">Sold Email</th>
+      <th (click)="updateSort('soldPriceUgx')" class="text-right table-head">Sold Amt</th>
+      <th (click)="updateSort('price')" class="text-right table-head">Price</th>
+      <th (click)="updateSort('soldDate')" class="text-right table-head">Sold On</th>
+      <th (click)="updateSort('dateAvailable')" class="text-right table-head">Available</th>
     </tr>
     <tr *ngFor="let item of sortAndFilter(items)">
       <ng-container *ngIf="!isBeingEdited(item)">
         <td>{{item.name}}</td>
-        <td  (click)="editInPlace(item)">
+        <td  (click)="editInPlace(item)" class="text-center">
           <mat-icon *ngIf="item.isSold" class="success">check_circle</mat-icon>
           <mat-icon *ngIf="!item.isSold" class="failure">cancel</mat-icon>
         </td>
         <td (click)="editInPlace(item)">{{item.soldTo}}</td>
         <td (click)="editInPlace(item)">{{item.soldToEmail}}</td>
-        <td (click)="editInPlace(item)">{{formatPrice(item.soldPriceUgx)}}</td>
-        <td (click)="editInPlace(item)">{{formatPrice(item.price)}}</td>
-        <td (click)="editInPlace(item)">{{item.soldDate | date:'MMM dd'}}</td>
-        <td (click)="editInPlace(item)">{{item.dateAvailable | date:'MMM dd'}}</td>
+        <td (click)="editInPlace(item)" class="text-right">{{formatPrice(item.soldPriceUgx)}}</td>
+        <td (click)="editInPlace(item)" class="text-right">{{formatPrice(item.price)}}</td>
+        <td (click)="editInPlace(item)" class="text-right">{{item.soldDate | date:'MMM dd'}}</td>
+        <td (click)="editInPlace(item)" class="text-right">{{item.dateAvailable | date:'MMM dd'}}</td>
         <td>    
           <i mat-icon-button class="icon-button material-icons" (click)="gotoEditPage(item)">
             edit
