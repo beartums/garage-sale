@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { ItemService } from '../item.service';
-import { Observable } from 'rxjs';
+import { Observable, fromEvent, Subscription, iif, of } from 'rxjs';
 import { Item } from '../item';
 import * as _ from 'lodash';
 import { DataService } from '../data.service';
+import { map, debounceTime, distinctUntilChanged, tap, switchMap, take, startWith, defaultIfEmpty } from 'rxjs/operators';
 
 enum Direction {
   descending, ascending
@@ -14,19 +15,53 @@ enum Direction {
   templateUrl: './admin-view.component.html',
   styleUrls: ['./admin-view.component.css']
 })
-export class AdminViewComponent implements OnInit {
+export class AdminViewComponent implements OnInit, AfterViewInit {
+
+  //@ViewChild('searchBox') searchBox: ElementRef;
+  @ViewChildren('searchBox') searchBoxes: QueryList<ElementRef>;
 
   items$: Observable<Item[]>
   sortProp: string;
   sortOrder: Direction;
 
   editItem: Partial<Item>;
+  search$: Observable<{}>;
+  searchSubscription: Subscription;
+  filterString: string;
+  searchBox: any;
+  sbSub: Subscription;
+  searchBoxSubscription: Subscription;
 
   constructor(private is: ItemService, private ds: DataService) {
     this.items$ = this.is.items$;
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    const mockEvent = { target: { value: '' } };
+    this.searchBoxSubscription = this.searchBoxes.changes.subscribe( searchBoxes => {
+      if (this.searchBox) { return null; }
+        this.searchBox = searchBoxes.reduce(( acc, box) => box, null);
+        if (!this.searchBox) {return null;}
+        this.search$ = fromEvent(this.searchBox.nativeElement, 'keyup').pipe(
+          map((event: any) => event.target.value.trim()),
+          startWith(''),
+          debounceTime(400),
+          distinctUntilChanged()
+        )
+        this.searchSubscription = this.search$.subscribe( filter => {
+            this.filterString = <string>filter;
+          })
+      }
+    )
+
+  }
+
+  ngOnDestroy() {
+    this.searchBoxSubscription.unsubscribe();
+    this.searchSubscription.unsubscribe()
   }
 
   cleanPrice(price: string): string {
@@ -73,9 +108,9 @@ export class AdminViewComponent implements OnInit {
   }
 
   sortAndFilter(items: Item[] = []): Item[] {
+    items = this.filterItems(items);
     let reverse = this.sortOrder === Direction.ascending ? 1 : -1
     items.sort( (a, b) => {
-      
       const aVal: any = this.getVal(a, this.sortProp);
       const bVal: any = this.getVal(b, this.sortProp);
       return reverse * (aVal > bVal ? -1 : 1);
@@ -83,7 +118,21 @@ export class AdminViewComponent implements OnInit {
     return items;
   }
 
+  filterItems(items: Item[]): Item[] {
+    if (this.filterString) {
+      const filter = this.filterString.toLowerCase();
+      return items.filter( (item: Item) => {
+        let testString = item.name + item.soldTo + item.tags.join('|');
+        testString = testString.toLowerCase();
+        return testString.indexOf(filter) > -1;
+      });
+    } else {
+      return items;
+    }
+  }
+
   soldAndCollected(items: Item[]): number {
+    if (!items) return 0;
     return items.reduce( (total, item) => {
       const price = +this.cleanPrice(item.soldPriceUgx);
       if (!item.isSold || +price === 0) { return total; }
@@ -92,6 +141,7 @@ export class AdminViewComponent implements OnInit {
   }
 
   soldAndUncollected(items: Item[]): number {
+    if (!items) return 0;
     return items.reduce( (total, item) => {
       const price = +this.cleanPrice(item.soldPriceUgx) || 0;
       const expectedPrice = +this.cleanPrice('' + item.price);
@@ -101,6 +151,7 @@ export class AdminViewComponent implements OnInit {
   }
 
   unsold(items: Item[]): number {
+    if (!items) return 0;
     return items.reduce( (total, item) => {
       const expectedPrice = +this.cleanPrice('' + item.price);
       if (item.isSold) { return total; }

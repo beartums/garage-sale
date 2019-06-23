@@ -1,26 +1,36 @@
 <div class="my-container full-width" *ngIf="items$ | async as items">
-  <table>
-    <tr>
-      <td class="label">
+  <div class="filter-box" fxLayout="row" fxLayoutAlign="center center">
+  <div class="stats" fxLayout="row" fxFlexAlign="left center" fxFlex="auto">
+    <div class="stats-pair" fxFlex="auto">
+      <span class="label">
         Sold & Collected:
-      </td>
-      <td class="value"> 
-        {{formatPrice(soldAndCollected(items))}}
-      </td>
-      <td class="label">
+      </span>
+      <span class="value"> 
+        {{formatPrice(soldAndCollected(filterItems(items)))}}
+      </span>
+    </div>
+    <div class="stats-pair" fxFlex="auto">
+      <span class="label">
         Sold & Uncollected:
-      </td>
-      <td class="value"> 
-        {{formatPrice(soldAndUncollected(items))}}
-      </td>
-      <td class="label">
+      </span>
+      <span class="value"> 
+        {{formatPrice(soldAndUncollected(filterItems(items)))}}
+      </span>
+    </div>
+    <div class="stats-pair" fxFlex="auto">
+      <span class="label">
         Unsold:
-      </td>
-      <td class="value">
-        {{formatPrice(unsold(items))}}
-      </td>
-    </tr>
-  </table>
+      </span>
+      <span class="value">
+        {{formatPrice(unsold(filterItems(items)))}}
+      </span>
+    </div>
+    </div>
+    <mat-form-field fxFlexAlign="right center" fxFlex="250px" class="filter-field">
+      <input #searchBox type="search" matInput [(ngModel)]="filterText" >
+      <button mat-icon-button matSuffix><mat-icon>search</mat-icon></button>
+    </mat-form-field>
+  </div>
 <br />
   <table>
     <tr>

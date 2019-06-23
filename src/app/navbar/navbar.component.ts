@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -17,6 +18,13 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { InfoPageComponent } from '../info-page/info-page.component';
 import { faSignOutAlt, faUserCog, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
+/**
+ * Primary navigational element -- navbar and router outlet for Tile list,
+ * table list, and admin list views
+ *
+ * @export
+ * @class NavbarComponent
+ */
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -24,35 +32,60 @@ import { faEdit } from '@fortawesome/free-regular-svg-icons';
 })
 export class NavbarComponent {
 
+  // FontAwesome fonts
   faSignOutAlt = faSignOutAlt;
   faUserCog = faUserCog;
   faToggleOn = faToggleOn;
   faToggleOff = faToggleOff;
   faEdit = faEdit;
 
+  // Expose services to view
   auth: AuthService;
   filt: FilterService;
 
+  // Subscriptions to unsubscribe
   subs: any[] = [];
 
+  // Messages for message dialog
+  // TODO: Move to a message service
   userMessages: Message[] = [];
   adminMessages: Message[] = [];
   userMessages$: Observable<Message[]>;
   adminMessages$: Observable<Message[]>;
 
+  /**
+   * Indicate the filter is active (filtering) or paused (not filtering)
+   *
+   * @readonly
+   * @memberof NavbarComponent
+   */
   get filterIsPaused() {
     return this.fs.isPaused;
   }
 
+  /**
+   * Return the number of messages available for the user
+   *
+   * @readonly
+   * @memberof NavbarComponent
+   */
   get messageCount() {
     return this.userMessages.length + this.adminMessages.length;
   }
+
+  /**
+   *Return the number of unread messages for th user
+   *
+   * @readonly
+   * @memberof NavbarComponent
+   */
   get newMessageCount() {
     const messages = this.userMessages.concat(this.adminMessages);
     const count = messages.filter(msg => !msg.isRead).length;
     return count;
   }
 
+  // For responsive actions -- is extra-small size?
   isXs: boolean;
 
   isXs$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.XSmall)

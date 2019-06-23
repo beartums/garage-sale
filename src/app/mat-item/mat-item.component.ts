@@ -85,8 +85,7 @@ export class MatItemComponent implements OnInit {
 
   isSold(item: Item): boolean {
     if (!item) return false; // in case this item is null because it's being refreshed async
-    const tags = item.tags || [];
-    return tags.some( tag => tag.trim().toLowerCase() == 'sold')
+    return this.is.isSold(item);
   }
 
   isFiltered(item: Item, user: User = null): boolean {
