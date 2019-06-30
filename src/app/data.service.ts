@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {AngularFireDatabase, AngularFireList, AngularFireObject} from '@angular/fire/database';
-import { map } from 'rxjs/operators';
+import { map, tap, mapTo, switchMap } from 'rxjs/operators';
 
 import { Item } from './item';
 import { TagService } from './tag.service';
@@ -10,6 +10,7 @@ import { Comment } from './comment';
 import { FilterService } from './filter.service';
 import { Message } from './message';
 import { OnlineStorageService } from './online-storage.service';
+import { Asset } from './asset';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,17 @@ export class DataService {
 
   constructor(private db: AngularFireDatabase, private ts: TagService,
             private oss: OnlineStorageService) { 
+
+    // let assets$ = this.oss.assets$;
+    // let assetsRef = this.db.list('Assets');
+    // assets$.subscribe( assets => {
+    //   let goodAssets = assets.filter( asset => asset.reference.indexOf("TEST_DONOTUSE") === -1 );
+    //   let badAssets = assets.filter( asset => asset.reference.indexOf("TEST_DONOTUSE") !== -1 );
+    //   assetsRef.remove();
+    //   goodAssets.forEach( asset => {
+    //     assetsRef.set(asset.key, asset)
+    //   })
+    // })
     //this.itemsRef = this.getItemsRef();
     // ONE TIME THING TO UPDATE THE ASSETS
     // let items$ = this.getItemsRef().snapshotChanges().pipe(
@@ -56,9 +68,7 @@ export class DataService {
 
   addComment(comment: Comment, item: Item, user?: User) {
     this.db.list(this.COMMENT_ROOT).push(comment);
-    // comment count disabled for now.  definitely causing too many problems with page refreshes
-    //const updateObj = { commentCount: (item.commentCount || 0) + 1 }
-    //this.updateItem(item.key, <Item>updateObj, item)
+
   }
 
   addItem(item: Item) {

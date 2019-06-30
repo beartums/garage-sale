@@ -43,7 +43,7 @@
       <th (click)="updateSort('soldDate')" class="text-right table-head">Sold On</th>
       <th (click)="updateSort('dateAvailable')" class="text-right table-head">Available</th>
     </tr>
-    <tr *ngFor="let item of sort(filterItems(items)">
+    <tr *ngFor="let item of sort(filterItems(items))">
       <ng-container *ngIf="!isBeingEdited(item)">
         <td>{{item.name}}</td>
         <td  (click)="editInPlace(item)" class="text-center">

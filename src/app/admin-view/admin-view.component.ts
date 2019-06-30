@@ -107,7 +107,7 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
     return item[prop] || '';
   }
 
-  sortAndFilter(items: Item[] = []): Item[] {
+  sort(items: Item[] = []): Item[] {
     let reverse = this.sortOrder === Direction.ascending ? 1 : -1
     items.sort( (a, b) => {
       const aVal: any = this.getVal(a, this.sortProp);

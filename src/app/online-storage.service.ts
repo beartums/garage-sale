@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Observable } from 'rxjs';
+import { Observable, of, empty } from 'rxjs';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
-import { map, finalize, tap } from 'rxjs/operators';
+import { map, finalize, tap, defaultIfEmpty, switchMap, withLatestFrom, take, combineLatest, switchMapTo, filter, mapTo } from 'rxjs/operators';
 import { Asset } from './asset';
 import { Item } from './item';
 import { MatSnackBar } from '@angular/material';
@@ -28,8 +28,14 @@ export class OnlineStorageService {
   }
 
   private _getAssetRef(id?: string): AngularFireObject<Asset> {
-     return this.db.object(this.ASSET_ROOT + '/' + id);
-   }
+    return this.db.object(this.ASSET_ROOT + '/' + id);
+  }
+  private _getAssetByName$(name?: string): Observable<Asset[]> {
+    return this.db.list(this.ASSET_ROOT, ref => ref.orderByChild('reference').equalTo(name))
+        .snapshotChanges().pipe(
+          map( changes => <Asset[]>changes.map( c => <unknown>({ key: c.payload.key, ...c.payload.val() }) ))
+        );
+  }
 
   getAssets$(): Observable<Asset[]> {
      return this._getAssetsRef().snapshotChanges().pipe(
@@ -74,24 +80,38 @@ export class OnlineStorageService {
 
     let obs = task.snapshotChanges().pipe(
       finalize(() => {
-        if (--this.uploadingCount == 0) {
-          this.snackbar.open('Uploads Complete!', 'Dismiss', { duration: 2000 })
+        if (--this.uploadingCount === 0) {
+          this.snackbar.open('Uploads Complete!', 'Dismiss', { duration: 5000 })
         } else {
           this.snackbar.open(`Uploading ${this.uploadingCount} file(s)`, 'Dismiss');
         }
-        return ref.getDownloadURL().subscribe(url => this._addAsset(url, name));
+        this.assets$.pipe(
+          map((assets: Asset[]) => assets.find((asset) => asset.reference === name)),
+          combineLatest(ref.getDownloadURL()),
+          tap( ([asset, url]) => this._persistAsset(url, name, asset) ),
+          take(1)
+        ).subscribe();
       })
     ).subscribe();
    
   }
 
-  private _addAsset(url: string, name?: string) {
-    const asset = new Asset(url, name);
-    this._putAsset(asset)
+  private _persistAsset(url: string, name?: string, asset?: any) {
+    if (asset) {
+      asset.url = url;
+      this._setAsset(asset)
+    } else {
+      const newAsset = new Asset(url, name);
+      this._putAsset(newAsset);
+    }
+
   }
 
   private _putAsset(asset: Asset) {
     this._getAssetsRef().push(asset);
+  }
+  private _setAsset(asset: Asset) {
+    this._getAssetsRef().set(asset.key, asset);
   }
 
 

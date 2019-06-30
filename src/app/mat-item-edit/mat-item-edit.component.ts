@@ -76,7 +76,7 @@ export class MatItemEditComponent implements OnInit{
 
       this._ngZone.onStable.pipe( take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
 
-      this.assets$ = oss.assets$.pipe(
+      this.assets$ = oss.getAssets$().pipe(
         map( assets => this.photoUrlsSort(assets))
       );
 
@@ -188,6 +188,7 @@ export class MatItemEditComponent implements OnInit{
 
   }
   isMatchingAsset(a1: Asset, a2: Asset): boolean {
+    if (!a1 || !a2) {return false; }
     return a1.key === a2.key;
   }
 
@@ -196,6 +197,7 @@ export class MatItemEditComponent implements OnInit{
     for (let i = 0; i < files.length; i++) {
       this.oss.uploadFile(files[i]);
     }
+    event.target.files.value = null;
   }
   photoUrlsSort(assets: Asset[] = []): Asset[] {
     return assets.sort((a, b) => {
