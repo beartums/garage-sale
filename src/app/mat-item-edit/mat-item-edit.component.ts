@@ -197,7 +197,7 @@ export class MatItemEditComponent implements OnInit{
     for (let i = 0; i < files.length; i++) {
       this.oss.uploadFile(files[i]);
     }
-    event.target.files.value = null;
+    event.target.value = null;
   }
   photoUrlsSort(assets: Asset[] = []): Asset[] {
     return assets.sort((a, b) => {
