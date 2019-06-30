@@ -1,0 +1,21 @@
+<div class="dialog-container" fxLayout="column" fxLayoutAlign="center left">
+    <div class="dialog-header" fxFlex="45px">
+        <h4 mat-dialog-title>{{data.title}}</h4>
+    </div>
+    <div class="dialog-content" fxFlex="auto">
+        {{data.message}}
+    </div>
+    <div class="dialog-footer" fxFlex="45px">
+        <ng-container *ngFor="let button of data.buttons">
+                <button *ngIf="button.type==='default'" mat-raised-button cdkFocusInitial
+                (click)="closeDialog(button.returnValue)" [color]="getButtonColor(button.type)">
+                {{button.text}}
+            </button>
+            <button *ngIf="button.type != 'default'" mat-raised-button
+                (click)="closeDialog(button.returnValue)" [color]="getButtonColor(button.type)">
+                {{button.text}}
+            </button>
+            &nbsp;
+        </ng-container>
+    </div>
+</div>

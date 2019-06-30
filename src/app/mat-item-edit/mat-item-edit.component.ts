@@ -3,7 +3,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Location } from '@angular/common';
 import { Component, ElementRef, NgZone, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
@@ -12,6 +12,7 @@ import { FilterService } from '../filter.service';
 import { Item } from '../item';
 import { OnlineStorageService } from '../online-storage.service';
 import { Asset } from '../asset';
+import { GenericDialogComponent } from '../generic-dialog/generic-dialog.component';
 
 
 @Component({
@@ -72,7 +73,8 @@ export class MatItemEditComponent implements OnInit{
   constructor(private fb: FormBuilder, private ds: DataService,
     private router: Router,  private route: ActivatedRoute,
     private _location: Location, private fs: FilterService,
-    private _ngZone: NgZone, private oss: OnlineStorageService) {
+    private _ngZone: NgZone, private oss: OnlineStorageService,
+    private dialog: MatDialog) {
 
       this._ngZone.onStable.pipe( take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
 
@@ -193,12 +195,42 @@ export class MatItemEditComponent implements OnInit{
   }
 
   onFileSelected(event) {
-    const files = event.target.files;
-    for (let i = 0; i < files.length; i++) {
-      this.oss.uploadFile(files[i]);
+    const files: File[] = Array.from(event.target.files);
+    const oversizedFiles = files.filter( file => file.size > 22000 );
+    const oversizeAmount = oversizedFiles.reduce((amt, file: File) => file.size - (30*1024) + amt, 0);
+    const oversizeMb = Math.floor(oversizeAmount/1024);
+    if (oversizedFiles.length > 0) {
+      const dialogData = {
+        title: 'Oversized File Warning',
+        message: `${oversizedFiles.length} of the file(s) you are uploading seem to be bigger than the maximum 30KB suggested 
+              size.  Total oversize amount is about ${oversizeMb}KB. Are you sure you want to continue?`,
+        buttons: [
+          {text: 'Yes, Damnit!', returnValue: 'YES', type: 'warning'},
+          {text: 'OMG! No!', returnValue: 'NO', type: 'default'}
+        ]
+      }
+      const dialogRef = this.dialog.open(GenericDialogComponent, {
+        width: '60%',
+        height: '40%',
+        data: dialogData
+      });
+      dialogRef.afterClosed().subscribe(response => {
+        if (response === 'YES') {
+          this.uploadFiles(files)
+        }
+      })
+    } else {
+      this.uploadFiles(files);
     }
     event.target.value = null;
   }
+
+  uploadFiles(files: File[]) {
+    for (let i = 0; i < files.length; i++) {
+      this.oss.uploadFile(files[i]);
+    }
+  }
+
   photoUrlsSort(assets: Asset[] = []): Asset[] {
     return assets.sort((a, b) => {
       if (this.isAssetUsed(a) && !this.isAssetUsed(b)) { return 1; }

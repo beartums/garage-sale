@@ -43,6 +43,7 @@ import { EmailComponent } from './email/email.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminViewComponent } from './admin-view/admin-view.component';
 import { EgFocusDirective } from './eg-focus.directive';
+import { GenericDialogComponent } from './generic-dialog/generic-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,10 +63,11 @@ import { EgFocusDirective } from './eg-focus.directive';
     EmailComponent,
     AdminViewComponent,
     EgFocusDirective,
+    GenericDialogComponent,
   ],
   entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, 
                     ContactUsComponent,  MessageNavDialogComponent, InfoPageComponent,
-                  ItemPicsComponent, EmailComponent ],
+                  ItemPicsComponent, EmailComponent, GenericDialogComponent ],
   imports: [
     BrowserModule,
     FormsModule, ReactiveFormsModule,
