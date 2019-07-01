@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatDialogRef, MatDialog } from '@angular/material';
 
-import { Item } from '../item';
+import { Item } from '../model/item';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { ItemService } from '../item.service';
@@ -9,7 +9,7 @@ import { AuthService } from '../auth.service';
 import { PATHS } from '../constants';
 import { ItemCommentsComponent } from '../item-comments/item-comments/item-comments.component';
 import { FilterService } from '../filter.service';
-import { User } from '../user';
+import { User } from '../model/user';
 import { Observable } from 'rxjs';
 import {breakpointsProvider, BreakpointsService, BreakpointConfig, BreakpointEvent} from '../breakpoint.service';
 import { EmailService } from '../email.service';

@@ -3,8 +3,8 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable, of, empty } from 'rxjs';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 import { map, finalize, tap, defaultIfEmpty, switchMap, withLatestFrom, take, combineLatest, switchMapTo, filter, mapTo } from 'rxjs/operators';
-import { Asset } from './asset';
-import { Item } from './item';
+import { Asset } from './model/asset';
+import { Item } from './model/item';
 import { MatSnackBar } from '@angular/material';
 
 @Injectable({

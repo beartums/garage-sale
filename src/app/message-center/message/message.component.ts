@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, NgZone, Input, SimpleChange, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
-import { Message } from '../../message';
-import { User } from '../../user';
+import { Message } from '../../model/message';
+import { User } from '../../model/user';
 import { DataService } from 'src/app/data.service';
 
 @Component({

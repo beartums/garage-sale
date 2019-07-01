@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { Item } from '../item';
+import { Item } from '../model/item';
 import { FilterService } from '../filter.service';
 import { TagService } from '../tag.service';
 import { ItemService } from '../item.service';
@@ -8,7 +8,7 @@ import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { ItemCommentsComponent } from '../item-comments/item-comments/item-comments.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { User } from '../user';
+import { User } from '../model/user';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
 import { PATHS, DEFAULT_PIC_TOOLTIP } from '../constants';
 import { ItemPicsComponent } from '../item-pics/item-pics.component';

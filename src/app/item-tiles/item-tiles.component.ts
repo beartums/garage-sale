@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Observable, Subscription } from 'rxjs';
-import { Item } from '../item';
+import { Item } from '../model/item';
 import { DataService } from '../data.service';
 import { FilterService } from '../filter.service';
 import { faLinkedin, faFacebook, 
@@ -9,7 +9,7 @@ import { faLinkedin, faFacebook,
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { Router } from '@angular/router';
 import { ItemService } from '../item.service';
-import { User } from '../user';
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-mat-item-tiles',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import {faEnvelope, faEnvelopeOpen} from '@fortawesome/free-solid-svg-icons';
-import { Message } from '../../message';
-import { User } from '../../user';
+import { Message } from '../../model/message';
+import { User } from '../../model/user';
 import * as moment from 'moment';
 import { DataService } from 'src/app/data.service';
 import { Observable, of } from 'rxjs';

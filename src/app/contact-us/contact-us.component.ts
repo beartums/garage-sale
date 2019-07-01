@@ -2,12 +2,12 @@ import { Component, Input, Inject, ViewChild, NgZone } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 import { AuthService } from '../auth.service';
-import { Item } from '../item';
-import { User } from '../user';
+import { Item } from '../model/item';
+import { User } from '../model/user';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
-import { Message } from '../message';
+import { Message } from '../model/message';
 
 @Component({
   selector: 'gs-contact-us',

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Item } from './item';
+import { Item } from './model/item';
 import * as _ from 'lodash';
 
 @Injectable({

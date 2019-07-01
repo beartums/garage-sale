@@ -11,7 +11,7 @@ import { SettingsComponent } from '../settings/settings.component';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { switchMap, map, reduce } from 'rxjs/operators';
 import { of, Observable, forkJoin } from 'rxjs';
-import { Message } from '../message';
+import { Message } from '../model/message';
 import { PATHS } from '../constants';
 import { MessageNavDialogComponent } from '../message-center/message-center-dialog/message-center-dialog.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';

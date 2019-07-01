@@ -4,9 +4,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { AuthService } from '../../auth.service';
-import { Comment } from '../../comment';
+import { Comment } from '../../model/comment';
 import { DataService } from '../../data.service';
-import { Item } from '../../item';
+import { Item } from '../../model/item';
 import { ItemService } from '../../item.service';
 
 

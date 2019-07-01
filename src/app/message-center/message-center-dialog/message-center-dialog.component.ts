@@ -3,8 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Message } from '../../message';
-import { User } from '../../user';
+import { Message } from '../../model/message';
+import { User } from '../../model/user';
 
 export class MessagesDialogData {
   user: User;

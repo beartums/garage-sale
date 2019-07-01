@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Item } from '../item';
+import { Item } from '../model/item';
 
 @Component({
   selector: 'app-item-pics',

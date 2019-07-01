@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent } from '@angular/material';
 import { DataService } from '../data.service';
-import { User } from '../user';
+import { User } from '../model/user';
 import * as _ from 'lodash';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';

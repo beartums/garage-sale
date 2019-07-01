@@ -9,9 +9,9 @@ import { Observable } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
 import { DataService } from '../data.service';
 import { FilterService } from '../filter.service';
-import { Item } from '../item';
+import { Item } from '../model/item';
 import { OnlineStorageService } from '../online-storage.service';
-import { Asset } from '../asset';
+import { Asset } from '../model/asset';
 import { GenericDialogComponent } from '../generic-dialog/generic-dialog.component';
 
 

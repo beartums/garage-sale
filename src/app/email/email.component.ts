@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { EmailService } from '../email.service';
-import { Email } from '../email';
+import { Email } from '../model/email';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 @Component({

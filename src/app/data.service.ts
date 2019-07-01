@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import {AngularFireDatabase, AngularFireList, AngularFireObject} from '@angular/fire/database';
 import { map, tap, mapTo, switchMap } from 'rxjs/operators';
 
-import { Item } from './item';
+import { Item } from './model/item';
 import { TagService } from './tag.service';
 import { Observable, Subscribable, of, combineLatest, forkJoin } from 'rxjs';
-import { User } from './user';
-import { Comment } from './comment';
+import { User } from './model/user';
+import { Comment } from './model/comment';
 import { FilterService } from './filter.service';
-import { Message } from './message';
+import { Message } from './model/message';
 import { OnlineStorageService } from './online-storage.service';
-import { Asset } from './asset';
+import { Asset } from './model/asset';
 
 @Injectable({
   providedIn: 'root'

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Item } from './item';
+import { Item } from './model/item';
 import { DataService } from './data.service';
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';

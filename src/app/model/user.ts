@@ -1,5 +1,5 @@
 import { FirebaseAuth } from '@angular/fire';
-import { FilterOptions } from './filter.service';
+import { FilterOptions } from '../filter.service';
 
 export class User {
     key?: string;
