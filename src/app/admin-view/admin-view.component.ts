@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
-import { ItemService } from '../item.service';
+import { ItemService } from '../shared/item.service';
 import { Observable, fromEvent, Subscription, iif, of } from 'rxjs';
 import { Item } from '../model/item';
 import * as _ from 'lodash';
-import { DataService } from '../data.service';
+import { DataService } from '../shared/data.service';
 import { map, debounceTime, distinctUntilChanged, tap, switchMap, take, startWith, defaultIfEmpty } from 'rxjs/operators';
 
 enum Direction {

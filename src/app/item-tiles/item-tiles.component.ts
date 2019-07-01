@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../shared/auth.service';
 import { Observable, Subscription } from 'rxjs';
 import { Item } from '../model/item';
-import { DataService } from '../data.service';
-import { FilterService } from '../filter.service';
+import { DataService } from '../shared/data.service';
+import { FilterService } from '../shared/filter.service';
 import { faLinkedin, faFacebook, 
   faTwitter, faPinterest, faInstagram} from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { Router } from '@angular/router';
-import { ItemService } from '../item.service';
+import { ItemService } from '../shared/item.service';
 import { User } from '../model/user';
 
 @Component({

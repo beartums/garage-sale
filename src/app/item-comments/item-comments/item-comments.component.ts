@@ -3,11 +3,11 @@ import { Component, ElementRef, Inject, Input, NgZone, OnInit, ViewChild } from 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '../../shared/auth.service';
 import { Comment } from '../../model/comment';
-import { DataService } from '../../data.service';
+import { DataService } from '../../shared/data.service';
 import { Item } from '../../model/item';
-import { ItemService } from '../../item.service';
+import { ItemService } from '../../shared/item.service';
 
 
 @Component({

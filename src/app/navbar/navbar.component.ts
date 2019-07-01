@@ -1,10 +1,10 @@
 
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { DataService } from '../data.service';
-import { TagService } from '../tag.service';
-import { FilterService } from '../filter.service';
+import { AuthService } from '../shared/auth.service';
+import { DataService } from '../shared/data.service';
+import { TagService } from '../shared/tag.service';
+import { FilterService } from '../shared/filter.service';
 import * as _ from 'lodash';
 import { MatDialog } from '@angular/material';
 import { SettingsComponent } from '../settings/settings.component';
@@ -12,7 +12,7 @@ import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component'
 import { switchMap, map, reduce } from 'rxjs/operators';
 import { of, Observable, forkJoin } from 'rxjs';
 import { Message } from '../model/message';
-import { PATHS } from '../constants';
+import { PATHS } from '../shared/constants';
 import { MessageNavDialogComponent } from '../message-center/message-center-dialog/message-center-dialog.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { InfoPageComponent } from '../info-page/info-page.component';

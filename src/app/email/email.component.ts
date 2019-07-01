@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, ErrorStateMatcher } from '@angular/material';
-import { SEND_EMAIL_URL } from '../constants';
+import { SEND_EMAIL_URL } from '../shared/constants';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { EmailService } from '../email.service';
+import { EmailService } from '../shared/email.service';
 import { Email } from '../model/email';
 
 /** Error when invalid control is dirty, touched, or submitted. */

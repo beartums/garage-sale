@@ -7,8 +7,8 @@ import * as firebase from 'firebase/app';
 import { Observable, Subscription, Subject, of } from 'rxjs';
 
 import { map } from 'rxjs/operators';
-import { User } from './model/user';
-import { Message } from './model/message';
+import { User } from '../model/user';
+import { Message } from '../model/message';
 import { DataService } from './data.service';
 import { FilterService } from './filter.service';
 

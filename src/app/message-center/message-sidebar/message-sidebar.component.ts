@@ -3,7 +3,7 @@ import {faEnvelope, faEnvelopeOpen} from '@fortawesome/free-solid-svg-icons';
 import { Message } from '../../model/message';
 import { User } from '../../model/user';
 import * as moment from 'moment';
-import { DataService } from 'src/app/data.service';
+import { DataService } from 'src/app/shared/data.service';
 import { Observable, of } from 'rxjs';
 // import { DataService } from 'src/app/data.service';
 

@@ -1,7 +1,7 @@
 import { Component, Input, Inject, ViewChild, NgZone } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { DataService } from '../data.service';
-import { AuthService } from '../auth.service';
+import { DataService } from '../shared/data.service';
+import { AuthService } from '../shared/auth.service';
 import { Item } from '../model/item';
 import { User } from '../model/user';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';

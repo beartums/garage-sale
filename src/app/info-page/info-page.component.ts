@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FAQS } from '../constants';
+import { FAQS } from '../shared/constants';
 import { of } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material';
 @Component({

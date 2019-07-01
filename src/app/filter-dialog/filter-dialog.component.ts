@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
-import { DataService } from '../data.service';
-import { TagService } from '../tag.service';
-import { FilterService, FilterOptions } from '../filter.service';
+import { DataService } from '../shared/data.service';
+import { TagService } from '../shared/tag.service';
+import { FilterService, FilterOptions } from '../shared/filter.service';
 import { faHandHoldingUsd } from '@fortawesome/free-solid-svg-icons'
 import * as _ from 'lodash';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-filter-dialog',

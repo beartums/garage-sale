@@ -1,18 +1,18 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Item } from '../model/item';
-import { FilterService } from '../filter.service';
-import { TagService } from '../tag.service';
-import { ItemService } from '../item.service';
-import { AuthService } from '../auth.service';
-import { DataService } from '../data.service';
+import { FilterService } from '../shared/filter.service';
+import { TagService } from '../shared/tag.service';
+import { ItemService } from '../shared/item.service';
+import { AuthService } from '../shared/auth.service';
+import { DataService } from '../shared/data.service';
 import { Router } from '@angular/router';
 import { ItemCommentsComponent } from '../item-comments/item-comments/item-comments.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { User } from '../model/user';
 import { ContactUsComponent } from '../contact-us/contact-us.component';
-import { PATHS, DEFAULT_PIC_TOOLTIP } from '../constants';
+import { PATHS, DEFAULT_PIC_TOOLTIP } from '../shared/constants';
 import { ItemPicsComponent } from '../item-pics/item-pics.component';
-import { EmailService } from '../email.service';
+import { EmailService } from '../shared/email.service';
 
 
 @Component({

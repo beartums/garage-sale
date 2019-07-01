@@ -2,17 +2,17 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatDialogRef, MatDialog } from '@angular/material';
 
 import { Item } from '../model/item';
-import { DataService } from '../data.service';
+import { DataService } from '../shared/data.service';
 import { Router } from '@angular/router';
-import { ItemService } from '../item.service';
-import { AuthService } from '../auth.service';
-import { PATHS } from '../constants';
+import { ItemService } from '../shared/item.service';
+import { AuthService } from '../shared/auth.service';
+import { PATHS } from '../shared/constants';
 import { ItemCommentsComponent } from '../item-comments/item-comments/item-comments.component';
-import { FilterService } from '../filter.service';
+import { FilterService } from '../shared/filter.service';
 import { User } from '../model/user';
 import { Observable } from 'rxjs';
-import {breakpointsProvider, BreakpointsService, BreakpointConfig, BreakpointEvent} from '../breakpoint.service';
-import { EmailService } from '../email.service';
+import {breakpointsProvider, BreakpointsService, BreakpointConfig, BreakpointEvent} from '../shared/breakpoint.service';
+import { EmailService } from '../shared/email.service';
 
 const breakpointConfig: BreakpointConfig = {
   xxs: { max: 475 },

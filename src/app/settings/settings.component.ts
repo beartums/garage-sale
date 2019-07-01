@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent } from '@angular/material';
-import { DataService } from '../data.service';
+import { DataService } from '../shared/data.service';
 import { User } from '../model/user';
 import * as _ from 'lodash';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
-import { FilterService } from '../filter.service';
-import { TagService } from '../tag.service';
+import { FilterService } from '../shared/filter.service';
+import { TagService } from '../shared/tag.service';
 
 @Component({
   selector: 'app-settings',

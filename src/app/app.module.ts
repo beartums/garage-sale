@@ -20,9 +20,9 @@ import { ItemCommentsModule } from './item-comments/item-comments.module';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { AuthService } from './auth.service';
-import { DataService } from './data.service';
-import { ItemService } from './item.service';
+import { AuthService } from './shared/auth.service';
+import { DataService } from './shared/data.service';
+import { ItemService } from './shared/item.service';
 import { ItemListComponent } from './item-list/item-list.component';
 import { ItemEditComponent } from './item-edit/item-edit.component';
 import { ItemTilesComponent } from './item-tiles/item-tiles.component';
@@ -36,13 +36,13 @@ import { MessageNavDialogComponent } from './message-center/message-center-dialo
 import { MaterialModule } from './material/material.module';
 import { ItemCommentsComponent } from './item-comments/item-comments/item-comments.component';
 import { InfoPageComponent } from './info-page/info-page.component';
-import { UncleanHtmlPipe } from './unclean-html.pipe';
+import { UncleanHtmlPipe } from './shared/unclean-html.pipe';
 import { MatTabsModule, MatSliderModule } from '@angular/material';
 import { ItemPicsComponent } from './item-pics/item-pics.component';
 import { EmailComponent } from './email/email.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminViewComponent } from './admin-view/admin-view.component';
-import { EgFocusDirective } from './eg-focus.directive';
+import { EgFocusDirective } from './shared/eg-focus.directive';
 import { GenericDialogComponent } from './generic-dialog/generic-dialog.component';
 
 @NgModule({

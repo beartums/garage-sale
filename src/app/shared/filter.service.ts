@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { TagService } from './tag.service';
 import { DataService } from './data.service';
 import * as _ from 'lodash';
-import { Item } from './model/item';
+import { Item } from '../model/item';
 import { ItemService } from './item.service';
-import { User } from './model/user';
+import { User } from '../model/user';
 
 export enum FilterOptions {
   'include', 'exclude', 'ignore'

@@ -3,7 +3,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { Message } from '../../model/message';
 import { User } from '../../model/user';
-import { DataService } from 'src/app/data.service';
+import { DataService } from 'src/app/shared/data.service';
 
 @Component({
   selector: 'gs-message',

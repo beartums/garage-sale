@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef, MatSnackBarRef, MatSnackBar, SimpleSnackBar } from '@angular/material';
-import { EmailComponent } from './email/email.component';
-import { Item } from './model/item';
+import { EmailComponent } from '../email/email.component';
+import { Item } from '../model/item';
 import { AuthService } from './auth.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { SEND_EMAIL_URL } from './constants';
-import { Email } from './model/email';
+import { Email } from '../model/email';
 import { Subscribable, Observable, throwError, empty } from 'rxjs';
 import { tap, catchError, switchMap } from 'rxjs/operators';
 

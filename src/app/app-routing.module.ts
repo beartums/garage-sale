@@ -4,7 +4,7 @@ import { ItemListComponent } from './item-list/item-list.component';
 import { ItemEditComponent } from './item-edit/item-edit.component';
 import { ItemTilesComponent } from './item-tiles/item-tiles.component';
 import { ShowItemComponent } from './show-item/show-item.component';
-import { PATHS } from './constants';
+import { PATHS } from './shared/constants';
 import { AdminViewComponent } from './admin-view/admin-view.component';
 
 const routes: Routes = [

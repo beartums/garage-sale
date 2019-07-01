@@ -7,10 +7,10 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent, MatDi
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith, take } from 'rxjs/operators';
-import { DataService } from '../data.service';
-import { FilterService } from '../filter.service';
+import { DataService } from '../shared/data.service';
+import { FilterService } from '../shared/filter.service';
 import { Item } from '../model/item';
-import { OnlineStorageService } from '../online-storage.service';
+import { OnlineStorageService } from '../shared/online-storage.service';
 import { Asset } from '../model/asset';
 import { GenericDialogComponent } from '../generic-dialog/generic-dialog.component';
 
