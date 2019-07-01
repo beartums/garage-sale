@@ -9,15 +9,15 @@ import {
   MatMenuModule,
 } from '@angular/material';
 
-import { MatItemTilesComponent } from './mat-item-tiles.component';
+import { ItemTilesComponent } from './item-tiles.component';
 
 describe('MatItemTilesComponent', () => {
-  let component: MatItemTilesComponent;
-  let fixture: ComponentFixture<MatItemTilesComponent>;
+  let component: ItemTilesComponent;
+  let fixture: ComponentFixture<ItemTilesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MatItemTilesComponent],
+      declarations: [ItemTilesComponent],
       imports: [
         NoopAnimationsModule,
         LayoutModule,
@@ -31,7 +31,7 @@ describe('MatItemTilesComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MatItemTilesComponent);
+    fixture = TestBed.createComponent(ItemTilesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

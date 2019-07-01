@@ -24,12 +24,12 @@ const breakpointConfig: BreakpointConfig = {
 }
 @Component({
   selector: 'app-mat-item-list',
-  templateUrl: './mat-item-list.component.html',
-  styleUrls: ['./mat-item-list.component.css'],
+  templateUrl: './item-list.component.html',
+  styleUrls: ['./item-list.component.css'],
   providers: [breakpointsProvider(breakpointConfig)]
 })
 
-export class MatItemListComponent implements AfterViewInit {
+export class ItemListComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 

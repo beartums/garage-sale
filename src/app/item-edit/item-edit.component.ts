@@ -17,10 +17,10 @@ import { GenericDialogComponent } from '../generic-dialog/generic-dialog.compone
 
 @Component({
   selector: 'app-mat-item-edit',
-  templateUrl: './mat-item-edit.component.html',
-  styleUrls: ['./mat-item-edit.component.css']
+  templateUrl: './item-edit.component.html',
+  styleUrls: ['./item-edit.component.css']
 })
-export class MatItemEditComponent implements OnInit{
+export class ItemEditComponent implements OnInit{
   itemEditForm = this.fb.group({
     itemName: null,
     itemDescription: [null, Validators.required],
@@ -196,7 +196,7 @@ export class MatItemEditComponent implements OnInit{
 
   onFileSelected(event) {
     const files: File[] = Array.from(event.target.files);
-    const oversizedFiles = files.filter( file => file.size > 22000 );
+    const oversizedFiles = files.filter( file => file.size > (30*1024) );
     const oversizeAmount = oversizedFiles.reduce((amt, file: File) => file.size - (30*1024) + amt, 0);
     const oversizeMb = Math.floor(oversizeAmount/1024);
     if (oversizedFiles.length > 0) {

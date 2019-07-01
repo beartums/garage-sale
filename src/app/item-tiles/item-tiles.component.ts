@@ -13,10 +13,10 @@ import { User } from '../user';
 
 @Component({
   selector: 'app-mat-item-tiles',
-  templateUrl: './mat-item-tiles.component.html',
-  styleUrls: ['./mat-item-tiles.component.css']
+  templateUrl: './item-tiles.component.html',
+  styleUrls: ['./item-tiles.component.css']
 })
-export class MatItemTilesComponent {
+export class ItemTilesComponent {
   faLinkedin = faLinkedin;
   faFacebook = faFacebook;
   faTwitter = faTwitter;

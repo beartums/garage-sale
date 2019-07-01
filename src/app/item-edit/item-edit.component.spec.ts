@@ -9,15 +9,15 @@ import {
   MatSelectModule,
 } from '@angular/material';
 
-import { MatItemEditComponent } from './mat-item-edit.component';
+import { ItemEditComponent } from './item-edit.component';
 
 describe('MatItemEditComponent', () => {
-  let component: MatItemEditComponent;
-  let fixture: ComponentFixture<MatItemEditComponent>;
+  let component: ItemEditComponent;
+  let fixture: ComponentFixture<ItemEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatItemEditComponent ],
+      declarations: [ ItemEditComponent ],
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
@@ -31,7 +31,7 @@ describe('MatItemEditComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MatItemEditComponent);
+    fixture = TestBed.createComponent(ItemEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

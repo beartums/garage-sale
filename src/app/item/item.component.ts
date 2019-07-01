@@ -17,10 +17,10 @@ import { EmailService } from '../email.service';
 
 @Component({
   selector: 'gs-item-card',
-  templateUrl: './mat-item.component.html',
-  styleUrls: ['./mat-item.component.css']
+  templateUrl: './item.component.html',
+  styleUrls: ['./item.component.css']
 })
-export class MatItemComponent implements OnInit {
+export class ItemComponent implements OnInit {
 
   @Input() item: Item = new Item();
 

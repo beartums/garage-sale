@@ -23,10 +23,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from './auth.service';
 import { DataService } from './data.service';
 import { ItemService } from './item.service';
-import { MatItemListComponent } from './mat-item-list/mat-item-list.component';
-import { MatItemEditComponent } from './mat-item-edit/mat-item-edit.component';
-import { MatItemTilesComponent } from './mat-item-tiles/mat-item-tiles.component';
-import { MatItemComponent } from './mat-item/mat-item.component';
+import { ItemListComponent } from './item-list/item-list.component';
+import { ItemEditComponent } from './item-edit/item-edit.component';
+import { ItemTilesComponent } from './item-tiles/item-tiles.component';
+import { ItemComponent } from './item/item.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ShowItemComponent } from './show-item/show-item.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -49,10 +49,10 @@ import { GenericDialogComponent } from './generic-dialog/generic-dialog.componen
   declarations: [
     AppComponent,
     NavbarComponent,
-    MatItemListComponent,
-    MatItemEditComponent,
-    MatItemTilesComponent,
-    MatItemComponent,
+    ItemListComponent,
+    ItemEditComponent,
+    ItemTilesComponent,
+    ItemComponent,
     SettingsComponent,
     ShowItemComponent,
     ContactUsComponent,
