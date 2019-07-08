@@ -123,12 +123,12 @@ export class ItemEditComponent implements OnInit{
 
   save() {
     const item = new Item();
-    item.name = this.itemEditForm.controls['itemName'].value || '';
-    item.price = this.itemEditForm.controls['itemPrice'].value || '';
-    item.description = this.itemEditForm.controls['itemDescription'].value || '';
+    item.name = this.itemEditForm.controls['itemName'].value || null;
+    item.price = this.itemEditForm.controls['itemPrice'].value || null;
+    item.description = this.itemEditForm.controls['itemDescription'].value || null;
     item.condition = this.itemEditForm.controls['itemCondition'].value || '';
     item.dateAvailable = this.itemEditForm.controls['itemDateAvailable'].value || new Date().toISOString();
-    item.isHidden = this.itemEditForm.controls['itemIsHidden'].value || false
+    item.isHidden = this.itemEditForm.controls['itemIsHidden'].value || false;
     item.isFeatured = this.itemEditForm.controls['itemIsFeatured'].value || false;
     item.isSold = this.itemEditForm.controls['itemIsSold'].value || false;
     item.soldDate = this.itemEditForm.controls['itemSoldDate'].value || '';
@@ -139,6 +139,8 @@ export class ItemEditComponent implements OnInit{
     item.primaryAsset = this.itemEditForm.controls['itemPrimaryAsset'].value || null;
     item.additionalAssets = this.itemEditForm.controls['itemAdditionalAssets'].value || [];
     item.tags = this.itemTags || [];
+
+    if ((!item.name || !item.price || !item.description) && !item.isHidden ) return;
 
     if (!this.ds.itemBeingEdited) {
       this.ds.addItem(item);

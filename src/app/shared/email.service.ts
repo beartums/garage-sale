@@ -7,7 +7,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { SEND_EMAIL_URL } from './constants';
 import { Email } from '../model/email';
 import { Subscribable, Observable, throwError, empty } from 'rxjs';
-import { tap, catchError, switchMap } from 'rxjs/operators';
+import { tap, catchError, switchMap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -41,8 +41,8 @@ export class EmailService {
           snackBarRef = this.snackBar.open('Sending Email...', 'Dismiss');
           return this.sendObject(emailObj).pipe(
             tap( result => {
-              this.snackBar.open('Success!!!', 'Dismiss', { duration: 2000 })
-              return result;
+              this.snackBar.open('Success!!!', 'Dismiss', { duration: 2000 });
+              return empty();
             }),
             catchError( err => {
               snackBarRef = this.snackBar.open('Email Failed!!  Sorry.', 'Dismiss');
@@ -76,10 +76,10 @@ export class EmailService {
       headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) 
     };
     const emailObservable = this.http.post(SEND_EMAIL_URL, params, headers);
-    emailObservable.subscribe(
-      result => console.log(result),
-      error => console.log(error)
-    );
+    // emailObservable.subscribe(
+    //   result => console.log(result),
+    //   error => console.log(error)
+    // );
     this.snackBar.open('Sending Email...', 'Dismiss');
     return emailObservable;
   }

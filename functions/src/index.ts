@@ -49,16 +49,36 @@ exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
 
 exports.sendMail = functions.https.onRequest(async (req, res) => {
     corsHandler(req, res, () => {
+
+        if (req.method === 'OPTIONS') {
+            res.set('Access-Control-Allow-Origin', req.hostname)
+                .set('Access-Control-Allow-Methods', 'GET, POST, PUT')
+                .status(200);
+                return
+        }
         
+        // retrieve email data
         const to = req.body.to || 'garage-sale@griffithnet.com';
         const from = req.body.from || 'noemailincluded';
         const subject = req.body.subject || 'no subject';
         const message = req.body.message || 'no message';
-        // let toLog = (req.body.to || 'noBody' ) + '/' +
-        //             (req.query.to || 'noQuery' ) + '/' +
-        //             (req.params.to || 'noParams' ) + '/' +
-        //             (to || 'noto' ) + '/'
-        // console.log(toLog);
+
+        // save email to database so info is not potentially lost
+        const email = {
+            to: to,
+            from: from,
+            subject: subject,
+            message: message,
+            date: new Date().toISOString(),
+            headers: req.headers,
+            body: req.body,
+            ip: req.ip,
+            method: req.method
+        }
+        const emailRef = admin.database().ref("/Emails");
+        emailRef.push(email);
+
+        // send email
         return sendEmail(to,from,subject,message).then( () => {
             res.status(200).send(true);
         }, (err) => { 
