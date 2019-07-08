@@ -135,10 +135,9 @@ export class ItemEditComponent implements OnInit{
     item.soldPriceUgx = this.itemEditForm.controls['itemSoldPriceUgx'].value || '';
     item.soldToEmail= this.itemEditForm.controls['itemSoldToEmail'].value || '';
     item.soldTo = this.itemEditForm.controls['itemSoldTo'].value || '';
-    //item.priority = this.itemEditForm.controls['itemPriority'].value || 0;
     item.useDefaultTooltip = this.itemEditForm.controls['itemUseDefaultTooltip'].value || false;
-    item.primaryAsset = this.itemEditForm.controls['itemPrimaryAsset'].value;
-    item.additionalAssets = this.itemEditForm.controls['itemAdditionalAssets'].value;
+    item.primaryAsset = this.itemEditForm.controls['itemPrimaryAsset'].value || null;
+    item.additionalAssets = this.itemEditForm.controls['itemAdditionalAssets'].value || [];
     item.tags = this.itemTags || [];
 
     if (!this.ds.itemBeingEdited) {
@@ -252,6 +251,31 @@ export class ItemEditComponent implements OnInit{
     this.selectedAsset = asset;
   }
 
+  delete() {
+    const dialogRef = this.dialog.open(GenericDialogComponent, {
+      width: '300px',
+      height: '300px',
+      data: {
+        title: 'Confirm Delete',
+        message: `Are you sure you want to permanently delete the item: ${this.ds.itemBeingEdited.name}?`,
+        buttons: [
+          {text: 'Yes, Damnit!', returnValue: 'YES', type: 'warning'},
+          {text: 'OMG! No!', returnValue: 'NO', type: 'default'}
+        ]
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(response => {
+        if (response === 'YES') {
+          this.ds.deleteItem(this.itemKey);
+          this._location.back();
+        }
+      });
+  }
+
+  canBeDeleted(): boolean {
+    return this.itemKey !== 'new' ? true : false;
+  }
 
   _filter(value: string): string[] {
     const filterValue = value.toLowerCase();

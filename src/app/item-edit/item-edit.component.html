@@ -1,8 +1,23 @@
-<form [formGroup]="itemEditForm" novalidate >
+<form [formGroup]="itemEditForm" >
   <mat-card class="shipping-card">
-    <mat-card-header>
+    <mat-card-header fxLayout="row">
       <mat-card-title>Edit Item</mat-card-title>
+      <span fxFlex="auto"></span>
+      
+        <div >
+          <button mat-raised-button color="primary" type="button" (click)="save()">Save</button>
+        </div>
+        <div  >
+            &nbsp;&nbsp;
+          <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+        </div>
+        <div  *ngIf="canBeDeleted()">
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <button mat-raised-button color="warn" type="button" (click)="delete()">Delete</button>
+        </div>
+      
     </mat-card-header>
+    <br />
     <mat-card-content>
       <!-- Name, price, condition, date availavle -->
       <div class="row" id="NameAndDetails">
@@ -66,15 +81,6 @@
         <!-- Priority -->
         <div class="col">
           <mat-slide-toggle matInput formControlName="itemUseDefaultTooltip">Default Picture Tooltip?</mat-slide-toggle>
-          <!-- <mat-form-field>
-            <mat-label>specify a priority</mat-label>
-            <mat-select [(value)]="priority" formControlName="itemPriority">
-              <mat-option>None</mat-option>
-              <mat-option *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]" [value]="i">
-                {{i}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field> -->
         </div>
       </div>
       <!-- Sold Info Row -->
@@ -146,7 +152,7 @@
                     <mat-option *ngFor="let asset of (assets$ | async)" [value]="asset" [ngClass]="{used: isAssetUsed(asset)}">
                       {{asset.reference}}
                     </mat-option>
-                  </mat-select>
+                  </mat-select>  
                 </mat-form-field>
               </div>
               <div fxFlex="25px">
@@ -201,9 +207,7 @@
         </div>
       </div>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" type="button" (click)="save()">Save</button>
-      <button mat-raised-button color="warn" type="button" (click)="cancel()">Cancel</button>
+    <mat-card-actions fxLayout="row">
     </mat-card-actions>
   </mat-card>
 </form>
