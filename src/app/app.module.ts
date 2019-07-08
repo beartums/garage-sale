@@ -44,6 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminViewComponent } from './admin-view/admin-view.component';
 import { EgFocusDirective } from './shared/eg-focus.directive';
 import { GenericDialogComponent } from './generic-dialog/generic-dialog.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { GenericDialogComponent } from './generic-dialog/generic-dialog.componen
     AdminViewComponent,
     EgFocusDirective,
     GenericDialogComponent,
+    SearchBoxComponent,
   ],
   entryComponents: [ ItemCommentsComponent, SettingsComponent, FilterDialogComponent, 
                     ContactUsComponent,  MessageNavDialogComponent, InfoPageComponent,

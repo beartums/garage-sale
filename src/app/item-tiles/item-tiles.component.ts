@@ -10,6 +10,7 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { Router } from '@angular/router';
 import { ItemService } from '../shared/item.service';
 import { User } from '../model/user';
+import { distinctUntilChanged, debounce, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mat-item-tiles',
@@ -33,6 +34,8 @@ export class ItemTilesComponent {
   subscriptions: Subscription[] = [];
 
   auth: AuthService
+
+  searchFilter$: Observable<string | null>;
 
   /** Based on the screen size, switch from standard to one column per row */
 
@@ -60,6 +63,10 @@ export class ItemTilesComponent {
   sortItems(items: Item[]): Item[] {
     if (!this.fs || !items) { return []; }
     return this.fs.sort(items);
+  }
+
+  updateSearchFilter(searchFilter$: Observable<string | null>) {
+    this.searchFilter$ = searchFilter$;
   }
 
 }

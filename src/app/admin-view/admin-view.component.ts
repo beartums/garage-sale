@@ -25,12 +25,8 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
   sortOrder: Direction;
 
   editItem: Partial<Item>;
-  search$: Observable<{}>;
-  searchSubscription: Subscription;
+
   filterString: string;
-  searchBox: any;
-  sbSub: Subscription;
-  searchBoxSubscription: Subscription;
 
   constructor(private is: ItemService, private ds: DataService) {
     this.items$ = this.is.items$;
@@ -40,28 +36,9 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const mockEvent = { target: { value: '' } };
-    this.searchBoxSubscription = this.searchBoxes.changes.subscribe( searchBoxes => {
-      if (this.searchBox) { return null; }
-        this.searchBox = searchBoxes.reduce(( acc, box) => box, null);
-        if (!this.searchBox) {return null;}
-        this.search$ = fromEvent(this.searchBox.nativeElement, 'keyup').pipe(
-          map((event: any) => event.target.value.trim()),
-          startWith(''),
-          debounceTime(400),
-          distinctUntilChanged()
-        )
-        this.searchSubscription = this.search$.subscribe( filter => {
-            this.filterString = <string>filter;
-          })
-      }
-    )
-
   }
 
   ngOnDestroy() {
-    this.searchBoxSubscription.unsubscribe();
-    this.searchSubscription.unsubscribe()
   }
 
   cleanPrice(price: string): string {
@@ -78,7 +55,6 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
   }
 
   editInPlace(item: Item, deprecated: string) {
-    //event.target.setFocus()
     this.editItem = _.pick(item, ['soldPriceUgx', 'price', 'soldTo', 'soldToEmail', 'isSold', 'soldDate', 'key', 'dateAvailable']);
   }
   cancelChanges() {
@@ -165,6 +141,10 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
       this.sortProp = prop;
       this.sortOrder = Direction.ascending;
     }
+  }
+
+  updateSearchFilter(filter: string) {
+    this.filterString = filter;
   }
 
 }

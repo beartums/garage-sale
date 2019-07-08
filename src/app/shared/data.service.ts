@@ -120,7 +120,7 @@ export class DataService {
     const items$: Observable<Item[]> = this.getItemsRef().snapshotChanges().pipe(
       map( changes => {
         let items  = <Item[]>changes.map(
-          c => ( <unknown>{ key: c.payload.key, ...c.payload.val() } )
+          c => ( { key: c.payload.key, ...c.payload.val() } )
         );
         this.ts.indexAllItems(<Item[]>items);
         this.photoURLsUsed = <Item[]>items.reduce((URLObj, item) => {

@@ -26,10 +26,9 @@
       </span>
     </div>
     </div>
-    <mat-form-field fxFlexAlign="right center" fxFlex="250px" class="filter-field">
-      <input #searchBox type="search" matInput [(ngModel)]="filterText" >
-      <button mat-icon-button matSuffix><mat-icon>search</mat-icon></button>
-    </mat-form-field>
+    <mat-search-box fxFlexAlign="right center" fxFlex="250px" class="filter-field"
+      (filterChange)="updateSearchFilter($event)" [debounce]="400">
+    </mat-search-box>
   </div>
 <br />
   <table>

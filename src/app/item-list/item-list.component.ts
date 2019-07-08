@@ -10,7 +10,7 @@ import { PATHS } from '../shared/constants';
 import { ItemCommentsComponent } from '../item-comments/item-comments/item-comments.component';
 import { FilterService } from '../shared/filter.service';
 import { User } from '../model/user';
-import { Observable } from 'rxjs';
+import { Observable, Subscribable, Subscription } from 'rxjs';
 import {breakpointsProvider, BreakpointsService, BreakpointConfig, BreakpointEvent} from '../shared/breakpoint.service';
 import { EmailService } from '../shared/email.service';
 
@@ -29,7 +29,7 @@ const breakpointConfig: BreakpointConfig = {
   providers: [breakpointsProvider(breakpointConfig)]
 })
 
-export class ItemListComponent implements AfterViewInit {
+export class ItemListComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -37,6 +37,8 @@ export class ItemListComponent implements AfterViewInit {
   itemList$: Observable<Item[]>;
   bpList: string[] = ['xxs', 'xs', 'sm', 'md', 'lg', 'xxl'];
   bpSub: any;
+
+  filter: string;
 
   constructor(private ds: DataService, private router: Router,
               private is: ItemService, private as: AuthService,
@@ -109,41 +111,25 @@ export class ItemListComponent implements AfterViewInit {
     this.is.toggleFavorite(item, this.as.userId);
   }
 
+  updateSearchFilter(filter: string) {
+    this.filter = filter;
+  }
+
   formatPrice(price: number = 0): string {
     return this.is.formatPrice(price.toString());
   }
   
-  // getEmailForItem(item: Item): string {
-  //   if (!item) { return '' };
-  //   let email = '';
-  //   email += 'MailTo: someone@somewhere.com';
-  //   email += '?subject=Check it out: ' + item.name;
-  //   email += '&body=Thought you might be interested in this:%0D%0A%0D%0A';
-  //   email += item.name + ' -- ';
-  //   email += item.description;
-  //   email += '%0D%0A%0D%0Ahttps://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
-    
-  //   return email;
-  // }
-
-  // getAdminEmailForItem(item: Item): string {
-  //   if (!item) { return '' };
-  //   let email = '';
-  //   email += 'MailTo: garage-sale@griffithnet.com';
-  //   email += '?subject=RE: ' + ( item ? item.name : '???');
-  //   email += '&body=RE: ';
-  //   email += 'https://garage-sale.griffithnet.com' + PATHS.itemUrl + '/' + item.key;
-    
-  //   return email;
-  // }
-
   sendEmail(item: Item) {
     this.es.mail(item);
   }
   
   isFiltered(item: Item, user: User = null): boolean {
     user = user || this.as.user;
-    return this.fs.isFiltered(item, user);
+    const isFiltered = this.fs.isFiltered(item, user);
+    if (isFiltered) { return true; }
+    if (!this.filter || this.filter === '') { return false; }
+    const filterString = item.name + '|' + item.soldTo + '|' + item.tags.join('|');
+    return filterString.toLowerCase().indexOf(this.filter.toLowerCase()) === -1;
   }
 
   gotoAdminView() {
@@ -161,7 +147,5 @@ export class ItemListComponent implements AfterViewInit {
     if (!this.fs) { return []; }
     return this.fs.sort(items);
   }
-  ngAfterViewInit() {
-    //this.dataSource = new MatItemListDataSource(this.paginator, this.sort);
-  }
+
 }

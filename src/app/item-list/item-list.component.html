@@ -1,7 +1,16 @@
-<button mat-raised-button color="" type="button" *ngIf="isAdmin()" (click)="addItem()">+</button>
-<button mat-icon-button (click)="gotoAdminView()" *ngIf="isAdmin()">
-  <mat-icon>monetization_on</mat-icon>
-</button>
+<div fxLayout="row">
+  <button mat-icon-button *ngIf="isAdmin()" (click)="addItem()">
+    <mat-icon>add_box</mat-icon>
+  </button>
+  <button mat-icon-button (click)="gotoAdminView()" *ngIf="isAdmin()">
+    <mat-icon>monetization_on</mat-icon>
+  </button>
+  <div fxFlex="auto"></div>
+  <div fxFlex="250px">
+    <mat-search-box (filterChange)="updateSearchFilter($event)" [debounce]="400">
+    </mat-search-box>
+  </div>
+</div>
 <div class="mat-elevation-z8" width="100%">
   <table class="material-table full-width" >
     <ng-container  *ngFor="let item of sortItems(itemList$ | async)">

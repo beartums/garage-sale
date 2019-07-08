@@ -1,0 +1,4 @@
+<mat-form-field>
+  <input #searchBox type="search" matInput [(ngModel)]="filterText" (keyup)="updateFilter(filterText)" >
+  <button mat-icon-button matSuffix><mat-icon>search</mat-icon></button>
+</mat-form-field>

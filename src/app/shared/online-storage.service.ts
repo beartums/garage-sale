@@ -6,6 +6,7 @@ import { map, finalize, tap, defaultIfEmpty, switchMap, withLatestFrom, take, co
 import { Asset } from '../model/asset';
 import { Item } from '../model/item';
 import { MatSnackBar } from '@angular/material';
+import { stringToKeyValue } from '@angular/flex-layout/extended/typings/style/style-transforms';
 
 @Injectable({
   providedIn: 'root'
@@ -78,24 +79,31 @@ export class OnlineStorageService {
 
     this.snackbar.open(`Uploading ${++this.uploadingCount} file(s)`, 'Dismiss');
 
-    let obs = task.snapshotChanges().pipe(
+    let url$: Observable<string>;
+
+    task.snapshotChanges().pipe(
       finalize(() => {
-        if (--this.uploadingCount === 0) {
-          this.snackbar.open('Uploads Complete!', 'Dismiss', { duration: 5000 })
-        } else {
-          this.snackbar.open(`Uploading ${this.uploadingCount} file(s)`, 'Dismiss');
-        }
-        this.assets$.pipe(
-          map((assets: Asset[]) => assets.find((asset) => asset.reference === name)),
-          combineLatest(ref.getDownloadURL()),
-          tap( ([asset, url]) => this._persistAsset(url, name, asset) ),
-          take(1)
-        ).subscribe();
+        this._decrementSnackbar();
+        url$ = ref.getDownloadURL();
       })
+    ).subscribe();
+
+    this.assets$.pipe(
+      map((assets: Asset[]) => assets.find((asset) => asset.reference === name)),
+      combineLatest(url$),
+      tap( ([asset, url]) => this._persistAsset(url, name, asset) ),
+      take(1)
     ).subscribe();
    
   }
 
+  private _decrementSnackbar() {
+    if (--this.uploadingCount === 0) {
+      this.snackbar.open('Uploads Complete!', 'Dismiss', { duration: 5000 })
+    } else {
+      this.snackbar.open(`Uploading ${this.uploadingCount} file(s)`, 'Dismiss');
+    }
+  }
   private _persistAsset(url: string, name?: string, asset?: any) {
     if (asset) {
       asset.url = url;
