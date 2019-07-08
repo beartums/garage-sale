@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -13,6 +13,9 @@ export class SearchBoxComponent implements OnInit {
   @Output() filterChange: EventEmitter<string|null> = new EventEmitter<string>();
 
   @Input() debounce: number = null;
+  @Input() showCancel: boolean = true;
+  @Input() cancelIcon: string = "cancel";
+  @Input() searchIcon: string = "search"
   @Input() width = null;
   @Input() allowCollapse = false;
   @Input() collapsed = false;
@@ -45,6 +48,12 @@ export class SearchBoxComponent implements OnInit {
 
   updateFilter(filter: string) {
     this.filter$.next(filter);
+  }
+
+  cancel() {
+    this.updateFilter('');
+    this.filterText = '';
+    
   }
 
 }

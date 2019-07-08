@@ -1,4 +1,5 @@
 <mat-form-field>
   <input #searchBox type="search" matInput [(ngModel)]="filterText" (keyup)="updateFilter(filterText)" >
-  <button mat-icon-button matSuffix><mat-icon>search</mat-icon></button>
+  <button mat-icon-button matSuffix><mat-icon>{{searchIcon}}</mat-icon></button>
+  <button *ngIf="showCancel && filterText" mat-icon-button matSuffix (click)="cancel()"><mat-icon>{{cancelIcon}}</mat-icon></button>
 </mat-form-field>
