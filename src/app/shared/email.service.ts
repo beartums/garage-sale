@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { SEND_EMAIL_URL } from './constants';
 import { Email } from '../model/email';
-import { Subscribable, Observable, throwError, empty } from 'rxjs';
+import { Subscribable, Observable, throwError, empty, iif, EMPTY } from 'rxjs';
 import { tap, catchError, switchMap, map } from 'rxjs/operators';
 
 @Injectable({
@@ -33,27 +33,24 @@ export class EmailService {
         emailService: this,
       }
     });
-    let snackBarRef;
 
     dialogRef.afterClosed().pipe(
-      switchMap( emailObj => {
-        if (emailObj) {
-          snackBarRef = this.snackBar.open('Sending Email...', 'Dismiss');
-          return this.sendObject(emailObj).pipe(
-            tap( result => {
-              this.snackBar.open('Success!!!', 'Dismiss', { duration: 2000 });
-              return empty();
-            }),
-            catchError( err => {
-              snackBarRef = this.snackBar.open('Email Failed!!  Sorry.', 'Dismiss');
-              return empty();
-            })
-          );
-        } else {
-          return empty()
-        }
+      switchMap( emailObj =>  emailObj ? this.sendObject(emailObj) : EMPTY  ),
+      catchError( err => {
+        console.log(err)
+        this.snackBar.open('Email Failed!!  Sorry.', 'Dismiss');
+        return EMPTY;
+      }),
+      tap( result => {
+        if (!result) { return EMPTY; }
+        this.snackBar.open('Success!!!', 'Dismiss', { duration: 2000 });
       })
-    ).subscribe()
+
+    ).subscribe();
+  }
+
+  isObj(obj: any): boolean {
+    return obj ? true : false;
   }
 
   sendObject(emailDeets: Email): Observable<any> {
@@ -76,10 +73,6 @@ export class EmailService {
       headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) 
     };
     const emailObservable = this.http.post(SEND_EMAIL_URL, params, headers);
-    // emailObservable.subscribe(
-    //   result => console.log(result),
-    //   error => console.log(error)
-    // );
     this.snackBar.open('Sending Email...', 'Dismiss');
     return emailObservable;
   }

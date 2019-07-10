@@ -1,9 +1,5 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, ErrorStateMatcher } from '@angular/material';
-import { SEND_EMAIL_URL } from '../shared/constants';
-import { HttpClient, HttpHeaders } from '@angular/common/http'; 
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { EmailService } from '../shared/email.service';
 import { Email } from '../model/email';
 
@@ -29,7 +25,7 @@ export class EmailComponent implements OnInit {
 
 
   constructor(private dialogRef: MatDialogRef<EmailComponent>,
-    @Inject(MAT_DIALOG_DATA) data, private http: HttpClient) { 
+    @Inject(MAT_DIALOG_DATA) data) { 
 
       this.toEmail = data.toEmail;
       this.fromEmail = data.fromEmail;
@@ -57,19 +53,8 @@ export class EmailComponent implements OnInit {
       subject: this.subject,
       message: this.message
     };
-    //this.es.sendObject(params)
+
     this.dialogRef.close(params);
-    // const headers = {
-    //   headers: new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) };
-    
-    // // params.set('to', this.toEmail);
-    // // params.set('from', this.fromEmail);
-    // // params.set('subject', this.subject);
-    // // params.set('message', this.message);
-    // this.http.post(SEND_EMAIL_URL, params, headers).subscribe(
-    //   result => console.log(result),
-    //   error => console.log(error));
-    // this.dialogRef.close(params)
-  }
+  }Ks
 
 }
