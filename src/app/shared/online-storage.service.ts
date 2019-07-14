@@ -84,17 +84,15 @@ export class OnlineStorageService {
     task.snapshotChanges().pipe(
       finalize(() => {
         this._decrementSnackbar();
-        url$ = ref.getDownloadURL();
+        this.assets$.pipe(
+          map((assets: Asset[]) => assets.find((asset) => asset.reference === name)),
+          combineLatest(ref.getDownloadURL()),
+          tap( ([asset, url]) => this._persistAsset(url, name, asset) ),
+          take(1)
+        ).subscribe();
       })
     ).subscribe();
 
-    this.assets$.pipe(
-      map((assets: Asset[]) => assets.find((asset) => asset.reference === name)),
-      combineLatest(url$),
-      tap( ([asset, url]) => this._persistAsset(url, name, asset) ),
-      take(1)
-    ).subscribe();
-   
   }
 
   private _decrementSnackbar() {
