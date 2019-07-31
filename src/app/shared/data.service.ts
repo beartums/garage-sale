@@ -128,7 +128,7 @@ export class DataService {
           return URLObj;
         }, {});
         this.photoAssetsUsed =<Item[]>items.reduce((assetObj, item) => {
-          if (item.primaryAsset) { assetObj[item.primaryAsset.key] = true; }
+          if (item.primaryAsset) { assetObj[item.primaryAsset.reference] = true; }
           return assetObj;
         }, {});
         return <Item[]>items;

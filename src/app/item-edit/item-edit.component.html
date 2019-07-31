@@ -155,16 +155,19 @@
                   </mat-select>  
                 </mat-form-field>
               </div>
-              <div fxFlex="25px">
+              <div fxFlex="80px" fxFlexAlign="right center">
                 <button mat-icon-button mat-tooltip="upload picture" (click)="uploadPhotos.click()">
                     <mat-icon>cloud_upload</mat-icon>
+                </button>
+                <button mat-icon-button (click)="resetAssets()" matTooltip="Reset photo list from storage">
+                  <mat-icon>cancel_presentation</mat-icon>
                 </button>
               </div>
             </div>
           </div>
           <!-- Additional Pic selection -->
           <div class="row">
-            <div class="col">
+            <div class="col" fxFlexAlign="start center">
               <div fxFlex="auto">
                 <mat-form-field class="full-width">
                     <mat-label>Select (optional) additonal photos</mat-label>
@@ -178,7 +181,7 @@
                     </mat-select>
                 </mat-form-field>
               </div>
-              <div fxFlex="25px">
+              <div fxFlex="80px">
                   <button mat-icon-button mat-tooltip="upload pictures" (click)="uploadPhotos.click()">
                       <mat-icon>cloud_upload</mat-icon>
                   </button>

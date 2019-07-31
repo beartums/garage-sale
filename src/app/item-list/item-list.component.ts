@@ -10,7 +10,7 @@ import { PATHS } from '../shared/constants';
 import { ItemCommentsComponent } from '../item-comments/item-comments/item-comments.component';
 import { FilterService } from '../shared/filter.service';
 import { User } from '../model/user';
-import { Observable, Subscribable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import {breakpointsProvider, BreakpointsService, BreakpointConfig, BreakpointEvent} from '../shared/breakpoint.service';
 import { EmailService } from '../shared/email.service';
 
@@ -143,6 +143,7 @@ export class ItemListComponent {
       data: { item: item },
     })
   }
+
   sortItems(items: Item[] = []): Item[] {
     if (!this.fs) { return []; }
     return this.fs.sort(items);

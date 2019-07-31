@@ -187,12 +187,16 @@ export class ItemEditComponent implements OnInit{
     return this.ds.photoURLsUsed[asset.url] === true;
   }
   isAssetUsed(asset: Asset): boolean {
-    return this.ds.photoAssetsUsed[asset.key] === true;
+    return this.ds.photoAssetsUsed[asset.reference] === true;
 
   }
   isMatchingAsset(a1: Asset, a2: Asset): boolean {
     if (!a1 || !a2) {return false; }
     return a1.key === a2.key;
+  }
+
+  listItems() {
+    this.oss.resetAssets();
   }
 
   onFileSelected(event) {
