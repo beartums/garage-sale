@@ -192,7 +192,7 @@ export class ItemEditComponent implements OnInit{
   }
   isMatchingAsset(a1: Asset, a2: Asset): boolean {
     if (!a1 || !a2) {return false; }
-    return a1.key === a2.key;
+    return a1.reference === a2.reference;
   }
 
   resetAssets() {
