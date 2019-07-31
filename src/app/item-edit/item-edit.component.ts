@@ -195,7 +195,7 @@ export class ItemEditComponent implements OnInit{
     return a1.key === a2.key;
   }
 
-  listItems() {
+  resetAssets() {
     this.oss.resetAssets();
   }
 
